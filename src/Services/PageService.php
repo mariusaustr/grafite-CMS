@@ -3,8 +3,6 @@
 namespace Grafite\Cms\Services;
 
 use Grafite\Cms\Repositories\PageRepository;
-use Grafite\Cms\Services\BaseService;
-use Illuminate\Support\Facades\Config;
 
 class PageService extends BaseService
 {
@@ -14,7 +12,7 @@ class PageService extends BaseService
     }
 
     /**
-     * Get pages as options
+     * Get pages as options.
      *
      * @return array
      */
@@ -31,7 +29,7 @@ class PageService extends BaseService
     }
 
     /**
-     * Get templates as options
+     * Get templates as options.
      *
      * @return array
      */
@@ -41,7 +39,7 @@ class PageService extends BaseService
     }
 
     /**
-     * Get a page name by ID
+     * Get a page name by ID.
      *
      * @param  int $id
      *

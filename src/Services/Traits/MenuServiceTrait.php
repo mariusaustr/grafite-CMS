@@ -3,12 +3,12 @@
 namespace Grafite\Cms\Services\Traits;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Gate;
 use Grafite\Cms\Repositories\LinkRepository;
 use Grafite\Cms\Repositories\MenuRepository;
 use Grafite\Cms\Repositories\PageRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Gate;
 
 trait MenuServiceTrait
 {
@@ -39,7 +39,7 @@ trait MenuServiceTrait
         $pageRepository = app(PageRepository::class);
         $menu = app(MenuRepository::class)->getBySlug($slug);
 
-        if (!$menu) {
+        if (! $menu) {
             return '';
         }
 
@@ -74,7 +74,7 @@ trait MenuServiceTrait
                 }
             }
         }
-        if (!is_null($view)) {
+        if (! is_null($view)) {
             $response = view($view, ['links' => $links, 'processed_links' => $processedLinks]);
         }
 
@@ -89,7 +89,7 @@ trait MenuServiceTrait
     }
 
     /**
-     * Sort by an existing set of keys
+     * Sort by an existing set of keys.
      *
      * @param  collection $links
      * @param  array $keys

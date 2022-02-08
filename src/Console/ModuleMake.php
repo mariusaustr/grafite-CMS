@@ -2,11 +2,9 @@
 
 namespace Grafite\Cms\Console;
 
-use Artisan;
-use Config;
 use Exception;
-use Illuminate\Console\Command;
 use Grafite\CrudMaker\Generators\CrudGenerator;
+use Illuminate\Console\Command;
 
 class ModuleMake extends Command
 {
@@ -37,11 +35,11 @@ class ModuleMake extends Command
 
         $moduleDirectory = base_path('cms/Modules/'.ucfirst(str_plural($name)));
 
-        if (!is_dir(base_path('cms'))) {
+        if (! is_dir(base_path('cms'))) {
             @mkdir(base_path('cms'));
         }
 
-        if (!is_dir(base_path('cms/Modules'))) {
+        if (! is_dir(base_path('cms/Modules'))) {
             @mkdir(base_path('cms/Modules'));
         }
 

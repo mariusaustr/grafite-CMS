@@ -2,18 +2,16 @@
 
 namespace Grafite\Cms\Services;
 
-use App;
+use Cms;
 use Exception;
+use Grafite\Cms\Facades\CryptoServiceFacade;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Cms;
 use SplFileInfo;
-use Grafite\Cms\Facades\CryptoServiceFacade;
 
 class AssetService
 {
@@ -156,7 +154,7 @@ class AssetService
 
             $fileName = basename($filePath);
 
-            if (!is_null($contentType)) {
+            if (! is_null($contentType)) {
                 $contentType = CryptoServiceFacade::url_decode($contentType);
             } else {
                 $contentType = $fileSystem->mimeType($fileName);
@@ -187,7 +185,7 @@ class AssetService
     }
 
     /**
-     * Get a file's path
+     * Get a file's path.
      *
      * @param  string $fileName
      *
@@ -205,7 +203,7 @@ class AssetService
     }
 
     /**
-     * Get a files content
+     * Get a files content.
      *
      * @param  string $fileName
      * @param  string $contentType
@@ -217,7 +215,7 @@ class AssetService
     {
         if (Storage::disk(config('cms.storage-location', 'local'))->exists($fileName)) {
             $fileContent = Storage::disk(config('cms.storage-location', 'local'))->get($fileName);
-        } elseif (!is_null(config('filesystems.cloud.key'))) {
+        } elseif (! is_null(config('filesystems.cloud.key'))) {
             $fileContent = Storage::disk('cloud')->get($fileName);
         } else {
             $fileContent = file_get_contents($this->generateImage('File Not Found'));
@@ -238,7 +236,7 @@ class AssetService
     }
 
     /**
-     * Generate an image
+     * Generate an image.
      *
      * @param string $ext
      *

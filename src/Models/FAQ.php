@@ -2,7 +2,6 @@
 
 namespace Grafite\Cms\Models;
 
-use Grafite\Cms\Models\CmsModel;
 use Grafite\Cms\Traits\Translatable;
 
 class FAQ extends CmsModel
@@ -32,7 +31,7 @@ class FAQ extends CmsModel
     ];
 
     protected $dates = [
-        'published_at'
+        'published_at',
     ];
 
     public function __construct(array $attributes = [])

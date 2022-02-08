@@ -3,7 +3,6 @@
 namespace Tests\Services;
 
 use Grafite\Cms\Services\BlogService;
-use Grafite\Cms\Services\Normalizer;
 use Tests\TestCase;
 
 class BlogServiceTest extends TestCase

@@ -4,10 +4,10 @@ namespace Grafite\Cms\Controllers;
 
 use Cms;
 use Grafite\Cms\Models\Blog;
-use Illuminate\Http\Request;
+use Grafite\Cms\Repositories\BlogRepository;
 use Grafite\Cms\Requests\BlogRequest;
 use Grafite\Cms\Services\ValidationService;
-use Grafite\Cms\Repositories\BlogRepository;
+use Illuminate\Http\Request;
 
 class BlogController extends GrafiteCmsController
 {
@@ -72,14 +72,14 @@ class BlogController extends GrafiteCmsController
     {
         $validation = app(ValidationService::class)->check(Blog::$rules);
 
-        if (!$validation['errors']) {
+        if (! $validation['errors']) {
             $blog = $this->repository->store($request->all());
             Cms::notification('Blog saved successfully.', 'success');
         } else {
             return $validation['redirect'];
         }
 
-        if (!$blog) {
+        if (! $blog) {
             Cms::notification('Blog could not be saved.', 'warning');
         }
 
@@ -126,7 +126,7 @@ class BlogController extends GrafiteCmsController
 
         $validation = app(ValidationService::class)->check(Blog::$rules);
 
-        if (!$validation['errors']) {
+        if (! $validation['errors']) {
             $blog = $this->repository->update($blog, $request->all());
 
             Cms::notification('Blog updated successfully.', 'success');

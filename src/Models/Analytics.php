@@ -2,8 +2,6 @@
 
 namespace Grafite\Cms\Models;
 
-use Grafite\Cms\Models\CmsModel;
-
 class Analytics extends CmsModel
 {
     public $table = 'analytics';

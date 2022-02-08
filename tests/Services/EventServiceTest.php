@@ -3,7 +3,6 @@
 namespace Tests\Services;
 
 use Grafite\Cms\Services\EventService;
-use Grafite\Cms\Services\Normalizer;
 use Tests\TestCase;
 
 class EventServiceTest extends TestCase
@@ -37,9 +36,9 @@ class EventServiceTest extends TestCase
             'class' => '',
             'dates' => [
                 '23' => [
-                    3 => 'content'
-                ]
-            ]
+                    3 => 'content',
+                ],
+            ],
         ]);
 
         $this->assertTrue(is_string($result));

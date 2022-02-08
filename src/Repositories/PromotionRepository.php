@@ -3,8 +3,6 @@
 namespace Grafite\Cms\Repositories;
 
 use Grafite\Cms\Models\Promotion;
-use Grafite\Cms\Repositories\CmsRepository;
-use Grafite\Cms\Repositories\TranslationRepository;
 
 class PromotionRepository extends CmsRepository
 {
@@ -36,7 +34,7 @@ class PromotionRepository extends CmsRepository
     }
 
     /**
-     * Updates Promotion in the database
+     * Updates Promotion in the database.
      *
      * @param Promotions $widget
      * @param array $payload
@@ -47,7 +45,7 @@ class PromotionRepository extends CmsRepository
     {
         $payload['slug'] = str_slug($payload['slug']);
 
-        if (!empty($payload['lang']) && $payload['lang'] !== config('cms.default-language', 'en')) {
+        if (! empty($payload['lang']) && $payload['lang'] !== config('cms.default-language', 'en')) {
             return $this->translationRepo->createOrUpdate($widget->id, 'Grafite\Cms\Models\Promotion', $payload['lang'], $payload);
         } else {
             unset($payload['lang']);

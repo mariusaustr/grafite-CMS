@@ -4,7 +4,6 @@ namespace Grafite\Cms\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Config;
 
 class ModuleComposer extends Command
 {
@@ -42,11 +41,11 @@ class ModuleComposer extends Command
                 $packageDir = $moduleDir.'/../../packages/'.ucfirst($module);
             }
 
-            if (!is_dir($moduleDir.'/../../packages/')) {
+            if (! is_dir($moduleDir.'/../../packages/')) {
                 $system->makeDirectory($moduleDir.'/../../packages/');
             }
 
-            if (!is_dir($packageDir)) {
+            if (! is_dir($packageDir)) {
                 $system->makeDirectory($packageDir);
             }
 

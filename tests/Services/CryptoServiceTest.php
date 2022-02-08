@@ -2,8 +2,8 @@
 
 namespace Tests\Services;
 
-use Tests\TestCase;
 use Grafite\Cms\Services\CryptoService;
+use Tests\TestCase;
 
 class CryptoServiceTest extends TestCase
 {
@@ -13,7 +13,6 @@ class CryptoServiceTest extends TestCase
 
         $this->service = app(CryptoService::class);
     }
-
 
     public function testEncrypt()
     {

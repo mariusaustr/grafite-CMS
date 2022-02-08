@@ -22,7 +22,7 @@ class ModuleService
 
         if (is_array(config('cms.modules'))) {
             foreach (config('cms.modules') as $module => $config) {
-                if (!is_dir($modulePath.ucfirst($module))) {
+                if (! is_dir($modulePath.ucfirst($module))) {
                     $menu .= view($module.'::menu');
                 }
             }

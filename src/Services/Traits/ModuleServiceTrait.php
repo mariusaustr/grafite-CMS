@@ -2,13 +2,13 @@
 
 namespace Grafite\Cms\Services\Traits;
 
-use Illuminate\Support\Facades\Config;
 use Grafite\Cms\Facades\CryptoServiceFacade;
+use Illuminate\Support\Facades\Config;
 
 trait ModuleServiceTrait
 {
     /**
-     * Determine the module based on URL
+     * Determine the module based on URL.
      *
      * @return string
      */
@@ -41,7 +41,7 @@ trait ModuleServiceTrait
     {
         $assetPath = base_path(Config::get('cms.module-directory').'/'.ucfirst($module).'/Assets/'.$path);
 
-        if (!is_file($assetPath)) {
+        if (! is_file($assetPath)) {
             $assetPath = config('cms.modules.'.$module.'.asset_path').'/'.$path;
         }
 
@@ -61,7 +61,7 @@ trait ModuleServiceTrait
     {
         $configArray = @include base_path(Config::get('cms.module-directory').'/'.ucfirst($module).'/config.php');
 
-        if (!$configArray) {
+        if (! $configArray) {
             return config('cms.modules.'.$module.'.'.$path);
         }
 

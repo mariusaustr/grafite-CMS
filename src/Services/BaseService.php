@@ -5,7 +5,7 @@ namespace Grafite\Cms\Services;
 class BaseService
 {
     /**
-     * Get templates as options
+     * Get templates as options.
      *
      * @param  string $module
      *
@@ -20,7 +20,7 @@ class BaseService
             $template = str_replace(base_path('resources/themes/'.config('cms.frontend-theme').'/'.$module.'/'), '', $template);
             if (stristr($template, 'template')) {
                 $template = str_replace('-template.blade.php', '', $template);
-                if (!stristr($template, '.php')) {
+                if (! stristr($template, '.php')) {
                     $availableTemplates[] = $template.'-template';
                 }
             }

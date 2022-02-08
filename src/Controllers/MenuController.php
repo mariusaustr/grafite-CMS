@@ -2,15 +2,15 @@
 
 namespace Grafite\Cms\Controllers;
 
-use Exception;
-use Illuminate\Http\Request;
 use Cms;
+use Exception;
 use Grafite\Cms\Models\Menu;
 use Grafite\Cms\Repositories\LinkRepository;
 use Grafite\Cms\Repositories\MenuRepository;
 use Grafite\Cms\Requests\MenuRequest;
 use Grafite\Cms\Services\CmsResponseService;
 use Grafite\Cms\Services\ValidationService;
+use Illuminate\Http\Request;
 
 class MenuController extends GrafiteCmsController
 {
@@ -79,11 +79,11 @@ class MenuController extends GrafiteCmsController
         try {
             $validation = app(ValidationService::class)->check(Menu::$rules);
 
-            if (!$validation['errors']) {
+            if (! $validation['errors']) {
                 $menu = $this->repository->store($request->all());
                 Cms::notification('Menu saved successfully.', 'success');
 
-                if (!$menu) {
+                if (! $menu) {
                     Cms::notification('Menu could not be saved.', 'danger');
                 }
             } else {
@@ -140,7 +140,7 @@ class MenuController extends GrafiteCmsController
             $menu = $this->repository->update($menu, $request->all());
             Cms::notification('Menu updated successfully.', 'success');
 
-            if (!$menu) {
+            if (! $menu) {
                 Cms::notification('Menu could not be updated.', 'danger');
             }
         } catch (Exception $e) {
@@ -174,7 +174,6 @@ class MenuController extends GrafiteCmsController
         return redirect(route($this->routeBase.'.menus.index'));
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | Api
@@ -182,7 +181,7 @@ class MenuController extends GrafiteCmsController
     */
 
     /**
-     * Set the order
+     * Set the order.
      *
      * @return Response
      */

@@ -13,7 +13,7 @@ class BlogController extends Controller
     {
         $this->repository = $repository;
 
-        if (!in_array('blog', config('cms.active-core-modules'))) {
+        if (! in_array('blog', config('cms.active-core-modules'))) {
             return redirect('/')->send();
         }
     }

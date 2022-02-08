@@ -4,8 +4,8 @@ namespace Grafite\Cms\Requests;
 
 use Auth;
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Grafite\Cms\Models\Blog;
+use Illuminate\Foundation\Http\FormRequest;
 
 class BlogRequest extends FormRequest
 {

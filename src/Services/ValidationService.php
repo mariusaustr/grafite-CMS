@@ -33,7 +33,7 @@ class ValidationService
             $fields = $conditions;
         }
 
-        if (!is_array($fields)) {
+        if (! is_array($fields)) {
             $fields = [$fields];
         }
 
@@ -53,11 +53,11 @@ class ValidationService
             $errors = $validation->messages();
         }
 
-        if (!$jsonInput) {
+        if (! $jsonInput) {
             $result['redirect'] = Redirect::back()->with('errors', $errors)->with('inputs', $this->inputsArray($jsonInput));
         }
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $result['errors'] = $errors;
         } else {
             $result['errors'] = false;
@@ -93,7 +93,7 @@ class ValidationService
         $errorMessage = '';
         $errors = Session::get('errors') ?: false;
 
-        if (!$errors) {
+        if (! $errors) {
             return false;
         }
 
@@ -117,7 +117,7 @@ class ValidationService
     {
         $inputs = Session::get('inputs') ?: false;
 
-        if (!$inputs) {
+        if (! $inputs) {
             return false;
         }
 
@@ -183,7 +183,7 @@ class ValidationService
     {
         $inputs = Session::get('inputs') ?: false;
 
-        if (!$inputs) {
+        if (! $inputs) {
             return '';
         }
 

@@ -4,7 +4,6 @@ namespace Grafite\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
-use Grafite\Cms\Models\Link;
 
 class CmsModel extends Model
 {
@@ -17,15 +16,15 @@ class CmsModel extends Model
     {
         parent::__construct($attributes);
 
-        if (!empty(config('cms.db-prefix', ''))) {
+        if (! empty(config('cms.db-prefix', ''))) {
             $this->table = config('cms.db-prefix', '').$this->table;
         }
     }
 
     /**
-     * Get a model as a translatable object
+     * Get a model as a translatable object.
      *
-     * @return Object
+     * @return object
      */
     public function asObject()
     {
@@ -43,7 +42,7 @@ class CmsModel extends Model
      */
     public function afterSaved($payload)
     {
-        if (!request()->is('cms/revert/*') && !request()->is('cms/rollback/*/*')) {
+        if (! request()->is('cms/revert/*') && ! request()->is('cms/rollback/*/*')) {
             unset($payload->attributes['created_at']);
             unset($payload->attributes['updated_at']);
             unset($payload->original['created_at']);
@@ -85,7 +84,7 @@ class CmsModel extends Model
     }
 
     /**
-     * A method for getting / setting blocks
+     * A method for getting / setting blocks.
      *
      * @param  string $slug
      * @return string
@@ -94,9 +93,9 @@ class CmsModel extends Model
     {
         $block = $this->findABlock($slug);
 
-        if (!$block) {
+        if (! $block) {
             $this->update([
-                'blocks' => json_encode(array_merge($this->blocks, [ $slug => '' ]))
+                'blocks' => json_encode(array_merge($this->blocks, [$slug => ''])),
             ]);
         }
 
@@ -104,7 +103,7 @@ class CmsModel extends Model
     }
 
     /**
-     * Find a block based on slug
+     * Find a block based on slug.
      *
      * @param  string $slug
      * @return string

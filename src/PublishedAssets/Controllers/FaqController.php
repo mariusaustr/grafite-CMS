@@ -13,7 +13,7 @@ class FaqController extends Controller
     {
         $this->repository = $repository;
 
-        if (!in_array('faqs', config('cms.active-core-modules'))) {
+        if (! in_array('faqs', config('cms.active-core-modules'))) {
             return redirect('/')->send();
         }
     }

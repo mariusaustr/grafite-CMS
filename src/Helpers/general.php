@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('sortable')) {
+if (! function_exists('sortable')) {
     function sortable($label, $field)
     {
         $query = request()->query();
@@ -25,7 +25,7 @@ if (!function_exists('sortable')) {
     }
 }
 
-if (!function_exists('cms')) {
+if (! function_exists('cms')) {
     function cms()
     {
         return app(Grafite\Cms\Services\CmsService::class);

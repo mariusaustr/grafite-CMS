@@ -3,11 +3,11 @@
 namespace Grafite\Cms\Controllers;
 
 use Cms;
-use Illuminate\Http\Request;
 use Grafite\Cms\Models\Promotion;
+use Grafite\Cms\Repositories\PromotionRepository;
 use Grafite\Cms\Requests\PromotionRequest;
 use Grafite\Cms\Services\ValidationService;
-use Grafite\Cms\Repositories\PromotionRepository;
+use Illuminate\Http\Request;
 
 class PromotionsController extends GrafiteCmsController
 {
@@ -72,7 +72,7 @@ class PromotionsController extends GrafiteCmsController
     {
         $validation = app(ValidationService::class)->check(Promotion::$rules);
 
-        if (!$validation['errors']) {
+        if (! $validation['errors']) {
             $promotion = $this->repository->store($request->all());
         } else {
             return $validation['redirect'];

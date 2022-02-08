@@ -2,9 +2,9 @@
 
 namespace Tests\Console;
 
-use Tests\TestCase;
-use org\bovigo\vfs\vfsStream;
 use Grafite\CrudMaker\Generators\CrudGenerator;
+use org\bovigo\vfs\vfsStream;
+use Tests\TestCase;
 
 class ModuleMakeTest extends TestCase
 {

@@ -3,8 +3,8 @@
 namespace Grafite\Cms\Services;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Schema;
 use Grafite\Cms\Models\Analytics;
+use Illuminate\Support\Facades\Schema;
 
 class AnalyticsService
 {
@@ -66,24 +66,24 @@ class AnalyticsService
 
     public function convertDataToItems($data, $key, $conversions = [], $limit = 15)
     {
-        if (!isset($conversions['unknown'])) {
+        if (! isset($conversions['unknown'])) {
             $conversions['unknown'] = 0;
         }
 
-        if (!isset($conversions['unknown'])) {
+        if (! isset($conversions['unknown'])) {
             $conversions['unknown'] = 0;
         }
 
         foreach ($data as $item) {
             $visit = json_decode($item);
-            if (!empty($visit->$key) && $visit->$key > '') {
+            if (! empty($visit->$key) && $visit->$key > '') {
                 $conversions[$visit->$key] = 0;
             }
         }
 
         foreach ($data as $item) {
             $visit = json_decode($item);
-            if (!empty($visit->$key) && $visit->$key > '') {
+            if (! empty($visit->$key) && $visit->$key > '') {
                 $conversions[$visit->$key] += 1;
             } else {
                 $conversions['unknown'] += 1;

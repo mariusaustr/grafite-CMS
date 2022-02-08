@@ -5,8 +5,6 @@ namespace Grafite\Cms\Repositories;
 use Carbon\Carbon;
 use Cms;
 use Grafite\Cms\Models\Blog;
-use Grafite\Cms\Repositories\CmsRepository;
-use Grafite\Cms\Repositories\TranslationRepository;
 use Grafite\Cms\Services\FileService;
 
 class BlogRepository extends CmsRepository
@@ -37,7 +35,7 @@ class BlogRepository extends CmsRepository
     }
 
     /**
-     * Blog tags, with similar name
+     * Blog tags, with similar name.
      *
      * @param  string $tag
      *
@@ -52,7 +50,7 @@ class BlogRepository extends CmsRepository
     }
 
     /**
-     * Gets all tags of an entry
+     * Gets all tags of an entry.
      *
      * @return Illuminate\Support\Collection
      */
@@ -91,7 +89,7 @@ class BlogRepository extends CmsRepository
         $payload['title'] = htmlentities($payload['title']);
         $payload['url'] = Cms::convertToURL($payload['url']);
         $payload['is_published'] = (isset($payload['is_published'])) ? (bool) $payload['is_published'] : 0;
-        $payload['published_at'] = (isset($payload['published_at']) && !empty($payload['published_at'])) ? Carbon::parse($payload['published_at'])->format('Y-m-d H:i:s') : Carbon::now(config('app.timezone'))->format('Y-m-d H:i:s');
+        $payload['published_at'] = (isset($payload['published_at']) && ! empty($payload['published_at'])) ? Carbon::parse($payload['published_at'])->format('Y-m-d H:i:s') : Carbon::now(config('app.timezone'))->format('Y-m-d H:i:s');
 
         if (isset($payload['hero_image'])) {
             $file = request()->file('hero_image');
@@ -115,7 +113,7 @@ class BlogRepository extends CmsRepository
 
         $blog = $this->model->where('url', $url)->where('is_published', 1)->where('published_at', '<=', Carbon::now(config('app.timezone'))->format('Y-m-d H:i:s'))->first();
 
-        if (!$blog) {
+        if (! $blog) {
             $blog = $this->translationRepo->findByUrl($url, 'Grafite\Cms\Models\Blog');
         }
 
@@ -155,12 +153,12 @@ class BlogRepository extends CmsRepository
             $payload['hero_image'] = $path['name'];
         }
 
-        if (!empty($payload['lang']) && $payload['lang'] !== config('cms.default-language', 'en')) {
+        if (! empty($payload['lang']) && $payload['lang'] !== config('cms.default-language', 'en')) {
             return $this->translationRepo->createOrUpdate($blog->id, 'Grafite\Cms\Models\Blog', $payload['lang'], $payload);
         } else {
             $payload['url'] = Cms::convertToURL($payload['url']);
             $payload['is_published'] = (isset($payload['is_published'])) ? (bool) $payload['is_published'] : 0;
-            $payload['published_at'] = (isset($payload['published_at']) && !empty($payload['published_at'])) ? Carbon::parse($payload['published_at'])->format('Y-m-d H:i:s') : Carbon::now(config('app.timezone'))->format('Y-m-d H:i:s');
+            $payload['published_at'] = (isset($payload['published_at']) && ! empty($payload['published_at'])) ? Carbon::parse($payload['published_at'])->format('Y-m-d H:i:s') : Carbon::now(config('app.timezone'))->format('Y-m-d H:i:s');
 
             unset($payload['lang']);
 

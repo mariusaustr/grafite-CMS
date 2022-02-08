@@ -4,8 +4,8 @@ namespace Grafite\Cms\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Schema;
 
 class ApiController extends GrafiteCmsController
 {
@@ -25,7 +25,7 @@ class ApiController extends GrafiteCmsController
     }
 
     /**
-     * Find an item in the API
+     * Find an item in the API.
      *
      * @param  int $id
      *
@@ -37,7 +37,7 @@ class ApiController extends GrafiteCmsController
     }
 
     /**
-     * Collect all items of a resource
+     * Collect all items of a resource.
      *
      * @return Collection
      */
@@ -63,7 +63,7 @@ class ApiController extends GrafiteCmsController
     }
 
     /**
-     * Search for the API Item
+     * Search for the API Item.
      *
      * @param  string $term
      *

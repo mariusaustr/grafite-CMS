@@ -3,8 +3,6 @@
 namespace Grafite\Cms\Repositories;
 
 use Grafite\Cms\Models\Widget;
-use Grafite\Cms\Repositories\CmsRepository;
-use Grafite\Cms\Repositories\TranslationRepository;
 
 class WidgetRepository extends CmsRepository
 {
@@ -36,7 +34,7 @@ class WidgetRepository extends CmsRepository
     }
 
     /**
-     * Updates Widget in the database
+     * Updates Widget in the database.
      *
      * @param Widgets $widget
      * @param array $payload
@@ -47,7 +45,7 @@ class WidgetRepository extends CmsRepository
     {
         $payload['name'] = htmlentities($payload['name']);
 
-        if (!empty($payload['lang']) && $payload['lang'] !== config('cms.default-language', 'en')) {
+        if (! empty($payload['lang']) && $payload['lang'] !== config('cms.default-language', 'en')) {
             return $this->translationRepo->createOrUpdate($widget->id, 'Grafite\Cms\Models\Widget', $payload['lang'], $payload);
         } else {
             unset($payload['lang']);

@@ -2,11 +2,8 @@
 
 namespace Grafite\Cms\Models;
 
-use Carbon\Carbon;
 use Config;
 use Exception;
-use FileService;
-use Grafite\Cms\Models\CmsModel;
 use Grafite\Cms\Services\AssetService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -69,7 +66,7 @@ class Image extends CmsModel
     }
 
     /**
-     * Get an S3 image
+     * Get an S3 image.
      *
      * @return string
      */
@@ -77,7 +74,7 @@ class Image extends CmsModel
     {
         $url = Storage::disk(Config::get('cms.storage-location', 'local'))->url($this->location);
 
-        if (!is_null(config('cms.cloudfront'))) {
+        if (! is_null(config('cms.cloudfront'))) {
             $url = str_replace(config('filesystems.disks.s3.bucket').'.s3.'.config('filesystems.disks.s3.region').'.amazonaws.com', config('cms.cloudfront'), $url);
         }
 
@@ -97,7 +94,7 @@ class Image extends CmsModel
     }
 
     /**
-     * Set Image Caches
+     * Set Image Caches.
      */
     public function setCaches()
     {
@@ -109,7 +106,7 @@ class Image extends CmsModel
     }
 
     /**
-     * Simple caching tool
+     * Simple caching tool.
      *
      * @param  string $attribute
      * @param  Clousre $closure
@@ -120,7 +117,7 @@ class Image extends CmsModel
     {
         $key = $attribute.'_'.$this->location;
 
-        if (!Cache::has($key)) {
+        if (! Cache::has($key)) {
             $result = $closure();
             Cache::forever($key, $result);
         }
@@ -129,7 +126,7 @@ class Image extends CmsModel
     }
 
     /**
-     * Forget the current Image caches
+     * Forget the current Image caches.
      */
     public function forgetCache()
     {
@@ -160,7 +157,7 @@ class Image extends CmsModel
     }
 
     /**
-     * Check if file exists
+     * Check if file exists.
      *
      * @return  string
      */
@@ -170,7 +167,7 @@ class Image extends CmsModel
     }
 
     /**
-     * Staged image if none are found
+     * Staged image if none are found.
      *
      * @return string
      */

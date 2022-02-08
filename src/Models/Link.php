@@ -2,9 +2,6 @@
 
 namespace Grafite\Cms\Models;
 
-use Grafite\Cms\Models\CmsModel;
-use Grafite\Cms\Models\Menu;
-use Grafite\Cms\Models\Page;
 use Grafite\Cms\Traits\Translatable;
 
 class Link extends CmsModel
@@ -30,7 +27,7 @@ class Link extends CmsModel
     ];
 
     public $with = [
-        'page'
+        'page',
     ];
 
     public function __construct(array $attributes = [])

@@ -2,7 +2,6 @@
 
 namespace Grafite\Cms\Models;
 
-use Grafite\Cms\Models\CmsModel;
 use Grafite\Cms\Services\Normalizer;
 use Grafite\Cms\Traits\Translatable;
 use Illuminate\Support\Carbon;

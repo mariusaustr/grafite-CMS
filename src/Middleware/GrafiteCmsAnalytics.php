@@ -17,7 +17,7 @@ class GrafiteCmsAnalytics
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->ajax()) {
+        if (! $request->ajax()) {
             app(AnalyticsService::class)->log($request);
         }
 

@@ -3,11 +3,11 @@
 namespace Grafite\Cms\Controllers;
 
 use Cms;
-use Illuminate\Http\Request;
 use Grafite\Cms\Models\Widget;
+use Grafite\Cms\Repositories\WidgetRepository;
 use Grafite\Cms\Requests\WidgetRequest;
 use Grafite\Cms\Services\ValidationService;
-use Grafite\Cms\Repositories\WidgetRepository;
+use Illuminate\Http\Request;
 
 class WidgetsController extends GrafiteCmsController
 {
@@ -72,7 +72,7 @@ class WidgetsController extends GrafiteCmsController
     {
         $validation = app(ValidationService::class)->check(Widget::$rules);
 
-        if (!$validation['errors']) {
+        if (! $validation['errors']) {
             $widgets = $this->repository->store($request->all());
         } else {
             return $validation['redirect'];

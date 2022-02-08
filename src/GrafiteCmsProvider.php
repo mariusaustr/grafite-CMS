@@ -78,6 +78,7 @@ class GrafiteCmsProvider extends ServiceProvider
 
         Blade::directive('block', function ($expression) {
             $module = Cms::getModule();
+
             return "<?php echo optional(\$".$module.")->block($expression); ?>";
         });
 

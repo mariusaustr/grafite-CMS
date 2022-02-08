@@ -15,14 +15,14 @@ class TranslationRepository
     }
 
     /**
-     * Create or Update an entry
+     * Create or Update an entry.
      *
-     * @param  integer $entityId
+     * @param  int $entityId
      * @param  string $entityType
      * @param  string $lang
      * @param  array $payload
      *
-     * @return boolean
+     * @return bool
      */
     public function createOrUpdate($entityId, $entityType, $lang, $payload)
     {
@@ -41,12 +41,12 @@ class TranslationRepository
     }
 
     /**
-     * Find by URL
+     * Find by URL.
      *
      * @param  string $url
      * @param  string $type
      *
-     * @return Object|null
+     * @return object|null
      */
     public function findByUrl($url, $type)
     {
@@ -56,16 +56,15 @@ class TranslationRepository
             return $item->data;
         }
 
-        return null;
     }
 
     /**
-     * Find an entity by its Id
+     * Find an entity by its Id.
      *
-     * @param  integer $entityId
+     * @param  int $entityId
      * @param  string $entityType
      *
-     * @return Object|null
+     * @return object|null
      */
     public function findByEntityId($entityId, $entityType)
     {
@@ -75,11 +74,10 @@ class TranslationRepository
             return $item->data;
         }
 
-        return null;
     }
 
     /**
-     * Get entities by type and language
+     * Get entities by type and language.
      *
      * @param  string $lang
      * @param  string $type

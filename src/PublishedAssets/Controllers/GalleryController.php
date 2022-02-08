@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Cms;
 
-use Config;
 use App\Http\Controllers\Controller;
+use Config;
 use Grafite\Cms\Repositories\ImageRepository;
 
 class GalleryController extends Controller

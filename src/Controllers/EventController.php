@@ -2,13 +2,13 @@
 
 namespace Grafite\Cms\Controllers;
 
-use URL;
 use Cms;
 use Grafite\Cms\Models\Event;
-use Illuminate\Http\Request;
+use Grafite\Cms\Repositories\EventRepository;
 use Grafite\Cms\Requests\EventRequest;
 use Grafite\Cms\Services\ValidationService;
-use Grafite\Cms\Repositories\EventRepository;
+use Illuminate\Http\Request;
+use URL;
 
 class EventController extends GrafiteCmsController
 {
@@ -73,14 +73,14 @@ class EventController extends GrafiteCmsController
     {
         $validation = app(ValidationService::class)->check(Event::$rules);
 
-        if (!$validation['errors']) {
+        if (! $validation['errors']) {
             $event = $this->repository->store($request->all());
             Cms::notification('Event saved successfully.', 'success');
         } else {
             return $validation['redirect'];
         }
 
-        if (!$event) {
+        if (! $event) {
             Cms::notification('Event could not be saved.', 'warning');
         }
 
@@ -128,7 +128,7 @@ class EventController extends GrafiteCmsController
         $event = $this->repository->update($event, $request->all());
         Cms::notification('Event updated successfully.', 'success');
 
-        if (!$event) {
+        if (! $event) {
             Cms::notification('Event could not be saved.', 'warning');
         }
 

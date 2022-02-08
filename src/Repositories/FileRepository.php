@@ -3,12 +3,9 @@
 namespace Grafite\Cms\Repositories;
 
 use Auth;
-use Config;
 use CryptoService;
 use Grafite\Cms\Models\File;
-use Grafite\Cms\Repositories\CmsRepository;
 use Grafite\Cms\Services\FileService;
-use Illuminate\Support\Facades\Schema;
 
 class FileRepository extends CmsRepository
 {
@@ -77,7 +74,7 @@ class FileRepository extends CmsRepository
     }
 
     /**
-     * Files output for API calls
+     * Files output for API calls.
      *
      * @return array
      */

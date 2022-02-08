@@ -3,11 +3,10 @@
 namespace Grafite\Cms\Console;
 
 use Artisan;
-use Config;
 use Exception;
+use Grafite\CrudMaker\Generators\CrudGenerator;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Grafite\CrudMaker\Generators\CrudGenerator;
 
 class ModuleCrud extends Command
 {
@@ -44,7 +43,7 @@ class ModuleCrud extends Command
 
         $this->directorySetup();
 
-        if (!is_dir($moduleDirectory)) {
+        if (! is_dir($moduleDirectory)) {
             mkdir($moduleDirectory);
             mkdir($moduleDirectory.'/Assets', 0777, true);
             mkdir($moduleDirectory.'/Publishes', 0777, true);
@@ -190,11 +189,11 @@ class ModuleCrud extends Command
      */
     public function directorySetup()
     {
-        if (!is_dir(base_path('cms'))) {
+        if (! is_dir(base_path('cms'))) {
             @mkdir(base_path('cms'));
         }
 
-        if (!is_dir(base_path('cms/Modules'))) {
+        if (! is_dir(base_path('cms/Modules'))) {
             mkdir(base_path('cms/Modules'));
         }
     }

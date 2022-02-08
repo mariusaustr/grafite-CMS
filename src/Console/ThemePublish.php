@@ -42,7 +42,7 @@ class ThemePublish extends Command
 
         $this->info("\n\nThese files will be overwritten\n");
 
-        if (!$this->option('forced')) {
+        if (! $this->option('forced')) {
             $result = $this->confirm('Are you sure you want to overwrite any files of the same name?');
         } else {
             $result = true;

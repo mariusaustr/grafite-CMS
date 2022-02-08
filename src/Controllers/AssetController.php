@@ -2,9 +2,8 @@
 
 namespace Grafite\Cms\Controllers;
 
-use Illuminate\Filesystem\Filesystem;
 use Grafite\Cms\Services\AssetService;
-use Grafite\Cms\Controllers\GrafiteCmsController;
+use Illuminate\Filesystem\Filesystem;
 
 class AssetController extends GrafiteCmsController
 {

@@ -70,7 +70,6 @@ class PromotionsTest extends TestCase
             'details' => 'foobar',
         ]);
 
-
         $this->assertEquals(302, $response->getStatusCode());
         $this->assertDatabaseHas('promotions', ['slug' => 'whacky']);
     }

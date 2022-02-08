@@ -52,7 +52,7 @@ class GrafiteCmsFeatureController extends GrafiteCmsController
     {
         $modelString = str_replace('_', '\\', $entity);
 
-        if (!class_exists($modelString)) {
+        if (! class_exists($modelString)) {
             Cms::notification('Could not rollback Model not found', 'warning');
 
             return redirect(URL::previous());
@@ -63,7 +63,7 @@ class GrafiteCmsFeatureController extends GrafiteCmsController
 
         $archive = Archive::where('entity_id', $id)->where('entity_type', $modelString)->limit(1)->offset(1)->orderBy('id', 'desc')->first();
 
-        if (!$archive) {
+        if (! $archive) {
             Cms::notification('Could not rollback', 'warning');
 
             return redirect(URL::previous());
@@ -91,7 +91,7 @@ class GrafiteCmsFeatureController extends GrafiteCmsController
     {
         $modelString = 'Grafite\Cms\Models\\'.ucfirst($entity);
 
-        if (!class_exists($modelString)) {
+        if (! class_exists($modelString)) {
             $modelString = 'Grafite\Cms\Models\\'.ucfirst($entity).'s';
         }
 
@@ -112,7 +112,7 @@ class GrafiteCmsFeatureController extends GrafiteCmsController
 
         $view = 'cms-frontend::'.$entity.'.show';
 
-        if (!View::exists($view)) {
+        if (! View::exists($view)) {
             $view = 'cms-frontend::'.$entity.'s.show';
         }
 
@@ -139,7 +139,7 @@ class GrafiteCmsFeatureController extends GrafiteCmsController
     }
 
     /**
-     * Delete the hero image
+     * Delete the hero image.
      *
      * @param  string $entity
      * @param  int $id
@@ -155,10 +155,12 @@ class GrafiteCmsFeatureController extends GrafiteCmsController
                 'hero_image' => null,
             ]);
             Cms::notification('Hero image deleted.', 'success');
+
             return back();
         }
 
         Cms::notification('Hero image could not be deleted', 'error');
+
         return back();
     }
 }

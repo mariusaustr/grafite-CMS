@@ -3,7 +3,6 @@
 namespace Grafite\Cms\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
 
 class ThemeLink extends Command
 {

@@ -4,10 +4,10 @@ namespace Grafite\Cms\Controllers;
 
 use Cms;
 use Grafite\Cms\Models\Page;
-use Illuminate\Http\Request;
+use Grafite\Cms\Repositories\PageRepository;
 use Grafite\Cms\Requests\PagesRequest;
 use Grafite\Cms\Services\ValidationService;
-use Grafite\Cms\Repositories\PageRepository;
+use Illuminate\Http\Request;
 
 class PagesController extends GrafiteCmsController
 {
@@ -72,14 +72,14 @@ class PagesController extends GrafiteCmsController
     {
         $validation = app(ValidationService::class)->check(Page::$rules);
 
-        if (!$validation['errors']) {
+        if (! $validation['errors']) {
             $pages = $this->repository->store($request->all());
             Cms::notification('Page saved successfully.', 'success');
         } else {
             return $validation['redirect'];
         }
 
-        if (!$pages) {
+        if (! $pages) {
             Cms::notification('Page could not be saved.', 'warning');
         }
 
@@ -127,7 +127,7 @@ class PagesController extends GrafiteCmsController
         $pages = $this->repository->update($pages, $request->all());
         Cms::notification('Page updated successfully.', 'success');
 
-        if (!$pages) {
+        if (! $pages) {
             Cms::notification('Page could not be saved.', 'warning');
         }
 

@@ -11,7 +11,7 @@ class Normalizer
 
     public function __toString()
     {
-        if (is_null($this->value)){
+        if (is_null($this->value)) {
             return "";
         }
 

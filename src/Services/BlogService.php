@@ -2,13 +2,10 @@
 
 namespace Grafite\Cms\Services;
 
-use Grafite\Cms\Services\BaseService;
-use Illuminate\Support\Facades\Config;
-
 class BlogService extends BaseService
 {
     /**
-     * Get templates as options
+     * Get templates as options.
      *
      * @return array
      */

@@ -39,7 +39,7 @@ class CmsService
      */
     public function asset($path, $contentType = 'null', $fullURL = true)
     {
-        if (!$fullURL) {
+        if (! $fullURL) {
             return base_path(__DIR__.'/../Assets/'.$path);
         }
 
@@ -47,7 +47,7 @@ class CmsService
     }
 
     /**
-     * Get a file download response
+     * Get a file download response.
      *
      * @param  string $fileName
      * @param  string $realFileName
@@ -60,7 +60,7 @@ class CmsService
     }
 
     /**
-     * Check if default CMS language
+     * Check if default CMS language.
      *
      * @return bool
      */
@@ -74,7 +74,7 @@ class CmsService
     }
 
     /**
-     * Links for each supported language
+     * Links for each supported language.
      *
      * @param  string $linkClass
      * @param  string $itemClass
@@ -218,10 +218,10 @@ class CmsService
      *
      * @return string
      */
-    public function editBtn($type = null, $id = null, $class="btn-outline-secondary")
+    public function editBtn($type = null, $id = null, $class = "btn-outline-secondary")
     {
         if (Gate::allows('cms', Auth::user())) {
-            if (!is_null($id)) {
+            if (! is_null($id)) {
                 return '<a href="'.url($this->backendRoute.'/'.$type.'/'.$id.'/edit').'" class="btn btn-sm '.$class.'"><span class="fa fa-edit"></span> Edit</a>';
             } else {
                 return '<a href="'.url($this->backendRoute.'/'.$type).'" class="btn btn-sm '.$class.'"><span class="fa fa-edit"></span> Edit</a>';
@@ -232,7 +232,7 @@ class CmsService
     }
 
     /**
-     * Grafite CMS url generator - handles custom cms url
+     * Grafite CMS url generator - handles custom cms url.
      *
      * @param  string $string
      *
@@ -246,7 +246,7 @@ class CmsService
     }
 
     /**
-     * Grafite CMS route generator
+     * Grafite CMS route generator.
      *
      * @param  string $string
      *
@@ -258,7 +258,7 @@ class CmsService
     }
 
     /**
-     * Another form of the edit button
+     * Another form of the edit button.
      *
      * @param string $type
      * @param int    $id
@@ -294,7 +294,7 @@ class CmsService
     {
         $changelog = @file_get_contents(__DIR__.'/../../changelog.md');
 
-        if (!$changelog) {
+        if (! $changelog) {
             return 'unknown version';
         }
 
@@ -305,7 +305,7 @@ class CmsService
     }
 
     /**
-     * Collect items for a site map
+     * Collect items for a site map.
      *
      * @return array
      */

@@ -4,8 +4,6 @@ namespace Grafite\Cms\Repositories;
 
 use Exception;
 use Grafite\Cms\Models\Link;
-use Grafite\Cms\Repositories\CmsRepository;
-use Grafite\Cms\Repositories\TranslationRepository;
 
 class LinkRepository extends CmsRepository
 {
@@ -31,13 +29,13 @@ class LinkRepository extends CmsRepository
      */
     public function store($payload)
     {
-        $payload['external'] = isset($payload['external']) ? $payload['external'] : 0;
+        $payload['external'] ??= 0;
 
         if ($payload['external'] != 0 && empty($payload['external_url'])) {
             throw new Exception("Your link was missing a URL", 1);
         }
 
-        if (!isset($payload['page_id'])) {
+        if (! isset($payload['page_id'])) {
             $payload['page_id'] = 0;
         }
 
@@ -78,9 +76,9 @@ class LinkRepository extends CmsRepository
      */
     public function update($link, $payload)
     {
-        $payload['external'] = isset($payload['external']) ? $payload['external'] : 0;
+        $payload['external'] ??= 0;
 
-        if (!empty($payload['lang']) && $payload['lang'] !== config('cms.default-language', 'en')) {
+        if (! empty($payload['lang']) && $payload['lang'] !== config('cms.default-language', 'en')) {
             return $this->translationRepo->createOrUpdate($link->id, 'Grafite\Cms\Models\Link', $payload['lang'], $payload);
         }
 

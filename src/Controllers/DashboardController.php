@@ -20,7 +20,7 @@ class DashboardController extends GrafiteCmsController
 
     public function main()
     {
-        if (!is_null(config('analytics.view_id')) && config('cms.analytics') == 'google') {
+        if (! is_null(config('analytics.view_id')) && config('cms.analytics') == 'google') {
             $period = Period::days(7);
 
             foreach (app(Analytics::class)->fetchVisitorsAndPageViews($period) as $view) {

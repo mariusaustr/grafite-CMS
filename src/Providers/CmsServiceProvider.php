@@ -3,14 +3,14 @@
 namespace Grafite\Cms\Providers;
 
 use App;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\ServiceProvider;
 use Grafite\Cms\Services\BlogService;
+use Grafite\Cms\Services\CmsService;
 use Grafite\Cms\Services\CryptoService;
 use Grafite\Cms\Services\EventService;
 use Grafite\Cms\Services\ModuleService;
 use Grafite\Cms\Services\PageService;
-use Grafite\Cms\Services\CmsService;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
 
 class CmsServiceProvider extends ServiceProvider
 {

@@ -2,17 +2,17 @@
 
 namespace Grafite\Cms\Controllers;
 
+use Cms;
 use Config;
 use CryptoService;
 use FileService;
-use Illuminate\Http\Request;
-use Cms;
-use Storage;
 use Grafite\Cms\Models\Image;
 use Grafite\Cms\Repositories\ImageRepository;
 use Grafite\Cms\Requests\ImagesRequest;
 use Grafite\Cms\Services\CmsResponseService;
 use Grafite\Cms\Services\ValidationService;
+use Illuminate\Http\Request;
+use Storage;
 
 class ImagesController extends GrafiteCmsController
 {
@@ -81,7 +81,7 @@ class ImagesController extends GrafiteCmsController
     {
         try {
             $validation = app(ValidationService::class)->check(['location' => 'required']);
-            if (!$validation['errors']) {
+            if (! $validation['errors']) {
                 foreach ($request->input('location') as $image) {
                     $imageSaved = $this->repository->store([
                         'location' => $image,
@@ -92,7 +92,7 @@ class ImagesController extends GrafiteCmsController
 
                 Cms::notification('Image saved successfully.', 'success');
 
-                if (!$imageSaved) {
+                if (! $imageSaved) {
                     Cms::notification('Image was not saved.', 'danger');
                 }
             } else {
@@ -120,7 +120,7 @@ class ImagesController extends GrafiteCmsController
             'location' => ['required'],
         ]);
 
-        if (!$validation['errors']) {
+        if (! $validation['errors']) {
             $file = $request->file('location');
             $fileSaved = app(FileService::class)->saveFile($file, 'public/images', [], true);
             $fileSaved['name'] = CryptoService::encrypt($fileSaved['name']);
@@ -177,7 +177,7 @@ class ImagesController extends GrafiteCmsController
 
             $images = $this->repository->update($images, $request->all());
 
-            if (!$images) {
+            if (! $images) {
                 Cms::notification('Image could not be updated', 'danger');
             }
         } catch (Exception $e) {
@@ -219,7 +219,7 @@ class ImagesController extends GrafiteCmsController
     }
 
     /**
-     * Bulk image delete
+     * Bulk image delete.
      *
      * @param  string $ids
      *
@@ -263,7 +263,7 @@ class ImagesController extends GrafiteCmsController
             return app(CmsResponseService::class)->apiResponse('error', []);
         }
 
-        $images =  $this->repository->apiPrepared();
+        $images = $this->repository->apiPrepared();
 
         return app(CmsResponseService::class)->apiResponse('success', $images);
     }

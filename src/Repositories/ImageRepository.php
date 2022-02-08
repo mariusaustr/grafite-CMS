@@ -7,7 +7,6 @@ use Config;
 use CryptoService;
 use Grafite\Cms\Models\Image;
 use Grafite\Cms\Services\FileService;
-use Illuminate\Support\Facades\Schema;
 
 class ImageRepository extends CmsRepository
 {
@@ -47,7 +46,7 @@ class ImageRepository extends CmsRepository
     {
         $images = $this->model->orderBy('created_at', 'desc')->where('is_published', 1);
 
-        if (!is_null($tag)) {
+        if (! is_null($tag)) {
             $images->where('tags', 'LIKE', '%'.$tag.'%');
         }
 
@@ -86,7 +85,7 @@ class ImageRepository extends CmsRepository
     {
         $savedFile = app(FileService::class)->saveClone($input['location'], 'public/images');
 
-        if (!$savedFile) {
+        if (! $savedFile) {
             return false;
         }
 
@@ -112,13 +111,13 @@ class ImageRepository extends CmsRepository
     {
         $savedFile = $input['location'];
 
-        if (!$savedFile) {
+        if (! $savedFile) {
             Cms::notification('Image could not be saved.', 'danger');
 
             return false;
         }
 
-        if (!isset($input['is_published'])) {
+        if (! isset($input['is_published'])) {
             $input['is_published'] = 0;
         } else {
             $input['is_published'] = 1;
@@ -135,7 +134,7 @@ class ImageRepository extends CmsRepository
     }
 
     /**
-     * Updates Images
+     * Updates Images.
      *
      * @param Images $images
      * @param array  $input
@@ -144,10 +143,10 @@ class ImageRepository extends CmsRepository
      */
     public function update($image, $input)
     {
-        if (isset($input['location']) && !empty($input['location'])) {
+        if (isset($input['location']) && ! empty($input['location'])) {
             $savedFile = app(FileService::class)->saveFile($input['location'], 'public/images', [], true);
 
-            if (!$savedFile) {
+            if (! $savedFile) {
                 Cms::notification('Image could not be updated.', 'danger');
 
                 return false;
@@ -159,7 +158,7 @@ class ImageRepository extends CmsRepository
             $input['location'] = $image->location;
         }
 
-        if (!isset($input['is_published'])) {
+        if (! isset($input['is_published'])) {
             $input['is_published'] = 0;
         } else {
             $input['is_published'] = 1;

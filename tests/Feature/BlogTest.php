@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use Grafite\Cms\Services\CryptoService;
+use Tests\TestCase;
 
 class BlogTest extends TestCase
 {

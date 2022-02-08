@@ -3,7 +3,6 @@
 namespace Grafite\Cms\Repositories;
 
 use Carbon\Carbon;
-use Grafite\Cms\Repositories\TranslationRepository;
 use Illuminate\Support\Facades\Schema;
 
 class CmsRepository
@@ -61,7 +60,7 @@ class CmsRepository
     }
 
     /**
-     * Returns all public items
+     * Returns all public items.
      *
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
@@ -81,7 +80,7 @@ class CmsRepository
     }
 
     /**
-     * Search the columns of a given table
+     * Search the columns of a given table.
      *
      * @param  array $payload
      *
@@ -163,7 +162,7 @@ class CmsRepository
     }
 
     /**
-     * Convert block payloads into json
+     * Convert block payloads into json.
      *
      * @param  array $payload
      * @param  string $module
@@ -214,7 +213,7 @@ class CmsRepository
             foreach ($matches as $match) {
                 $match = str_replace('"', "", $match);
                 $match = str_replace("'", "", $match);
-                if (!isset($currentBlocks[$match])) {
+                if (! isset($currentBlocks[$match])) {
                     $currentBlocks[$match] = '';
                 }
             }

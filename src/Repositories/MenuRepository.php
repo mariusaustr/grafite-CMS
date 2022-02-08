@@ -3,8 +3,6 @@
 namespace Grafite\Cms\Repositories;
 
 use Grafite\Cms\Models\Menu;
-use Grafite\Cms\Repositories\CmsRepository;
-use Illuminate\Support\Facades\Schema;
 
 class MenuRepository extends CmsRepository
 {
@@ -48,7 +46,7 @@ class MenuRepository extends CmsRepository
     }
 
     /**
-     * Set the order
+     * Set the order.
      *
      * @param Menu  $menu
      * @param array $payload

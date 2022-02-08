@@ -31,7 +31,7 @@ class CmsResponseService
     {
         $message = [];
         foreach ($inputs as $key => $value) {
-            if (!isset($errors[$key])) {
+            if (! isset($errors[$key])) {
                 $message[$key] = [
                     'status' => 'valid',
                     'value' => $value,

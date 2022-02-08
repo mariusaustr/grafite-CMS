@@ -2,8 +2,6 @@
 
 namespace Grafite\Cms\Models;
 
-use Grafite\Cms\Models\CmsModel;
-
 class Menu extends CmsModel
 {
     public $table = 'menus';

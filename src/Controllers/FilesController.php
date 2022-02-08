@@ -3,19 +3,18 @@
 namespace Grafite\Cms\Controllers;
 
 use Cms;
-use Config;
-use Storage;
-use Redirect;
-use Response;
-use Exception;
 use CryptoService;
+use Exception;
 use Grafite\Cms\Models\File;
-use Illuminate\Http\Request;
+use Grafite\Cms\Repositories\FileRepository;
 use Grafite\Cms\Requests\FileRequest;
+use Grafite\Cms\Services\CmsResponseService;
 use Grafite\Cms\Services\FileService;
 use Grafite\Cms\Services\ValidationService;
-use Grafite\Cms\Repositories\FileRepository;
-use Grafite\Cms\Services\CmsResponseService;
+use Illuminate\Http\Request;
+use Redirect;
+use Response;
+use Storage;
 
 class FilesController extends GrafiteCmsController
 {
@@ -88,7 +87,7 @@ class FilesController extends GrafiteCmsController
     {
         $validation = $this->validation->check(File::$rules);
 
-        if (!$validation['errors']) {
+        if (! $validation['errors']) {
             $file = $this->repository->store($request->all());
         } else {
             return $validation['redirect'];
@@ -112,7 +111,7 @@ class FilesController extends GrafiteCmsController
             'location' => [],
         ]);
 
-        if (!$validation['errors']) {
+        if (! $validation['errors']) {
             $file = $request->file('location');
             $fileSaved = $this->fileService->saveFile($file, 'files/');
             $fileSaved['name'] = CryptoService::encrypt($fileSaved['name']);

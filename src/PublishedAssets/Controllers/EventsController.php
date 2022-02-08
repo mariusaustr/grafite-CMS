@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
-use Grafite\Cms\Services\EventService;
 use Grafite\Cms\Repositories\EventRepository;
+use Grafite\Cms\Services\EventService;
 
 class EventsController extends Controller
 {
@@ -15,7 +15,7 @@ class EventsController extends Controller
         $this->repository = $repository;
         $this->service = $service;
 
-        if (!in_array('events', config('cms.active-core-modules'))) {
+        if (! in_array('events', config('cms.active-core-modules'))) {
             return redirect('/')->send();
         }
     }

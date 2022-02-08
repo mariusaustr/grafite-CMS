@@ -4,7 +4,6 @@ namespace Grafite\Cms\Services\Traits;
 
 use Grafite\Cms\Repositories\PromotionRepository;
 use Grafite\Cms\Repositories\WidgetRepository;
-use Grafite\Cms\Services\FileService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 

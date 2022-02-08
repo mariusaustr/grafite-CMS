@@ -2,7 +2,6 @@
 
 namespace Grafite\Cms\Models;
 
-use Grafite\Cms\Models\CmsModel;
 use Grafite\Cms\Services\Normalizer;
 use Grafite\Cms\Traits\Translatable;
 
@@ -39,7 +38,7 @@ class Page extends CmsModel
     ];
 
     protected $dates = [
-        'published_at' => 'Y-m-d H:i'
+        'published_at' => 'Y-m-d H:i',
     ];
 
     public function __construct(array $attributes = [])

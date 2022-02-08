@@ -2,8 +2,8 @@
 
 namespace Tests\Services;
 
-use Tests\TestCase;
 use Grafite\Cms\Services\Normalizer;
+use Tests\TestCase;
 
 class NormalizerTest extends TestCase
 {

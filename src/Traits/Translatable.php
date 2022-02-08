@@ -3,9 +3,9 @@
 namespace Grafite\Cms\Traits;
 
 use Grafite\Cms\Models\Translation;
+use Grafite\Cms\Repositories\TranslationRepository;
 use Grafite\Cms\Services\CmsService;
 use Stichoza\GoogleTranslate\TranslateClient;
-use Grafite\Cms\Repositories\TranslationRepository;
 
 trait Translatable
 {
@@ -53,7 +53,6 @@ trait Translatable
             return $data;
         }
 
-        return null;
     }
 
     /**
@@ -101,7 +100,7 @@ trait Translatable
                     foreach ($entry as $key => $value) {
                         $translation[$key] = $value;
 
-                        if (!empty($value)) {
+                        if (! empty($value)) {
                             $translation[$key] = json_decode(json_encode($translateClient->translate(strip_tags($value))));
                         }
                     }

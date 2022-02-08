@@ -4,9 +4,6 @@ namespace Grafite\Cms\Services;
 
 use Carbon\Carbon;
 use Grafite\Cms\Repositories\EventRepository;
-use Grafite\Cms\Services\BaseService;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\URL;
 
 class EventService extends BaseService
 {
@@ -18,7 +15,7 @@ class EventService extends BaseService
     }
 
     /**
-     * Generate a calendar
+     * Generate a calendar.
      *
      * @param  string $date
      *
@@ -52,7 +49,7 @@ class EventService extends BaseService
     }
 
     /**
-     * Get a calendar by date
+     * Get a calendar by date.
      *
      * @param  string $date
      *
@@ -83,7 +80,7 @@ class EventService extends BaseService
     }
 
     /**
-     * Get a calendar as html
+     * Get a calendar as html.
      *
      * @param  array $config
      *
@@ -147,7 +144,7 @@ class EventService extends BaseService
     }
 
     /**
-     * Generate HTML links
+     * Generate HTML links.
      *
      * @param  string $class
      *
@@ -172,7 +169,7 @@ class EventService extends BaseService
     }
 
     /**
-     * Get templates as options
+     * Get templates as options.
      *
      * @return array
      */

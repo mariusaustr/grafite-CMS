@@ -5,11 +5,10 @@ namespace Grafite\Cms\Controllers;
 use Cms;
 use Exception;
 use Grafite\Cms\Models\Link;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\URL;
+use Grafite\Cms\Repositories\LinkRepository;
 use Grafite\Cms\Requests\LinksRequest;
 use Grafite\Cms\Services\ValidationService;
-use Grafite\Cms\Repositories\LinkRepository;
+use Illuminate\Http\Request;
 
 class LinksController extends GrafiteCmsController
 {
@@ -58,11 +57,11 @@ class LinksController extends GrafiteCmsController
         try {
             $validation = app(ValidationService::class)->check(Link::$rules);
 
-            if (!$validation['errors']) {
+            if (! $validation['errors']) {
                 $links = $this->repository->store($request->all());
                 Cms::notification('Link saved successfully.', 'success');
 
-                if (!$links) {
+                if (! $links) {
                     Cms::notification('Link could not be saved.', 'danger');
                 }
             } else {
@@ -117,7 +116,7 @@ class LinksController extends GrafiteCmsController
             $links = $this->repository->update($links, $request->all());
             Cms::notification('Link updated successfully.', 'success');
 
-            if (!$links) {
+            if (! $links) {
                 Cms::notification('Link could not be updated.', 'danger');
             }
         } catch (Exception $e) {

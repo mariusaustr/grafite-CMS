@@ -2,13 +2,13 @@
 
 namespace Grafite\Cms\Controllers;
 
-use URL;
 use Cms;
 use Grafite\Cms\Models\FAQ;
-use Illuminate\Http\Request;
-use Grafite\Cms\Requests\FAQRequest;
 use Grafite\Cms\Repositories\FAQRepository;
+use Grafite\Cms\Requests\FAQRequest;
 use Grafite\Cms\Services\ValidationService;
+use Illuminate\Http\Request;
+use URL;
 
 class FAQController extends GrafiteCmsController
 {
@@ -73,14 +73,14 @@ class FAQController extends GrafiteCmsController
     {
         $validation = app(ValidationService::class)->check(FAQ::$rules);
 
-        if (!$validation['errors']) {
+        if (! $validation['errors']) {
             $faq = $this->repository->store($request->all());
             Cms::notification('FAQ saved successfully.', 'success');
         } else {
             return $validation['redirect'];
         }
 
-        if (!$faq) {
+        if (! $faq) {
             Cms::notification('FAQ could not be saved.', 'warning');
         }
 
@@ -127,11 +127,11 @@ class FAQController extends GrafiteCmsController
 
         $validation = app(ValidationService::class)->check(FAQ::$rules);
 
-        if (!$validation['errors']) {
+        if (! $validation['errors']) {
             $faq = $this->repository->update($faq, $request->all());
             Cms::notification('FAQ updated successfully.', 'success');
 
-            if (!$faq) {
+            if (! $faq) {
                 Cms::notification('FAQ could not be saved.', 'warning');
             }
         } else {
