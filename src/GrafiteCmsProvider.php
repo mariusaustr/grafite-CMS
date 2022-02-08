@@ -69,7 +69,7 @@ class GrafiteCmsProvider extends ServiceProvider
             $theme = config('cms.frontend-theme');
             $view = '"cms-frontend::'.str_replace('"', '', str_replace("'", '', $expression)).'"';
 
-            return "<?php echo \$__env->make($view, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
+            return "<?php echo \$__env->make($view, \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
         });
 
         Blade::directive('menu', function ($expression) {

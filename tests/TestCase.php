@@ -39,7 +39,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         return [
             \Grafite\Cms\GrafiteCmsProvider::class,
             \Collective\Html\HtmlServiceProvider::class,
-            \Grafite\FormMaker\FormMakerProvider::class,
+            \Grafite\Forms\FormsProvider::class,
         ];
     }
 
