@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Grafite\Cms\Models\Event;
 use Tests\TestCase;
 
 class EventsTest extends TestCase
@@ -11,7 +12,7 @@ class EventsTest extends TestCase
         parent::setUp();
         $this->withoutMiddleware();
         $this->withoutEvents();
-        factory(\Grafite\Cms\Models\Event::class)->create();
+        Event::factory()->create();
     }
 
     /*
@@ -48,7 +49,7 @@ class EventsTest extends TestCase
 
     public function testStore()
     {
-        $event = factory(\Grafite\Cms\Models\Event::class)->make(['id' => 2]);
+        $event = Event::factory()->make(['id' => 2]);
         $event = $event->toArray();
         unset($event['translations']);
         $response = $this->call('POST', 'cms/events', $event);

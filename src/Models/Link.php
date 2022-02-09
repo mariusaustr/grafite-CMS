@@ -3,11 +3,13 @@
 namespace Grafite\Cms\Models;
 
 use Grafite\Cms\Traits\Translatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Link extends CmsModel
 {
     use Translatable;
+    use HasFactory;
 
     public $table = 'links';
 

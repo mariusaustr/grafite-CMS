@@ -2,8 +2,12 @@
 
 namespace Grafite\Cms\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class Menu extends CmsModel
 {
+    use HasFactory;
+
     public $table = 'menus';
 
     public $primaryKey = 'id';

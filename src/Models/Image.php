@@ -5,6 +5,7 @@ namespace Grafite\Cms\Models;
 use Closure;
 use Exception;
 use Grafite\Cms\Services\AssetService;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
@@ -17,6 +18,8 @@ use Intervention\Image\ImageManagerStatic as InterventionImage;
  */
 class Image extends CmsModel
 {
+    use HasFactory;
+
     public $table = 'images';
 
     public $primaryKey = 'id';

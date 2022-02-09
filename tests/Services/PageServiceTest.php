@@ -8,13 +8,15 @@ use Tests\TestCase;
 
 class PageServiceTest extends TestCase
 {
+    private $service;
+
     public function setUp(): void
     {
         parent::setUp();
 
         $this->service = app(PageService::class);
 
-        factory(Page::class)->create();
+        Page::factory()->create();
     }
 
     public function testGetPagesAsOptions()

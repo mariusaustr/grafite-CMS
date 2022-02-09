@@ -1,19 +1,22 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Menu Factory
-|--------------------------------------------------------------------------
-*/
+namespace Grafite\Database\Factories;
 
-$factory->define(\Grafite\Cms\Models\Menu::class, function (Faker\Generator $faker) {
-    return [
+use Grafite\Cms\Models\Menu;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-        'id' => 1,
+class MenuFactory extends Factory
+{
+    protected $model = Menu::class;
+
+    public function definition()
+    {
+        return [
+            'id' => 1,
         'name' => 'dumb menu',
         'slug' => 'testerSLUG',
-        'updated_at' => $faker->datetime(),
-        'created_at' => $faker->datetime(),
-
-    ];
-});
+        'updated_at' => $this->faker->dateTime(),
+        'created_at' => $this->faker->dateTime(),
+        ];
+    }
+}

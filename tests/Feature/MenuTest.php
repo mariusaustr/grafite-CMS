@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Grafite\Cms\Models\Menu;
 use Tests\TestCase;
 
 class MenuTest extends TestCase
@@ -11,7 +12,7 @@ class MenuTest extends TestCase
         parent::setUp();
         $this->withoutMiddleware();
         $this->withoutEvents();
-        factory(\Grafite\Cms\Models\Menu::class)->create();
+        Menu::factory()->create();
     }
 
     /*
@@ -48,7 +49,7 @@ class MenuTest extends TestCase
 
     public function testStore()
     {
-        $menu = factory(\Grafite\Cms\Models\Menu::class)->make(['id' => 2]);
+        $menu = Menu::factory()->make(['id' => 2]);
         $response = $this->call('POST', '/cms/menus', $menu->toArray());
 
         $this->assertEquals(302, $response->getStatusCode());

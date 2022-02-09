@@ -9,6 +9,8 @@ use Tests\TestCase;
 
 class AssetServiceTest extends TestCase
 {
+    private $service;
+
     public function setUp(): void
     {
         parent::setUp();

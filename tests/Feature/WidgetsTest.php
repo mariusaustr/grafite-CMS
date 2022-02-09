@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Grafite\Cms\Models\Widget;
 use Tests\TestCase;
 
 class WidgetsTest extends TestCase
@@ -11,7 +12,7 @@ class WidgetsTest extends TestCase
         parent::setUp();
         $this->withoutMiddleware();
         $this->withoutEvents();
-        factory(\Grafite\Cms\Models\Widget::class)->create();
+        Widget::factory()->create();
     }
 
     /*
@@ -48,7 +49,7 @@ class WidgetsTest extends TestCase
 
     public function testStore()
     {
-        $widget = factory(\Grafite\Cms\Models\Widget::class)->make(['id' => 2]);
+        $widget = Widget::factory()->make(['id' => 2]);
         $widget = $widget->toArray();
         unset($widget['translations']);
         $response = $this->call('POST', 'cms/widgets', $widget);

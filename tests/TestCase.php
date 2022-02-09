@@ -30,8 +30,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
     /**
      * getPackageProviders.
      *
-     * @param App $app
-     *
      * @return array
      */
     protected function getPackageProviders($app)

@@ -4,6 +4,7 @@ namespace Grafite\Cms\Models;
 
 use Grafite\Cms\Services\Normalizer;
 use Grafite\Cms\Traits\Translatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
 
 /**
@@ -12,6 +13,7 @@ use Illuminate\Support\Carbon;
 class Promotion extends CmsModel
 {
     use Translatable;
+    use HasFactory;
 
     public $table = 'promotions';
 

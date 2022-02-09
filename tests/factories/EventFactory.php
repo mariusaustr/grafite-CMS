@@ -1,22 +1,27 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Events Factory
-|--------------------------------------------------------------------------
-*/
+namespace Grafite\Database\Factories;
 
-$factory->define(\Grafite\Cms\Models\Event::class, function (Faker\Generator $faker) {
-    return [
-        'id' => 1,
+use Grafite\Cms\Models\Event;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class EventFactory extends Factory
+{
+    protected $model = Event::class;
+
+    public function definition()
+    {
+        return [
+            'id' => 1,
         'start_date' => '2016-10-31',
         'end_date' => '2016-10-31',
         'seo_keywords' => 'dumb, dumber',
         'seo_description' => 'dumb is dumb',
         'title' => 'dumb',
-        'details' => $faker->paragraph().' '.$faker->paragraph(),
+        'details' => $this->faker->paragraph().' '.$this->faker->paragraph(),
         'is_published' => 1,
-        'updated_at' => $faker->datetime(),
-        'created_at' => $faker->datetime(),
-    ];
-});
+        'updated_at' => $this->faker->dateTime(),
+        'created_at' => $this->faker->dateTime(),
+        ];
+    }
+}

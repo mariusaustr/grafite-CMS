@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use Grafite\Cms\Models\Link;
+use Grafite\Cms\Models\Menu;
 use Tests\TestCase;
 
 class LinksTest extends TestCase
@@ -11,9 +13,9 @@ class LinksTest extends TestCase
         parent::setUp();
         $this->withoutMiddleware();
         $this->withoutEvents();
-        factory(\Grafite\Cms\Models\Menu::class)->create();
-        factory(\Grafite\Cms\Models\Link::class)->create();
-        factory(\Grafite\Cms\Models\Link::class)->make(['id' => 1]);
+        Menu::factory()->create();
+        Link::factory()->create();
+        Link::factory()->make(['id' => 1]);
     }
 
     /*
@@ -43,7 +45,7 @@ class LinksTest extends TestCase
 
     public function testStore()
     {
-        $link = factory(\Grafite\Cms\Models\Link::class)->make(['id' => 89]);
+        $link = Link::factory()->make(['id' => 89]);
         $response = $this->call('POST', '/cms/links', $link->toArray());
 
         $this->assertEquals(302, $response->getStatusCode());

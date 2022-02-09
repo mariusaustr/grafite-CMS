@@ -7,6 +7,8 @@ use Tests\TestCase;
 
 class CryptoServiceTest extends TestCase
 {
+    private $service;
+
     public function setUp(): void
     {
         parent::setUp();

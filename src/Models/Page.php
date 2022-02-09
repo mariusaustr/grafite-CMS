@@ -5,6 +5,7 @@ namespace Grafite\Cms\Models;
 use Carbon\Carbon;
 use Grafite\Cms\Services\Normalizer;
 use Grafite\Cms\Traits\Translatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Collection;
 
 /**
@@ -17,6 +18,7 @@ use Illuminate\Support\Collection;
 class Page extends CmsModel
 {
     use Translatable;
+    use HasFactory;
 
     public $table = 'pages';
 

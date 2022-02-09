@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Grafite\Cms\Models\Blog;
 use Grafite\Cms\Services\CryptoService;
 use Tests\TestCase;
 
@@ -12,7 +13,7 @@ class BlogTest extends TestCase
         parent::setUp();
         $this->withoutMiddleware();
         $this->withoutEvents();
-        factory(\Grafite\Cms\Models\Blog::class)->create();
+        Blog::factory()->create();
     }
 
     /*
@@ -37,7 +38,7 @@ class BlogTest extends TestCase
 
     public function testEdit()
     {
-        factory(\Grafite\Cms\Models\Blog::class)->create(['id' => 4]);
+        Blog::factory()->create(['id' => 4]);
         $response = $this->call('GET', 'cms/blog/4/edit');
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('blog');

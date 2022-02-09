@@ -3,10 +3,12 @@
 namespace Grafite\Cms\Models;
 
 use Grafite\Cms\Traits\Translatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class FAQ extends CmsModel
 {
     use Translatable;
+    use HasFactory;
 
     public $table = 'faqs';
 

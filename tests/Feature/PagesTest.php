@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Grafite\Cms\Models\Page;
 use Tests\TestCase;
 
 class PagesTest extends TestCase
@@ -11,7 +12,7 @@ class PagesTest extends TestCase
         parent::setUp();
         $this->withoutMiddleware();
         $this->withoutEvents();
-        factory(\Grafite\Cms\Models\Page::class)->create();
+        Page::factory()->create();
     }
 
     /*
@@ -48,7 +49,7 @@ class PagesTest extends TestCase
 
     public function testStore()
     {
-        $page = factory(\Grafite\Cms\Models\Page::class)->make(['id' => 2]);
+        $page = Page::factory()->make(['id' => 2]);
         $page = $page->toArray();
         unset($page['translations']);
         $response = $this->call('POST', 'cms/pages', $page);

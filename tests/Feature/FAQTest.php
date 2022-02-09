@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Grafite\Cms\Models\FAQ;
 use Tests\TestCase;
 
 class FAQTest extends TestCase
@@ -11,7 +12,7 @@ class FAQTest extends TestCase
         parent::setUp();
         $this->withoutMiddleware();
         $this->withoutEvents();
-        factory(\Grafite\Cms\Models\FAQ::class)->create();
+        FAQ::factory()->create();
     }
 
     /*

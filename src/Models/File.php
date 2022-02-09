@@ -3,6 +3,7 @@
 namespace Grafite\Cms\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property string $location
@@ -11,6 +12,8 @@ use Carbon\Carbon;
  */
 class File extends CmsModel
 {
+    use HasFactory;
+
     public $table = 'files';
 
     public $primaryKey = 'id';

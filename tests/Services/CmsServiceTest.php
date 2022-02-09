@@ -7,6 +7,8 @@ use Tests\TestCase;
 
 class CmsServiceTest extends TestCase
 {
+    private $service;
+
     public function setUp(): void
     {
         parent::setUp();

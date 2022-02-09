@@ -1,18 +1,23 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Widget Factory
-|--------------------------------------------------------------------------
-*/
+namespace Grafite\Database\Factories;
 
-$factory->define(\Grafite\Cms\Models\Widget::class, function (Faker\Generator $faker) {
-    return [
-        'id' => 1,
+use Grafite\Cms\Models\Widget;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class WidgetFactory extends Factory
+{
+    protected $model = Widget::class;
+
+    public function definition()
+    {
+        return [
+            'id' => 1,
         'name' => 'test',
         'slug' => 'tester',
-        'content' => implode(' ', $faker->paragraphs(3)),
-        'updated_at' => $faker->datetime(),
-        'created_at' => $faker->datetime(),
-    ];
-});
+        'content' => implode(' ', $this->faker->paragraphs(3)),
+        'updated_at' => $this->faker->dateTime(),
+        'created_at' => $this->faker->dateTime(),
+        ];
+    }
+}

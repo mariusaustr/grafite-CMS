@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Grafite\Cms\Models\Promotion;
 use Tests\TestCase;
 
 class PromotionsTest extends TestCase
@@ -11,7 +12,7 @@ class PromotionsTest extends TestCase
         parent::setUp();
         $this->withoutMiddleware();
         $this->withoutEvents();
-        factory(\Grafite\Cms\Models\Promotion::class)->create();
+        Promotion::factory()->create();
     }
 
     /*
@@ -48,7 +49,7 @@ class PromotionsTest extends TestCase
 
     public function testStore()
     {
-        $promotion = factory(\Grafite\Cms\Models\Promotion::class)->make(['id' => 2]);
+        $promotion = Promotion::factory()->make(['id' => 2]);
         $promotion = $promotion->toArray();
         unset($promotion['is_published']);
         unset($promotion['translations']);
@@ -61,8 +62,6 @@ class PromotionsTest extends TestCase
     public function testUpdate()
     {
         $promotion = ['id' => 2, 'slug' => 'dumber'];
-        unset($promotion['is_published']);
-        unset($promotion['translations']);
         $response = $this->call('POST', 'cms/promotions', $promotion);
 
         $response = $this->call('PATCH', 'cms/promotions/2', [
@@ -77,8 +76,6 @@ class PromotionsTest extends TestCase
     public function testUpdateTranslation()
     {
         $promotion = ['id' => 2, 'slug' => 'dumber'];
-        unset($promotion['is_published']);
-        unset($promotion['translations']);
         $response = $this->call('POST', 'cms/promotions', $promotion);
 
         $response = $this->call('PATCH', 'cms/promotions/2', [
