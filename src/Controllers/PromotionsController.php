@@ -7,23 +7,22 @@ use Grafite\Cms\Models\Promotion;
 use Grafite\Cms\Repositories\PromotionRepository;
 use Grafite\Cms\Requests\PromotionRequest;
 use Grafite\Cms\Services\ValidationService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class PromotionsController extends GrafiteCmsController
 {
     public function __construct(PromotionRepository $repository)
     {
-        parent::construct();
-
         $this->repository = $repository;
+        parent::construct();
     }
 
     /**
      * Display a listing of the Promotions.
-     *
-     * @return Response
      */
-    public function index()
+    public function index(): View
     {
         $result = $this->repository->paginated();
 
@@ -34,12 +33,8 @@ class PromotionsController extends GrafiteCmsController
 
     /**
      * Search.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
-    public function search(Request $request)
+    public function search(Request $request): View
     {
         $input = $request->all();
 
@@ -53,22 +48,16 @@ class PromotionsController extends GrafiteCmsController
 
     /**
      * Show the form for creating a new Promotions.
-     *
-     * @return Response
      */
-    public function create()
+    public function create(): View
     {
         return view('cms::modules.promotions.create');
     }
 
     /**
      * Store a newly created Promotions in storage.
-     *
-     * @param PromotionRequest $request
-     *
-     * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validation = app(ValidationService::class)->check(Promotion::$rules);
 
@@ -85,12 +74,8 @@ class PromotionsController extends GrafiteCmsController
 
     /**
      * Show the form for editing the specified Promotions.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function edit($id)
+    public function edit(int $id): View|RedirectResponse
     {
         $promotion = $this->repository->find($id);
 
@@ -105,13 +90,8 @@ class PromotionsController extends GrafiteCmsController
 
     /**
      * Update the specified Promotions in storage.
-     *
-     * @param int            $id
-     * @param PromotionRequest $request
-     *
-     * @return Response
      */
-    public function update($id, PromotionRequest $request)
+    public function update(int $id, PromotionRequest $request): RedirectResponse
     {
         $promotion = $this->repository->find($id);
 
@@ -130,12 +110,8 @@ class PromotionsController extends GrafiteCmsController
 
     /**
      * Remove the specified Promotions from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $promotion = $this->repository->find($id);
 

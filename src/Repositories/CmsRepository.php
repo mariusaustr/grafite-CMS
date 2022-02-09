@@ -3,37 +3,31 @@
 namespace Grafite\Cms\Repositories;
 
 use Carbon\Carbon;
+use Grafite\Cms\Models\CmsModel;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 
 class CmsRepository
 {
-    public $translationRepo;
-
-    public $model;
-
     public $table;
 
-    public function __construct(TranslationRepository $translationRepo)
+    public function __construct(public TranslationRepository $translationRepo)
     {
-        $this->translationRepo = $translationRepo;
     }
 
     /**
      * Returns all Widgets.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function all()
+    public function all(): Collection
     {
         return $this->model->orderBy('created_at', 'desc')->get()->all();
     }
 
     /**
      * Returns all paginated items.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function paginated()
+    public function paginated(): LengthAwarePaginator
     {
         $model = $this->model;
 
@@ -48,10 +42,8 @@ class CmsRepository
 
     /**
      * Returns all published items.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function published()
+    public function published(): LengthAwarePaginator
     {
         return $this->model->where('is_published', 1)
             ->where('published_at', '<=', Carbon::now(config('app.timezone'))->format('Y-m-d H:i:s'))
@@ -61,10 +53,8 @@ class CmsRepository
 
     /**
      * Returns all public items.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function arePublic()
+    public function arePublic(): Collection
     {
         if (Schema::hasColumn($this->model->getTable(), 'is_published')) {
             $query = $this->model->where('is_published', 1);
@@ -81,12 +71,8 @@ class CmsRepository
 
     /**
      * Search the columns of a given table.
-     *
-     * @param  array $payload
-     *
-     * @return array
      */
-    public function search($payload)
+    public function search(array $payload): array
     {
         $query = $this->model->orderBy('created_at', 'desc');
         $query->where('id', 'LIKE', '%'.$payload['term'].'%');
@@ -102,74 +88,48 @@ class CmsRepository
 
     /**
      * Stores Widgets into database.
-     *
-     * @param array $payload
-     *
-     * @return Widgets
      */
-    public function store($payload)
+    public function store(array $payload): CmsModel
     {
         return $this->model->create($payload);
     }
 
     /**
      * Find Widgets by given id.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Support\Collection|null|static|Widgets
      */
-    public function find($id)
+    public function find(int $id): ?CmsModel
     {
         return $this->model->find($id);
     }
 
     /**
      * Find items by slug.
-     *
-     * @param int $slug
-     *
-     * @return \Illuminate\Support\Collection|null|static|Model
      */
-    public function getBySlug($slug)
+    public function getBySlug(string $slug): ?CmsModel
     {
         return $this->model->where('slug', $slug)->first();
     }
 
     /**
      * Find items by url.
-     *
-     * @param int $url
-     *
-     * @return \Illuminate\Support\Collection|null|static|Model
      */
-    public function getByUrl($url)
+    public function getByUrl(string $url): ?CmsModel
     {
         return $this->model->where('url', $url)->first();
     }
 
     /**
      * Updates items into database.
-     *
-     * @param Model $model
-     * @param array $payload
-     *
-     * @return Model
      */
-    public function update($model, $payload)
+    public function update(CmsModel $model, array $payload): CmsModel|bool
     {
         return $model->update($payload);
     }
 
     /**
      * Convert block payloads into json.
-     *
-     * @param  array $payload
-     * @param  string $module
-     *
-     * @return array
      */
-    public function parseBlocks($payload, $module)
+    public function parseBlocks(array $payload, string $module): array
     {
         $blockCollection = [];
 
@@ -194,13 +154,8 @@ class CmsRepository
 
     /**
      * Parse the template for blocks.
-     *
-     * @param  array $payload
-     * @param  array $currentBlocks
-     *
-     * @return array
      */
-    public function parseTemplate($payload, $currentBlocks, $module)
+    public function parseTemplate(array $payload, array $currentBlocks, string $module): array
     {
         if (isset($payload['template'])) {
             $content = file_get_contents(base_path('resources/themes/'.config('cms.frontend-theme').'/'.$module.'/'.$payload['template'].'.blade.php'));

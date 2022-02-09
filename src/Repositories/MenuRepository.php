@@ -2,28 +2,22 @@
 
 namespace Grafite\Cms\Repositories;
 
+use Grafite\Cms\Models\CmsModel;
 use Grafite\Cms\Models\Menu;
 
 class MenuRepository extends CmsRepository
 {
-    public $model;
-
     public $table;
 
-    public function __construct(Menu $model)
+    public function __construct(public Menu $model)
     {
-        $this->model = $model;
         $this->table = config('cms.db-prefix').'menus';
     }
 
     /**
      * Stores Menu into database.
-     *
-     * @param array $payload
-     *
-     * @return Menu
      */
-    public function store($payload)
+    public function store(array $payload): Menu
     {
         $payload['name'] = htmlentities($payload['name']);
 
@@ -32,13 +26,8 @@ class MenuRepository extends CmsRepository
 
     /**
      * Updates Menu into database.
-     *
-     * @param Menu  $menu
-     * @param array $payload
-     *
-     * @return Menu
      */
-    public function update($menu, $payload)
+    public function update(CmsModel $menu, array $payload): Menu|bool
     {
         $payload['name'] = htmlentities($payload['name']);
 
@@ -47,13 +36,8 @@ class MenuRepository extends CmsRepository
 
     /**
      * Set the order.
-     *
-     * @param Menu  $menu
-     * @param array $payload
-     *
-     * @return Menu
      */
-    public function setOrder($menu, $payload)
+    public function setOrder(Menu $menu, array $payload): bool
     {
         return $menu->update($payload);
     }

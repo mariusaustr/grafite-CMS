@@ -8,8 +8,6 @@ class Menu extends CmsModel
 
     public $primaryKey = 'id';
 
-    protected $guarded = [];
-
     public static $rules = [
         'name' => 'required',
         'slug' => 'required',
@@ -28,7 +26,7 @@ class Menu extends CmsModel
         parent::__construct($attributes);
     }
 
-    public function getOrderAttribute($value)
+    public function getOrderAttribute($value): string
     {
         if (is_null($value)) {
             return '[]';

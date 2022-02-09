@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
-use Config;
 use Grafite\Cms\Repositories\ImageRepository;
+use Illuminate\Support\Facades\Config;
 
 class GalleryController extends Controller
 {

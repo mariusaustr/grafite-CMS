@@ -2,21 +2,24 @@
 
 namespace Grafite\Cms\Models;
 
-use Config;
+use Closure;
 use Exception;
 use Grafite\Cms\Services\AssetService;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as InterventionImage;
-use Storage;
 
+/**
+ * @property string $location
+ * @property string $tags
+ */
 class Image extends CmsModel
 {
     public $table = 'images';
 
     public $primaryKey = 'id';
-
-    protected $guarded = [];
 
     protected $appends = [
         'url',
@@ -49,12 +52,8 @@ class Image extends CmsModel
 
     /**
      * Get the images url location.
-     *
-     * @param string $value
-     *
-     * @return string
      */
-    public function getUrlAttribute()
+    public function getUrlAttribute(): string
     {
         if ($this->isLocalFile()) {
             return url(str_replace('public/', 'storage/', $this->location));
@@ -67,10 +66,8 @@ class Image extends CmsModel
 
     /**
      * Get an S3 image.
-     *
-     * @return string
      */
-    public function getS3Image()
+    public function getS3Image(): string
     {
         $url = Storage::disk(Config::get('cms.storage-location', 'local'))->url($this->location);
 
@@ -83,12 +80,8 @@ class Image extends CmsModel
 
     /**
      * Get the images url location.
-     *
-     * @param string $value
-     *
-     * @return string
      */
-    public function getJsUrlAttribute()
+    public function getJsUrlAttribute(): string
     {
         return $this->url;
     }
@@ -96,7 +89,7 @@ class Image extends CmsModel
     /**
      * Set Image Caches.
      */
-    public function setCaches()
+    public function setCaches(): bool
     {
         if ($this->url && $this->js_url) {
             return true;
@@ -107,13 +100,8 @@ class Image extends CmsModel
 
     /**
      * Simple caching tool.
-     *
-     * @param  string $attribute
-     * @param  Clousre $closure
-     *
-     * @return mixed
      */
-    public function remember($attribute, $closure)
+    public function remember(string $attribute, Closure $closure): mixed
     {
         $key = $attribute.'_'.$this->location;
 
@@ -128,7 +116,7 @@ class Image extends CmsModel
     /**
      * Forget the current Image caches.
      */
-    public function forgetCache()
+    public function forgetCache(): void
     {
         foreach (['url', 'js_url'] as $attribute) {
             $key = $attribute.'_'.$this->location;
@@ -138,10 +126,8 @@ class Image extends CmsModel
 
     /**
      * Check the location of the file.
-     *
-     * @return bool
      */
-    private function isLocalFile()
+    private function isLocalFile(): bool
     {
         try {
             if (file_exists(storage_path('app/'.$this->location))) {
@@ -158,20 +144,16 @@ class Image extends CmsModel
 
     /**
      * Check if file exists.
-     *
-     * @return  string
      */
-    public function fileExists()
+    public function fileExists(): bool
     {
         return Storage::disk(Config::get('cms.storage-location', 'local'))->exists($this->location);
     }
 
     /**
      * Staged image if none are found.
-     *
-     * @return string
      */
-    public function lostImage()
+    public function lostImage(): string
     {
         $imagePath = app(AssetService::class)->generateImage('File Not Found');
 

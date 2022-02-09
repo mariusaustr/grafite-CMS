@@ -2,32 +2,22 @@
 
 namespace Grafite\Cms\Services;
 
-use Illuminate\Support\Facades\Response;
+use Illuminate\Http\JsonResponse;
 
 class CmsResponseService
 {
     /**
      * Generate an api response.
-     *
-     * @param string $type    Response type
-     * @param string $message Response string
-     *
-     * @return Response
      */
-    public function apiResponse($type, $message, $code = 200)
+    public function apiResponse(string $type, string $message, $code = 200): JsonResponse
     {
-        return Response::json(['status' => $type, 'data' => $message], $code);
+        return response()->json(['status' => $type, 'data' => $message], $code);
     }
 
     /**
      * Generate an API error response.
-     *
-     * @param array $errors Validation errors
-     * @param array $inputs Input values
-     *
-     * @return Response
      */
-    public function apiErrorResponse($errors, $inputs)
+    public function apiErrorResponse(array $errors, array $inputs): JsonResponse
     {
         $message = [];
         foreach ($inputs as $key => $value) {
@@ -45,6 +35,6 @@ class CmsResponseService
             }
         }
 
-        return Response::json(['status' => 'error', 'data' => $message]);
+        return response()->json(['status' => 'error', 'data' => $message]);
     }
 }

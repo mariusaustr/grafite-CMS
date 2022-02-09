@@ -7,6 +7,8 @@ use Grafite\Cms\Models\Event;
 use Grafite\Cms\Repositories\EventRepository;
 use Grafite\Cms\Requests\EventRequest;
 use Grafite\Cms\Services\ValidationService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use URL;
 
@@ -21,10 +23,8 @@ class EventController extends GrafiteCmsController
 
     /**
      * Display a listing of the Event.
-     *
-     * @return Response
      */
-    public function index()
+    public function index(): View
     {
         $result = $this->repository->paginated();
 
@@ -35,12 +35,8 @@ class EventController extends GrafiteCmsController
 
     /**
      * Search.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
-    public function search(Request $request)
+    public function search(Request $request): View
     {
         $input = $request->all();
 
@@ -54,10 +50,8 @@ class EventController extends GrafiteCmsController
 
     /**
      * Show the form for creating a new Event.
-     *
-     * @return Response
      */
-    public function create()
+    public function create(): View
     {
         return view('cms::modules.events.create');
     }
@@ -66,10 +60,8 @@ class EventController extends GrafiteCmsController
      * Store a newly created Event in storage.
      *
      * @param EventRequest $request
-     *
-     * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validation = app(ValidationService::class)->check(Event::$rules);
 
@@ -89,12 +81,8 @@ class EventController extends GrafiteCmsController
 
     /**
      * Show the form for editing the specified Event.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function edit($id)
+    public function edit(int $id): View|RedirectResponse
     {
         $event = $this->repository->find($id);
 
@@ -109,13 +97,8 @@ class EventController extends GrafiteCmsController
 
     /**
      * Update the specified Event in storage.
-     *
-     * @param int          $id
-     * @param EventRequest $request
-     *
-     * @return Response
      */
-    public function update($id, EventRequest $request)
+    public function update(int $id, EventRequest $request): RedirectResponse
     {
         $event = $this->repository->find($id);
 
@@ -137,12 +120,8 @@ class EventController extends GrafiteCmsController
 
     /**
      * Remove the specified Event from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $event = $this->repository->find($id);
 
@@ -161,12 +140,8 @@ class EventController extends GrafiteCmsController
 
     /**
      * Page history.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function history($id)
+    public function history(int $id): View
     {
         $event = $this->repository->find($id);
 

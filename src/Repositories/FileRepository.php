@@ -4,29 +4,23 @@ namespace Grafite\Cms\Repositories;
 
 use Auth;
 use CryptoService;
+use Grafite\Cms\Models\CmsModel;
 use Grafite\Cms\Models\File;
 use Grafite\Cms\Services\FileService;
 
 class FileRepository extends CmsRepository
 {
-    public $model;
-
     public $table;
 
-    public function __construct(File $model)
+    public function __construct(public File $model)
     {
-        $this->model = $model;
         $this->table = config('cms.db-prefix').'files';
     }
 
     /**
      * Stores Files into database.
-     *
-     * @param array $input
-     *
-     * @return Files
      */
-    public function store($payload)
+    public function store(array $payload): File
     {
         $result = false;
 
@@ -47,13 +41,8 @@ class FileRepository extends CmsRepository
 
     /**
      * Updates Files into database.
-     *
-     * @param Files $files
-     * @param array $payload
-     *
-     * @return Files
      */
-    public function update($files, $payload)
+    public function update(CmsModel $files, array $payload): File|bool
     {
         if (isset($payload['location'])) {
             $savedFile = app(FileService::class)->saveFile($payload['location'], 'files/');
@@ -75,10 +64,8 @@ class FileRepository extends CmsRepository
 
     /**
      * Files output for API calls.
-     *
-     * @return array
      */
-    public function apiPrepared()
+    public function apiPrepared(): array
     {
         $files = File::orderBy('created_at', 'desc')->where('is_published', 1)->get();
         $allFiles = [];

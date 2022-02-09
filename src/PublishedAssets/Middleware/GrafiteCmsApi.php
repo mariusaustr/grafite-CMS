@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Config;
+use Illuminate\Support\Facades\Config;
 
 class GrafiteCmsApi
 {

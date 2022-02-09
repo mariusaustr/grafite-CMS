@@ -12,8 +12,6 @@ class Widget extends CmsModel
 
     public $primaryKey = 'id';
 
-    protected $guarded = [];
-
     public static $rules = [
         'name' => 'required',
         'slug' => 'required',

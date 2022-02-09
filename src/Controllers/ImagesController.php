@@ -3,16 +3,20 @@
 namespace Grafite\Cms\Controllers;
 
 use Cms;
-use Config;
 use CryptoService;
+use Exception;
 use FileService;
 use Grafite\Cms\Models\Image;
 use Grafite\Cms\Repositories\ImageRepository;
 use Grafite\Cms\Requests\ImagesRequest;
 use Grafite\Cms\Services\CmsResponseService;
 use Grafite\Cms\Services\ValidationService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Storage;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
 
 class ImagesController extends GrafiteCmsController
 {
@@ -25,15 +29,9 @@ class ImagesController extends GrafiteCmsController
 
     /**
      * Display a listing of the Images.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
-    public function index(Request $request)
+    public function index(): View
     {
-        $input = $request->all();
-
         $result = $this->repository->paginated();
 
         return view('cms::modules.images.index')
@@ -43,12 +41,8 @@ class ImagesController extends GrafiteCmsController
 
     /**
      * Search.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
-    public function search(Request $request)
+    public function search(Request $request): View
     {
         $input = $request->all();
 
@@ -62,26 +56,21 @@ class ImagesController extends GrafiteCmsController
 
     /**
      * Show the form for creating a new Images.
-     *
-     * @return Response
      */
-    public function create()
+    public function create(): View
     {
         return view('cms::modules.images.create');
     }
 
     /**
      * Store a newly created Images in storage.
-     *
-     * @param ImagesRequest $request
-     *
-     * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         try {
             $validation = app(ValidationService::class)->check(['location' => 'required']);
             if (! $validation['errors']) {
+                $imageSaved = true;
                 foreach ($request->input('location') as $image) {
                     $imageSaved = $this->repository->store([
                         'location' => $image,
@@ -109,12 +98,8 @@ class ImagesController extends GrafiteCmsController
 
     /**
      * Store a newly created Files in storage.
-     *
-     * @param FileRequest $request
-     *
-     * @return Response
      */
-    public function upload(Request $request)
+    public function upload(Request $request): JsonResponse
     {
         $validation = app(ValidationService::class)->check([
             'location' => ['required'],
@@ -125,7 +110,7 @@ class ImagesController extends GrafiteCmsController
             $fileSaved = app(FileService::class)->saveFile($file, 'public/images', [], true);
             $fileSaved['name'] = CryptoService::encrypt($fileSaved['name']);
             $fileSaved['mime'] = $file->getClientMimeType();
-            $fileSaved['size'] = $file->getClientSize();
+            $fileSaved['size'] = $file->getSize();
             $response = app(CmsResponseService::class)->apiResponse('success', $fileSaved);
         } else {
             $response = app(CmsResponseService::class)->apiErrorResponse($validation['errors'], $validation['inputs']);
@@ -136,12 +121,8 @@ class ImagesController extends GrafiteCmsController
 
     /**
      * Show the form for editing the specified Images.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function edit($id)
+    public function edit(int $id): View|RedirectResponse
     {
         $images = $this->repository->find($id);
 
@@ -156,13 +137,8 @@ class ImagesController extends GrafiteCmsController
 
     /**
      * Update the specified Images in storage.
-     *
-     * @param int           $id
-     * @param ImagesRequest $request
-     *
-     * @return Response
      */
-    public function update($id, ImagesRequest $request)
+    public function update(int $id, ImagesRequest $request): RedirectResponse
     {
         try {
             $images = $this->repository->find($id);
@@ -189,12 +165,8 @@ class ImagesController extends GrafiteCmsController
 
     /**
      * Remove the specified Images from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $image = $this->repository->find($id);
 
@@ -220,12 +192,8 @@ class ImagesController extends GrafiteCmsController
 
     /**
      * Bulk image delete.
-     *
-     * @param  string $ids
-     *
-     * @return Redirect
      */
-    public function bulkDelete($ids)
+    public function bulkDelete(string $ids): RedirectResponse
     {
         $ids = explode('-', $ids);
 
@@ -254,10 +222,8 @@ class ImagesController extends GrafiteCmsController
 
     /**
      * Display the specified Images.
-     *
-     * @return Response
      */
-    public function apiList(Request $request)
+    public function apiList(Request $request): JsonResponse
     {
         if (config('cms.api-key') != $request->header('cms')) {
             return app(CmsResponseService::class)->apiResponse('error', []);
@@ -270,12 +236,8 @@ class ImagesController extends GrafiteCmsController
 
     /**
      * Store a newly created Images in storage.
-     *
-     * @param ImagesRequest $request
-     *
-     * @return Response
      */
-    public function apiStore(Request $request)
+    public function apiStore(Request $request): JsonResponse
     {
         $image = $this->repository->apiStore($request->all());
 

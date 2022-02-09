@@ -12,8 +12,6 @@ class FAQ extends CmsModel
 
     public $primaryKey = 'id';
 
-    protected $guarded = [];
-
     public static $rules = [
         'question' => 'required',
         'answer' => 'required',

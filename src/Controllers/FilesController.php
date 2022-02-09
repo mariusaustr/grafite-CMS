@@ -11,34 +11,29 @@ use Grafite\Cms\Requests\FileRequest;
 use Grafite\Cms\Services\CmsResponseService;
 use Grafite\Cms\Services\FileService;
 use Grafite\Cms\Services\ValidationService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Redirect;
-use Response;
-use Storage;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class FilesController extends GrafiteCmsController
 {
     public function __construct(
         FileRepository $repository,
-        FileService $fileService,
-        ValidationService $validationService,
-        CmsResponseService $cmsResponseService
+        private FileService $fileService,
+        private ValidationService $validation,
+        private CmsResponseService $responseService
     ) {
         parent::construct();
         $this->repository = $repository;
-        $this->fileService = $fileService;
-        $this->validation = $validationService;
-        $this->responseService = $cmsResponseService;
     }
 
     /**
      * Display a listing of the Files.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
-    public function index()
+    public function index(): View
     {
         $result = $this->repository->paginated();
 
@@ -49,12 +44,8 @@ class FilesController extends GrafiteCmsController
 
     /**
      * Search.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
-    public function search(Request $request)
+    public function search(Request $request): View
     {
         $input = $request->all();
 
@@ -68,22 +59,16 @@ class FilesController extends GrafiteCmsController
 
     /**
      * Show the form for creating a new Files.
-     *
-     * @return Response
      */
-    public function create()
+    public function create(): View
     {
         return view('cms::modules.files.create');
     }
 
     /**
      * Store a newly created Files in storage.
-     *
-     * @param FileRequest $request
-     *
-     * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validation = $this->validation->check(File::$rules);
 
@@ -100,12 +85,8 @@ class FilesController extends GrafiteCmsController
 
     /**
      * Store a newly created Files in storage.
-     *
-     * @param FileRequest $request
-     *
-     * @return Response
      */
-    public function upload(Request $request)
+    public function upload(Request $request): JsonResponse
     {
         $validation = $this->validation->check([
             'location' => [],
@@ -116,7 +97,7 @@ class FilesController extends GrafiteCmsController
             $fileSaved = $this->fileService->saveFile($file, 'files/');
             $fileSaved['name'] = CryptoService::encrypt($fileSaved['name']);
             $fileSaved['mime'] = $file->getClientMimeType();
-            $fileSaved['size'] = $file->getClientSize();
+            $fileSaved['size'] = $file->getSize();
             $response = $this->responseService->apiResponse('success', $fileSaved);
         } else {
             $response = $this->responseService->apiErrorResponse($validation['errors'], $validation['inputs']);
@@ -127,12 +108,8 @@ class FilesController extends GrafiteCmsController
 
     /**
      * Remove a file.
-     *
-     * @param string $id
-     *
-     * @return Response
      */
-    public function remove($id)
+    public function remove(string $id): JsonResponse
     {
         try {
             Storage::delete($id);
@@ -146,12 +123,8 @@ class FilesController extends GrafiteCmsController
 
     /**
      * Show the form for editing the specified Files.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function edit($id)
+    public function edit(int $id): View|RedirectResponse
     {
         $files = $this->repository->find($id);
 
@@ -166,13 +139,8 @@ class FilesController extends GrafiteCmsController
 
     /**
      * Update the specified Files in storage.
-     *
-     * @param int         $id
-     * @param FileRequest $request
-     *
-     * @return Response
      */
-    public function update($id, FileRequest $request)
+    public function update(int $id, FileRequest $request): RedirectResponse
     {
         $files = $this->repository->find($id);
 
@@ -191,12 +159,8 @@ class FilesController extends GrafiteCmsController
 
     /**
      * Remove the specified Files from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $files = $this->repository->find($id);
 
@@ -221,10 +185,8 @@ class FilesController extends GrafiteCmsController
 
     /**
      * Display the specified Images.
-     *
-     * @return Response
      */
-    public function apiList(Request $request)
+    public function apiList(Request $request): JsonResponse
     {
         if (config('cms.api-key') != $request->header('cms')) {
             return $this->responseService->apiResponse('error', []);

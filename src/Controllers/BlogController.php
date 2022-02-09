@@ -20,10 +20,8 @@ class BlogController extends GrafiteCmsController
 
     /**
      * Display a listing of the Blog.
-     *
-     * @return Response
      */
-    public function index()
+    public function index(): View
     {
         $blogs = $this->repository->paginated();
 
@@ -34,12 +32,8 @@ class BlogController extends GrafiteCmsController
 
     /**
      * Search.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
-    public function search(Request $request)
+    public function search(Request $request): View
     {
         $input = $request->all();
 
@@ -53,10 +47,8 @@ class BlogController extends GrafiteCmsController
 
     /**
      * Show the form for creating a new Blog.
-     *
-     * @return Response
      */
-    public function create()
+    public function create(): View
     {
         return view('cms::modules.blogs.create');
     }
@@ -65,10 +57,8 @@ class BlogController extends GrafiteCmsController
      * Store a newly created Blog in storage.
      *
      * @param BlogRequest $request
-     *
-     * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validation = app(ValidationService::class)->check(Blog::$rules);
 
@@ -88,12 +78,8 @@ class BlogController extends GrafiteCmsController
 
     /**
      * Show the form for editing the specified Blog.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function edit($id)
+    public function edit(int $id): View|RedirectResponse
     {
         $blog = $this->repository->find($id);
 
@@ -111,10 +97,8 @@ class BlogController extends GrafiteCmsController
      *
      * @param int         $id
      * @param BlogRequest $request
-     *
-     * @return Response
      */
-    public function update($id, BlogRequest $request)
+    public function update(int $id, BlogRequest $request)
     {
         $blog = $this->repository->find($id);
 
@@ -143,12 +127,8 @@ class BlogController extends GrafiteCmsController
 
     /**
      * Remove the specified Blog from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $blog = $this->repository->find($id);
 
@@ -167,10 +147,6 @@ class BlogController extends GrafiteCmsController
 
     /**
      * Blog history.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
     public function history($id)
     {

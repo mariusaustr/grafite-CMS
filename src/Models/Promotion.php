@@ -14,8 +14,6 @@ class Promotion extends CmsModel
 
     public $primaryKey = 'id';
 
-    protected $guarded = [];
-
     public static $rules = [
         'slug' => 'required',
     ];
@@ -44,22 +42,22 @@ class Promotion extends CmsModel
         parent::__construct($attributes);
     }
 
-    public function getDetailsAttribute($value)
+    public function getDetailsAttribute($value): string
     {
         return new Normalizer($value);
     }
 
-    public function getPublishedAtAttribute($value)
+    public function getPublishedAtAttribute($value): Carbon
     {
         return Carbon::parse($value)->timezone(config('app.timezone'));
     }
 
-    public function getFinishedAtAttribute($value)
+    public function getFinishedAtAttribute($value): Carbon
     {
         return Carbon::parse($value)->timezone(config('app.timezone'));
     }
 
-    public function getIsPublishedAttribute()
+    public function getIsPublishedAttribute(): bool
     {
         $published = Carbon::parse($this->published_at)->timezone(config('app.timezone'));
         $finished = Carbon::parse($this->finished_at)->timezone(config('app.timezone'));

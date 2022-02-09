@@ -1,12 +1,30 @@
 <?php
 
-    $routePrefix = config('cms.backend-route-prefix', 'cms');
+use Grafite\Cms\Controllers\AssetController;
+use Grafite\Cms\Controllers\BlogController;
+use Grafite\Cms\Controllers\DashboardController;
+use Grafite\Cms\Controllers\EventController;
+use Grafite\Cms\Controllers\FAQController;
+use Grafite\Cms\Controllers\FilesController;
+use Grafite\Cms\Controllers\GrafiteCmsFeatureController;
+use Grafite\Cms\Controllers\HelpController;
+use Grafite\Cms\Controllers\ImagesController;
+use Grafite\Cms\Controllers\LinksController;
+use Grafite\Cms\Controllers\MenuController;
+use Grafite\Cms\Controllers\PagesController;
+use Grafite\Cms\Controllers\PromotionsController;
+use Grafite\Cms\Controllers\RssController;
+use Grafite\Cms\Controllers\SiteMapController;
+use Grafite\Cms\Controllers\WidgetsController;
+use Illuminate\Support\Facades\Route;
+
+$routePrefix = config('cms.backend-route-prefix', 'cms');
 
     Route::group(['middleware' => 'web'], function () use ($routePrefix) {
-        Route::get($routePrefix, 'GrafiteCmsFeatureController@sendHome');
-        Route::get('{module}/rss', 'RssController@index');
-        Route::get('site-map', 'SiteMapController@index');
-        Route::get($routePrefix.'/hero-images/delete/{entity}/{entity_id}', 'GrafiteCmsFeatureController@deleteHero');
+        Route::get($routePrefix, [GrafiteCmsFeatureController::class, 'sendHome']);
+        Route::get('{module}/rss', [RssController::class, 'index']);
+        Route::get('site-map', [SiteMapController::class, 'index']);
+        Route::get($routePrefix.'/hero-images/delete/{entity}/{entity_id}', [GrafiteCmsFeatureController::class, 'deleteHero']);
 
         /*
         |--------------------------------------------------------------------------
@@ -14,7 +32,7 @@
         |--------------------------------------------------------------------------
         */
 
-        Route::get($routePrefix.'/language/set/{language}', 'GrafiteCmsFeatureController@setLanguage');
+        Route::get($routePrefix.'/language/set/{language}', [GrafiteCmsFeatureController::class, 'setLanguage']);
 
         /*
         |--------------------------------------------------------------------------
@@ -22,9 +40,9 @@
         |--------------------------------------------------------------------------
         */
 
-        Route::get('public-preview/{encFileName}', 'AssetController@asPreview');
-        Route::get('public-asset/{encFileName}', 'AssetController@asPublic');
-        Route::get('public-download/{encFileName}/{encRealFileName}', 'AssetController@asDownload');
+        Route::get('public-preview/{encFileName}', [AssetController::class, 'asPreview']);
+        Route::get('public-asset/{encFileName}', [AssetController::class, 'asPublic']);
+        Route::get('public-download/{encFileName}/{encRealFileName}', [AssetController::class, 'asDownload']);
 
         /*
          * --------------------------------------------------------------------------
@@ -33,15 +51,15 @@
         */
         Route::group(['middleware' => 'auth'], function () use ($routePrefix) {
             Route::group(['prefix' => 'cms/api'], function () {
-                Route::get('images/list', 'ImagesController@apiList');
-                Route::post('images/store', 'ImagesController@apiStore');
-                Route::get('files/list', 'FilesController@apiList');
+                Route::get('images/list', [ImagesController::class, 'apiList']);
+                Route::post('images/store', [ImagesController::class, 'apiStore']);
+                Route::get('files/list', [FilesController::class, 'apiList']);
             });
 
             Route::group(['prefix' => $routePrefix], function () {
-                Route::get('images/bulk-delete/{ids}', 'ImagesController@bulkDelete');
-                Route::post('images/upload', 'ImagesController@upload');
-                Route::post('files/upload', 'FilesController@upload');
+                Route::get('images/bulk-delete/{ids}', [ImagesController::class, 'bulkDelete']);
+                Route::post('images/upload', [ImagesController::class, 'upload']);
+                Route::post('files/upload', [FilesController::class, 'upload']);
             });
         });
 
@@ -52,11 +70,11 @@
         */
 
         Route::group(['prefix' => $routePrefix], function () use ($routePrefix) {
-            Route::get('asset/{path}/{contentType}', 'AssetController@asset');
+            Route::get('asset/{path}/{contentType}', [AssetController::class, 'asset']);
 
             Route::group(['middleware' => ['auth', 'cms']], function () use ($routePrefix) {
-                Route::get('dashboard', 'DashboardController@main');
-                Route::get('help', 'HelpController@main');
+                Route::get('dashboard', [DashboardController::class, 'main']);
+                Route::get('help', [HelpController::class, 'main']);
 
                 /*
                 |--------------------------------------------------------------------------
@@ -64,9 +82,9 @@
                 |--------------------------------------------------------------------------
                 */
 
-                Route::get('preview/{entity}/{entityId}', 'GrafiteCmsFeatureController@preview');
-                Route::get('rollback/{entity}/{entityId}', 'GrafiteCmsFeatureController@rollback');
-                Route::get('revert/{id}', 'GrafiteCmsFeatureController@revert');
+                Route::get('preview/{entity}/{entityId}', [GrafiteCmsFeatureController::class, 'preview']);
+                Route::get('rollback/{entity}/{entityId}', [GrafiteCmsFeatureController::class, 'rollback']);
+                Route::get('revert/{id}', [GrafiteCmsFeatureController::class, 'revert']);
 
                 /*
                 |--------------------------------------------------------------------------
@@ -74,9 +92,9 @@
                 |--------------------------------------------------------------------------
                 */
 
-                Route::resource('menus', 'MenuController', ['except' => ['show'], 'as' => $routePrefix]);
-                Route::post('menus/search', 'MenuController@search');
-                Route::put('menus/{id}/order', 'MenuController@setOrder');
+                Route::resource('menus', MenuController::class, ['except' => ['show'], 'as' => $routePrefix]);
+                Route::post('menus/search', [MenuController::class, 'search']);
+                Route::put('menus/{id}/order', [MenuController::class, 'setOrder']);
 
                 /*
                 |--------------------------------------------------------------------------
@@ -84,8 +102,8 @@
                 |--------------------------------------------------------------------------
                 */
 
-                Route::resource('links', 'LinksController', ['except' => ['index', 'show'], 'as' => $routePrefix]);
-                Route::post('links/search', 'LinksController@search');
+                Route::resource('links', LinksController::class, ['except' => ['index', 'show'], 'as' => $routePrefix]);
+                Route::post('links/search', [LinksController::class, 'search']);
 
                 /*
                 |--------------------------------------------------------------------------
@@ -93,8 +111,8 @@
                 |--------------------------------------------------------------------------
                 */
 
-                Route::resource('images', 'ImagesController', ['as' => $routePrefix, 'except' => ['show']]);
-                Route::post('images/search', 'ImagesController@search');
+                Route::resource('images', ImagesController::class, ['as' => $routePrefix, 'except' => ['show']]);
+                Route::post('images/search', [ImagesController::class, 'search']);
 
                 /*
                 |--------------------------------------------------------------------------
@@ -102,9 +120,9 @@
                 |--------------------------------------------------------------------------
                 */
 
-                Route::resource('blog', 'BlogController', ['as' => $routePrefix, 'except' => ['show']]);
-                Route::post('blog/search', 'BlogController@search');
-                Route::get('blog/{id}/history', 'BlogController@history');
+                Route::resource('blog', BlogController::class, ['as' => $routePrefix, 'except' => ['show']]);
+                Route::post('blog/search', [BlogController::class, 'search']);
+                Route::get('blog/{id}/history', [BlogController::class, 'history']);
 
                 /*
                 |--------------------------------------------------------------------------
@@ -112,9 +130,9 @@
                 |--------------------------------------------------------------------------
                 */
 
-                Route::resource('pages', 'PagesController', ['as' => $routePrefix, 'except' => ['show']]);
-                Route::post('pages/search', 'PagesController@search');
-                Route::get('pages/{id}/history', 'PagesController@history');
+                Route::resource('pages', PagesController::class, ['as' => $routePrefix, 'except' => ['show']]);
+                Route::post('pages/search', [PagesController::class, 'search']);
+                Route::get('pages/{id}/history', [PagesController::class, 'history']);
 
                 /*
                 |--------------------------------------------------------------------------
@@ -122,8 +140,8 @@
                 |--------------------------------------------------------------------------
                 */
 
-                Route::resource('widgets', 'WidgetsController', ['as' => $routePrefix, 'except' => ['show']]);
-                Route::post('widgets/search', 'WidgetsController@search');
+                Route::resource('widgets', WidgetsController::class, ['as' => $routePrefix, 'except' => ['show']]);
+                Route::post('widgets/search', [WidgetsController::class, 'search']);
 
                 /*
                 |--------------------------------------------------------------------------
@@ -131,8 +149,8 @@
                 |--------------------------------------------------------------------------
                 */
 
-                Route::resource('promotions', 'PromotionsController', ['as' => $routePrefix, 'except' => ['show']]);
-                Route::post('promotions/search', 'PromotionsController@search');
+                Route::resource('promotions', PromotionsController::class, ['as' => $routePrefix, 'except' => ['show']]);
+                Route::post('promotions/search', [PromotionsController::class, 'search']);
 
                 /*
                 |--------------------------------------------------------------------------
@@ -140,8 +158,8 @@
                 |--------------------------------------------------------------------------
                 */
 
-                Route::resource('faqs', 'FAQController', ['as' => $routePrefix, 'except' => ['show']]);
-                Route::post('faqs/search', 'FAQController@search');
+                Route::resource('faqs', FAQController::class, ['as' => $routePrefix, 'except' => ['show']]);
+                Route::post('faqs/search', [FAQController::class, 'search']);
 
                 /*
                 |--------------------------------------------------------------------------
@@ -149,9 +167,9 @@
                 |--------------------------------------------------------------------------
                 */
 
-                Route::resource('events', 'EventController', ['as' => $routePrefix, 'except' => ['show']]);
-                Route::post('events/search', 'EventController@search');
-                Route::get('events/{id}/history', 'EventController@history');
+                Route::resource('events', EventController::class, ['as' => $routePrefix, 'except' => ['show']]);
+                Route::post('events/search', [EventController::class, 'search']);
+                Route::get('events/{id}/history', [EventController::class, 'history']);
 
                 /*
                 |--------------------------------------------------------------------------
@@ -159,8 +177,8 @@
                 |--------------------------------------------------------------------------
                 */
 
-                Route::get('files/remove/{id}', 'FilesController@remove');
-                Route::post('files/search', 'FilesController@search');
+                Route::get('files/remove/{id}', [FilesController::class, 'remove']);
+                Route::post('files/search', [FilesController::class, 'search']);
 
                 Route::resource('files', 'FilesController', ['as' => $routePrefix, 'except' => ['show']]);
             });

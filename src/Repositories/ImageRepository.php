@@ -3,24 +3,25 @@
 namespace Grafite\Cms\Repositories;
 
 use Cms;
-use Config;
 use CryptoService;
+use Grafite\Cms\Models\CmsModel;
 use Grafite\Cms\Models\Image;
 use Grafite\Cms\Services\FileService;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
 
 class ImageRepository extends CmsRepository
 {
-    public $model;
-
     public $table;
 
-    public function __construct(Image $model)
+    public function __construct(public Image $model)
     {
-        $this->model = $model;
         $this->table = config('cms.db-prefix').'images';
     }
 
-    public function published()
+    public function published(): LengthAwarePaginator
     {
         return $this->model->where('is_published', 1)
             ->orderBy('created_at', 'desc')
@@ -29,20 +30,16 @@ class ImageRepository extends CmsRepository
 
     /**
      * Returns all Images for the API.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function apiPrepared()
+    public function apiPrepared(): Collection
     {
         return $this->model->orderBy('created_at', 'desc')->where('is_published', 1)->get();
     }
 
     /**
      * Returns all Images for the API.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getImagesByTag($tag = null)
+    public function getImagesByTag($tag = null): Builder
     {
         $images = $this->model->orderBy('created_at', 'desc')->where('is_published', 1);
 
@@ -55,10 +52,8 @@ class ImageRepository extends CmsRepository
 
     /**
      * Returns all Images tags.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function allTags()
+    public function allTags(): array
     {
         $tags = [];
         $images = $this->model->orderBy('created_at', 'desc')->where('is_published', 1)->get();
@@ -76,12 +71,8 @@ class ImageRepository extends CmsRepository
 
     /**
      * Stores Images into database.
-     *
-     * @param array $input
-     *
-     * @return Images
      */
-    public function apiStore($input)
+    public function apiStore(array $input): Image|false
     {
         $savedFile = app(FileService::class)->saveClone($input['location'], 'public/images');
 
@@ -102,20 +93,17 @@ class ImageRepository extends CmsRepository
 
     /**
      * Stores Images into database.
-     *
-     * @param array $input
-     *
-     * @return Images
      */
-    public function store($input)
+    public function store(array $input): Image
     {
         $savedFile = $input['location'];
 
-        if (! $savedFile) {
-            Cms::notification('Image could not be saved.', 'danger');
+        // @todo - can be deleted?
+        // if (! $savedFile) {
+        //     Cms::notification('Image could not be saved.', 'danger');
 
-            return false;
-        }
+        //     return false;
+        // }
 
         if (! isset($input['is_published'])) {
             $input['is_published'] = 0;
@@ -135,13 +123,8 @@ class ImageRepository extends CmsRepository
 
     /**
      * Updates Images.
-     *
-     * @param Images $images
-     * @param array  $input
-     *
-     * @return Images
      */
-    public function update($image, $input)
+    public function update(CmsModel $model, array $input): Image|bool
     {
         if (isset($input['location']) && ! empty($input['location'])) {
             $savedFile = app(FileService::class)->saveFile($input['location'], 'public/images', [], true);
@@ -155,7 +138,7 @@ class ImageRepository extends CmsRepository
             $input['location'] = $savedFile['name'];
             $input['original_name'] = $savedFile['original'];
         } else {
-            $input['location'] = $image->location;
+            $input['location'] = $model->location;
         }
 
         if (! isset($input['is_published'])) {
@@ -164,12 +147,12 @@ class ImageRepository extends CmsRepository
             $input['is_published'] = 1;
         }
 
-        $image->forgetCache();
+        $model->forgetCache();
 
-        $image->update($input);
+        $model->update($input);
 
-        $image->setCaches();
+        $model->setCaches();
 
-        return $image;
+        return $model;
     }
 }

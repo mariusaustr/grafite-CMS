@@ -5,25 +5,23 @@ namespace Grafite\Cms\Controllers;
 use Cms;
 use Grafite\Cms\Models\Archive;
 use Grafite\Cms\Services\FileService;
+use Illuminate\Contracts\View\View as ViewView;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 
 class GrafiteCmsFeatureController extends GrafiteCmsController
 {
-    public function sendHome()
+    public function sendHome(): RedirectResponse
     {
         return redirect('/');
     }
 
     /**
      * Rollback to a previous version of an entity, a specific moment.
-     *
-     * @param int $id
-     *
-     * @return Redirect
      */
-    public function revert($id)
+    public function revert(int $id): RedirectResponse
     {
         $archive = Archive::find($id);
 
@@ -42,13 +40,8 @@ class GrafiteCmsFeatureController extends GrafiteCmsController
 
     /**
      * Rollback to a previous version of an entity.
-     *
-     * @param string $entity
-     * @param int    $id
-     *
-     * @return Redirect
      */
-    public function rollback($entity, $id)
+    public function rollback(string $entity, int $id): RedirectResponse
     {
         $modelString = str_replace('_', '\\', $entity);
 
@@ -81,13 +74,8 @@ class GrafiteCmsFeatureController extends GrafiteCmsController
 
     /**
      * Preview content.
-     *
-     * @param string $entity
-     * @param int    $id
-     *
-     * @return Response
      */
-    public function preview($entity, $id)
+    public function preview(string $entity, int $id): ViewView
     {
         $modelString = 'Grafite\Cms\Models\\'.ucfirst($entity);
 
@@ -129,24 +117,16 @@ class GrafiteCmsFeatureController extends GrafiteCmsController
 
     /**
      * Set the default lanugage for the session.
-     *
-     * @param Request $request
-     * @param string  $lang
      */
-    public function setLanguage(Request $request, $lang)
+    public function setLanguage(Request $request, string $lang): RedirectResponse
     {
         return back()->withCookie('language', $lang);
     }
 
     /**
      * Delete the hero image.
-     *
-     * @param  string $entity
-     * @param  int $id
-     *
-     * @return Response
      */
-    public function deleteHero($entity, $id)
+    public function deleteHero(string $entity, int $id): RedirectResponse
     {
         $entity = app('Grafite\Cms\Models\\'.ucfirst($entity))->find($id);
 

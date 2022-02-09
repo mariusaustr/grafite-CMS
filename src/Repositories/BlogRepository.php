@@ -5,29 +5,24 @@ namespace Grafite\Cms\Repositories;
 use Carbon\Carbon;
 use Cms;
 use Grafite\Cms\Models\Blog;
+use Grafite\Cms\Models\CmsModel;
 use Grafite\Cms\Services\FileService;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class BlogRepository extends CmsRepository
 {
-    public $model;
-
-    public $translationRepo;
-
     public $table;
 
-    public function __construct(Blog $model, TranslationRepository $translationRepo)
+    public function __construct(public Blog $model, public TranslationRepository $translationRepo)
     {
-        $this->model = $model;
-        $this->translationRepo = $translationRepo;
         $this->table = config('cms.db-prefix').'blogs';
     }
 
     /**
      * Returns all paginated EventS.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function published()
+    public function published(): LengthAwarePaginator
     {
         return $this->model->where('is_published', 1)
             ->where('published_at', '<=', Carbon::now(config('app.timezone'))->format('Y-m-d H:i:s'))->orderBy('created_at', 'desc')
@@ -36,12 +31,8 @@ class BlogRepository extends CmsRepository
 
     /**
      * Blog tags, with similar name.
-     *
-     * @param  string $tag
-     *
-     * @return Illuminate\Support\Collection
      */
-    public function tags($tag)
+    public function tags(string $tag): LengthAwarePaginator
     {
         return $this->model->where('is_published', 1)
             ->where('published_at', '<=', Carbon::now(config('app.timezone'))->format('Y-m-d H:i:s'))
@@ -51,10 +42,8 @@ class BlogRepository extends CmsRepository
 
     /**
      * Gets all tags of an entry.
-     *
-     * @return Illuminate\Support\Collection
      */
-    public function allTags()
+    public function allTags(): Collection
     {
         $tags = [];
 
@@ -77,12 +66,8 @@ class BlogRepository extends CmsRepository
 
     /**
      * Stores Blog into database.
-     *
-     * @param array $input
-     *
-     * @return Blog
      */
-    public function store($payload)
+    public function store(array $payload): Blog
     {
         $payload = $this->parseBlocks($payload, 'blog');
 
@@ -102,12 +87,8 @@ class BlogRepository extends CmsRepository
 
     /**
      * Find Blog by given URL.
-     *
-     * @param string $url
-     *
-     * @return \Illuminate\Support\Collection|null|static|Pages
      */
-    public function findBlogsByURL($url)
+    public function findBlogsByURL(string $url): ?Blog
     {
         $blog = null;
 
@@ -122,25 +103,16 @@ class BlogRepository extends CmsRepository
 
     /**
      * Find Blogs by given Tag.
-     *
-     * @param string $tag
-     *
-     * @return \Illuminate\Support\Collection|null|static|Pages
      */
-    public function findBlogsByTag($tag)
+    public function findBlogsByTag(string $tag): Collection
     {
         return $this->model->where('tags', 'LIKE', "%$tag%")->where('is_published', 1)->get();
     }
 
     /**
      * Updates Blog into database.
-     *
-     * @param Blog  $blog
-     * @param array $input
-     *
-     * @return Blog
      */
-    public function update($blog, $payload)
+    public function update(CmsModel $blog, array $payload): Blog|bool
     {
         $payload = $this->parseBlocks($payload, 'blog');
 

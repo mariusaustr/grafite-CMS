@@ -10,6 +10,9 @@ use Grafite\Cms\Repositories\MenuRepository;
 use Grafite\Cms\Requests\MenuRequest;
 use Grafite\Cms\Services\CmsResponseService;
 use Grafite\Cms\Services\ValidationService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class MenuController extends GrafiteCmsController
@@ -26,10 +29,8 @@ class MenuController extends GrafiteCmsController
 
     /**
      * Display a listing of the Menu.
-     *
-     * @return Response
      */
-    public function index()
+    public function index(): View
     {
         $result = $this->repository->paginated();
 
@@ -40,12 +41,8 @@ class MenuController extends GrafiteCmsController
 
     /**
      * Search.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
-    public function search(Request $request)
+    public function search(Request $request): View
     {
         $input = $request->all();
 
@@ -59,22 +56,16 @@ class MenuController extends GrafiteCmsController
 
     /**
      * Show the form for creating a new Menu.
-     *
-     * @return Response
      */
-    public function create()
+    public function create(): View
     {
         return view('cms::modules.menus.create');
     }
 
     /**
      * Store a newly created Menu in storage.
-     *
-     * @param MenuRequest $request
-     *
-     * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         try {
             $validation = app(ValidationService::class)->check(Menu::$rules);
@@ -98,12 +89,8 @@ class MenuController extends GrafiteCmsController
 
     /**
      * Show the form for editing the specified Menu.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function edit($id)
+    public function edit(int $id): View|RedirectResponse
     {
         $menu = $this->repository->find($id);
 
@@ -120,13 +107,8 @@ class MenuController extends GrafiteCmsController
 
     /**
      * Update the specified Menu in storage.
-     *
-     * @param int         $id
-     * @param MenuRequest $request
-     *
-     * @return Response
      */
-    public function update($id, MenuRequest $request)
+    public function update(int $id, MenuRequest $request): RedirectResponse
     {
         try {
             $menu = $this->repository->find($id);
@@ -152,12 +134,8 @@ class MenuController extends GrafiteCmsController
 
     /**
      * Remove the specified Menu from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $menu = $this->repository->find($id);
 
@@ -182,10 +160,8 @@ class MenuController extends GrafiteCmsController
 
     /**
      * Set the order.
-     *
-     * @return Response
      */
-    public function setOrder($id, Request $request)
+    public function setOrder(int $id, Request $request): JsonResponse
     {
         $menu = $this->repository->find($id);
         $result = $this->repository->setOrder($menu, $request->except('_token'));

@@ -4,27 +4,18 @@ namespace Grafite\Cms\Repositories;
 
 use Carbon\Carbon;
 use Grafite\Cms\Models\Translation;
+use Illuminate\Support\Collection;
 
 class TranslationRepository
 {
-    public $model;
-
-    public function __construct(Translation $translation)
+    public function __construct(public Translation $model)
     {
-        $this->model = $translation;
     }
 
     /**
      * Create or Update an entry.
-     *
-     * @param  int $entityId
-     * @param  string $entityType
-     * @param  string $lang
-     * @param  array $payload
-     *
-     * @return bool
      */
-    public function createOrUpdate($entityId, $entityType, $lang, $payload)
+    public function createOrUpdate(int $entityId, string $entityType, string $lang, array $payload): bool
     {
         $translation = $this->model->firstOrCreate([
             'entity_id' => $entityId,
@@ -42,13 +33,8 @@ class TranslationRepository
 
     /**
      * Find by URL.
-     *
-     * @param  string $url
-     * @param  string $type
-     *
-     * @return object|null
      */
-    public function findByUrl($url, $type)
+    public function findByUrl(string $url, string $type): ?object
     {
         $item = $this->model->where('entity_type', $type)->where('entity_data', 'LIKE', '%"url":"'.$url.'"%')->first();
 
@@ -56,17 +42,13 @@ class TranslationRepository
             return $item->data;
         }
 
+        return null;
     }
 
     /**
      * Find an entity by its Id.
-     *
-     * @param  int $entityId
-     * @param  string $entityType
-     *
-     * @return object|null
      */
-    public function findByEntityId($entityId, $entityType)
+    public function findByEntityId(int $entityId, string $entityType): ?object
     {
         $item = $this->model->where('entity_type', $entityType)->where('entity_id', $entityId)->first();
 
@@ -74,23 +56,19 @@ class TranslationRepository
             return $item->data;
         }
 
+        return null;
     }
 
     /**
      * Get entities by type and language.
-     *
-     * @param  string $lang
-     * @param  string $type
-     *
-     * @return Illuminate\Support\Collection
      */
-    public function getEntitiesByTypeAndLang($lang, $type)
+    public function getEntitiesByTypeAndLang(string $lang, string $type): Collection
     {
         $entities = collect();
         $collection = $this->model->where('entity_type', $type)->where('entity_data', 'LIKE', '%"lang":"'.$lang.'"%')->get();
 
         foreach ($collection as $item) {
-            $instance = app($item->type)->attributes = $item->data;
+            $instance = app($item->$type)->attributes = $item->data;
             $entities->push($instance);
         }
 

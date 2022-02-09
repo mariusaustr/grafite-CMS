@@ -8,6 +8,8 @@ use Grafite\Cms\Models\Link;
 use Grafite\Cms\Repositories\LinkRepository;
 use Grafite\Cms\Requests\LinksRequest;
 use Grafite\Cms\Services\ValidationService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class LinksController extends GrafiteCmsController
@@ -21,10 +23,8 @@ class LinksController extends GrafiteCmsController
 
     /**
      * Display a listing of the Links.
-     *
-     * @return Response
      */
-    public function index()
+    public function index(): View
     {
         $result = $this->repository->paginated();
 
@@ -35,8 +35,6 @@ class LinksController extends GrafiteCmsController
 
     /**
      * Show the form for creating a new Links.
-     *
-     * @return Response
      */
     public function create(Request $request)
     {
@@ -47,12 +45,8 @@ class LinksController extends GrafiteCmsController
 
     /**
      * Store a newly created Links in storage.
-     *
-     * @param LinksRequest $request
-     *
-     * @return Response
      */
-    public function store(LinksRequest $request)
+    public function store(LinksRequest $request): RedirectResponse
     {
         try {
             $validation = app(ValidationService::class)->check(Link::$rules);
@@ -76,12 +70,8 @@ class LinksController extends GrafiteCmsController
 
     /**
      * Show the form for editing the specified Links.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function edit($id)
+    public function edit(int $id): View|RedirectResponse
     {
         $links = $this->repository->find($id);
 
@@ -96,13 +86,8 @@ class LinksController extends GrafiteCmsController
 
     /**
      * Update the specified Links in storage.
-     *
-     * @param int          $id
-     * @param LinksRequest $request
-     *
-     * @return Response
      */
-    public function update($id, LinksRequest $request)
+    public function update(int $id, LinksRequest $request): RedirectResponse
     {
         try {
             $links = $this->repository->find($id);
@@ -128,12 +113,8 @@ class LinksController extends GrafiteCmsController
 
     /**
      * Remove the specified Links from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $link = $this->repository->find($id);
         $menu = $link->menu_id;

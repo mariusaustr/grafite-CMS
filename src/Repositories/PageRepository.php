@@ -4,32 +4,23 @@ namespace Grafite\Cms\Repositories;
 
 use Carbon\Carbon;
 use Cms;
+use Grafite\Cms\Models\CmsModel;
 use Grafite\Cms\Models\Page;
 use Grafite\Cms\Services\FileService;
 
 class PageRepository extends CmsRepository
 {
-    public $model;
-
-    public $translationRepo;
-
     public $table;
 
-    public function __construct(Page $model, TranslationRepository $translationRepo)
+    public function __construct(public Page $model, public TranslationRepository $translationRepo)
     {
-        $this->model = $model;
-        $this->translationRepo = $translationRepo;
         $this->table = config('cms.db-prefix').'pages';
     }
 
     /**
      * Stores Pages into database.
-     *
-     * @param array $input
-     *
-     * @return Pages
      */
-    public function store($payload)
+    public function store(array $payload): Page
     {
         $payload = $this->parseBlocks($payload, 'pages');
 
@@ -49,12 +40,8 @@ class PageRepository extends CmsRepository
 
     /**
      * Find Pages by given URL.
-     *
-     * @param string $url
-     *
-     * @return \Illuminate\Support\Collection|null|static|Pages
      */
-    public function findPagesByURL($url)
+    public function findPagesByURL(string $url): ?Page
     {
         $page = null;
 
@@ -77,13 +64,8 @@ class PageRepository extends CmsRepository
 
     /**
      * Updates Pages into database.
-     *
-     * @param Pages $page
-     * @param array $input
-     *
-     * @return Pages
      */
-    public function update($page, $payload)
+    public function update(CmsModel $page, array $payload): Page|bool
     {
         $payload = $this->parseBlocks($payload, 'pages');
 

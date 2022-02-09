@@ -7,11 +7,9 @@ use Illuminate\Filesystem\Filesystem;
 
 class AssetController extends GrafiteCmsController
 {
-    public function __construct(AssetService $service)
+    public function __construct(private AssetService $service)
     {
         parent::construct();
-
-        $this->service = $service;
     }
 
     /**

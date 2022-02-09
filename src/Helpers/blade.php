@@ -20,10 +20,3 @@ if (! function_exists('widget')) {
         return app('CmsService')->widget($slug);
     }
 }
-
-if (! function_exists('editBtn')) {
-    function edit($module, $id = null)
-    {
-        return app('CmsService')->module($module, $id);
-    }
-}

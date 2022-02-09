@@ -7,16 +7,12 @@ use Illuminate\Http\Response;
 
 class SiteMapController extends GrafiteCmsController
 {
-    protected $service;
-
-    public function __construct(CmsService $service)
+    public function __construct(protected CmsService $service)
     {
         parent::construct();
-
-        $this->service = $service;
     }
 
-    public function index()
+    public function index(): Response
     {
         $items = $this->service->collectSiteMapItems();
 

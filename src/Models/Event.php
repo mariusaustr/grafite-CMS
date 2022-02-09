@@ -4,6 +4,7 @@ namespace Grafite\Cms\Models;
 
 use Grafite\Cms\Services\Normalizer;
 use Grafite\Cms\Traits\Translatable;
+use Illuminate\Support\Collection;
 
 class Event extends CmsModel
 {
@@ -12,8 +13,6 @@ class Event extends CmsModel
     public $table = 'events';
 
     public $primaryKey = 'id';
-
-    protected $guarded = [];
 
     public static $rules = [
         'title' => 'required',
@@ -46,12 +45,12 @@ class Event extends CmsModel
         parent::__construct($attributes);
     }
 
-    public function getDetailsAttribute($value)
+    public function getDetailsAttribute($value): string
     {
         return new Normalizer($value);
     }
 
-    public function history()
+    public function history(): Collection
     {
         return Archive::where('entity_type', get_class($this))->where('entity_id', $this->id)->get();
     }

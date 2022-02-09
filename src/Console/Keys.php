@@ -3,6 +3,7 @@
 namespace Grafite\Cms\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class Keys extends Command
 {
@@ -27,8 +28,8 @@ class Keys extends Command
      */
     public function handle()
     {
-        $keyOne = sha1(str_random(12));
-        $keyTwo = sha1(str_random(40));
+        $keyOne = sha1(Str::random(12));
+        $keyTwo = sha1(Str::random(40));
 
         $content = file_get_contents(base_path('.env'));
 

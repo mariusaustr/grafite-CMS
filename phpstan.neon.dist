@@ -4,8 +4,16 @@ includes:
 parameters:
 
     paths:
-        - src
-        - tests
+        #- src/Assets
+        #- src/Models
+        #- src/Routes
+        #- src/Repositories
+        # - src/Console
+        - src/Controllers
+        #- src/Facades
+        #- src/Helpers
+        #- src
+        #- tests
 
     # The level 8 is the highest level
     level: 4

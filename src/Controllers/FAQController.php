@@ -7,6 +7,8 @@ use Grafite\Cms\Models\FAQ;
 use Grafite\Cms\Repositories\FAQRepository;
 use Grafite\Cms\Requests\FAQRequest;
 use Grafite\Cms\Services\ValidationService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use URL;
 
@@ -21,10 +23,8 @@ class FAQController extends GrafiteCmsController
 
     /**
      * Display a listing of the FAQ.
-     *
-     * @return Response
      */
-    public function index()
+    public function index(): View
     {
         $result = $this->repository->paginated();
 
@@ -35,12 +35,8 @@ class FAQController extends GrafiteCmsController
 
     /**
      * Search.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
-    public function search(Request $request)
+    public function search(Request $request): View
     {
         $input = $request->all();
 
@@ -54,10 +50,8 @@ class FAQController extends GrafiteCmsController
 
     /**
      * Show the form for creating a new FAQ.
-     *
-     * @return Response
      */
-    public function create()
+    public function create(): View
     {
         return view('cms::modules.faqs.create');
     }
@@ -66,10 +60,8 @@ class FAQController extends GrafiteCmsController
      * Store a newly created FAQ in storage.
      *
      * @param FAQRequest $request
-     *
-     * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validation = app(ValidationService::class)->check(FAQ::$rules);
 
@@ -89,12 +81,8 @@ class FAQController extends GrafiteCmsController
 
     /**
      * Show the form for editing the specified FAQ.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function edit($id)
+    public function edit(int $id): View|RedirectResponse
     {
         $faq = $this->repository->find($id);
 
@@ -112,10 +100,8 @@ class FAQController extends GrafiteCmsController
      *
      * @param int        $id
      * @param FAQRequest $request
-     *
-     * @return Response
      */
-    public function update($id, FAQRequest $request)
+    public function update(int $id, FAQRequest $request)
     {
         $faq = $this->repository->find($id);
 
@@ -143,12 +129,8 @@ class FAQController extends GrafiteCmsController
 
     /**
      * Remove the specified FAQ from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $faq = $this->repository->find($id);
 

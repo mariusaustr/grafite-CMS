@@ -3,31 +3,22 @@
 namespace Grafite\Cms\Repositories;
 
 use Carbon\Carbon;
+use Grafite\Cms\Models\CmsModel;
 use Grafite\Cms\Models\FAQ;
 
 class FAQRepository extends CmsRepository
 {
-    public $model;
-
-    public $translationRepo;
-
     public $table;
 
-    public function __construct(FAQ $model, TranslationRepository $translationRepo)
+    public function __construct(public FAQ $model, public TranslationRepository $translationRepo)
     {
-        $this->model = $model;
-        $this->translationRepo = $translationRepo;
         $this->table = config('cms.db-prefix').'faqs';
     }
 
     /**
      * Stores FAQ into database.
-     *
-     * @param array $payload
-     *
-     * @return FAQ
      */
-    public function store($payload)
+    public function store(array $payload): FAQ
     {
         $payload['question'] = htmlentities($payload['question']);
         $payload['is_published'] = (isset($payload['is_published'])) ? (bool) $payload['is_published'] : 0;
@@ -38,13 +29,8 @@ class FAQRepository extends CmsRepository
 
     /**
      * Updates FAQ into database.
-     *
-     * @param FAQ   $FAQ
-     * @param array $input
-     *
-     * @return FAQ
      */
-    public function update($item, $payload)
+    public function update(CmsModel $item, array $payload): FAQ|bool
     {
         $payload['question'] = htmlentities($payload['question']);
 

@@ -7,6 +7,8 @@ use Grafite\Cms\Models\Widget;
 use Grafite\Cms\Repositories\WidgetRepository;
 use Grafite\Cms\Requests\WidgetRequest;
 use Grafite\Cms\Services\ValidationService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class WidgetsController extends GrafiteCmsController
@@ -20,10 +22,8 @@ class WidgetsController extends GrafiteCmsController
 
     /**
      * Display a listing of the Widgets.
-     *
-     * @return Response
      */
-    public function index()
+    public function index(): View
     {
         $result = $this->repository->paginated();
 
@@ -34,12 +34,8 @@ class WidgetsController extends GrafiteCmsController
 
     /**
      * Search.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
-    public function search(Request $request)
+    public function search(Request $request): View
     {
         $input = $request->all();
 
@@ -53,22 +49,16 @@ class WidgetsController extends GrafiteCmsController
 
     /**
      * Show the form for creating a new Widgets.
-     *
-     * @return Response
      */
-    public function create()
+    public function create(): View
     {
         return view('cms::modules.widgets.create');
     }
 
     /**
      * Store a newly created Widgets in storage.
-     *
-     * @param WidgetRequest $request
-     *
-     * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validation = app(ValidationService::class)->check(Widget::$rules);
 
@@ -85,12 +75,8 @@ class WidgetsController extends GrafiteCmsController
 
     /**
      * Show the form for editing the specified Widgets.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function edit($id)
+    public function edit(int $id): View|RedirectResponse
     {
         $widget = $this->repository->find($id);
 
@@ -105,13 +91,8 @@ class WidgetsController extends GrafiteCmsController
 
     /**
      * Update the specified Widgets in storage.
-     *
-     * @param int            $id
-     * @param WidgetRequest $request
-     *
-     * @return Response
      */
-    public function update($id, WidgetRequest $request)
+    public function update(int $id, WidgetRequest $request): RedirectResponse
     {
         $widgets = $this->repository->find($id);
 
@@ -130,12 +111,8 @@ class WidgetsController extends GrafiteCmsController
 
     /**
      * Remove the specified Widgets from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $widgets = $this->repository->find($id);
 

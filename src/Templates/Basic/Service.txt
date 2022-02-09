@@ -2,7 +2,7 @@
 
 namespace _namespace_services_;
 
-use Config;
+use Illuminate\Support\Facades\Config;
 
 class _camel_case_Service
 {

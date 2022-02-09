@@ -3,29 +3,23 @@
 namespace Grafite\Cms\Repositories;
 
 use Carbon\Carbon;
+use Grafite\Cms\Models\CmsModel;
 use Grafite\Cms\Models\Event;
+use Illuminate\Support\Collection;
 
 class EventRepository extends CmsRepository
 {
-    public $model;
-
-    public $translationRepo;
-
     public $table;
 
-    public function __construct(Event $model, TranslationRepository $translationRepo)
+    public function __construct(public Event $model, public TranslationRepository $translationRepo)
     {
-        $this->model = $model;
-        $this->translationRepo = $translationRepo;
         $this->table = config('cms.db-prefix').'events';
     }
 
     /**
      * Returns all published Events.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function findEventsByDate($date)
+    public function findEventsByDate(Carbon $date): Collection
     {
         return $this->model->where('is_published', 1)
             ->where('published_at', '<=', Carbon::now(config('app.timezone'))->format('Y-m-d H:i:s'))
@@ -35,12 +29,8 @@ class EventRepository extends CmsRepository
 
     /**
      * Stores Event into database.
-     *
-     * @param array $payload
-     *
-     * @return Event
      */
-    public function store($payload)
+    public function store(array $payload): Event
     {
         $payload['title'] = htmlentities($payload['title']);
         $payload['is_published'] = (isset($payload['is_published'])) ? (bool) $payload['is_published'] : 0;
@@ -51,13 +41,8 @@ class EventRepository extends CmsRepository
 
     /**
      * Updates Event into database.
-     *
-     * @param Event $event
-     * @param array $input
-     *
-     * @return Event
      */
-    public function update($event, $payload)
+    public function update(CmsModel $event, array $payload): Event|bool
     {
         $payload['title'] = htmlentities($payload['title']);
         if (! empty($payload['lang']) && $payload['lang'] !== config('cms.default-language', 'en')) {

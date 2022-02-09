@@ -2,6 +2,11 @@
 
 namespace Grafite\Cms\Models;
 
+/**
+ * @property string $entity_type
+ * @property int $entity_id
+ * @property string $entity_data
+ */
 class Archive extends CmsModel
 {
     public $table = 'archives';
@@ -14,6 +19,4 @@ class Archive extends CmsModel
         'entity_type',
         'entity_data',
     ];
-
-    public static $rules = [];
 }

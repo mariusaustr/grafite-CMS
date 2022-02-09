@@ -9,8 +9,6 @@ class CmsModel extends Model
 {
     /**
      * Model contructuor.
-     *
-     * @param array $attributes
      */
     public function __construct(array $attributes = [])
     {
@@ -23,10 +21,8 @@ class CmsModel extends Model
 
     /**
      * Get a model as a translatable object.
-     *
-     * @return object
      */
-    public function asObject()
+    public function asObject(): static
     {
         if (! is_null(request('lang')) && request('lang') !== config('cms.default-language', 'en')) {
             return $this->translationData(request('lang'));
@@ -37,10 +33,8 @@ class CmsModel extends Model
 
     /**
      * After the item is saved to the database.
-     *
-     * @param object $payload
      */
-    public function afterSaved($payload)
+    public function afterSaved(self $payload): void
     {
         if (! request()->is('cms/revert/*') && ! request()->is('cms/rollback/*/*')) {
             unset($payload->attributes['created_at']);
@@ -62,10 +56,8 @@ class CmsModel extends Model
 
     /**
      * When the item is being deleted.
-     *
-     * @param object $payload
      */
-    public function beingDeleted($payload)
+    public function beingDeleted(self $payload): void
     {
         $type = get_class($payload);
         $id = $payload->id;
@@ -85,35 +77,31 @@ class CmsModel extends Model
 
     /**
      * A method for getting / setting blocks.
-     *
-     * @param  string $slug
-     * @return string
      */
-    public function block($slug)
+    public function block(string $slug): string
     {
         $block = $this->findABlock($slug);
 
-        if (! $block) {
-            $this->update([
-                'blocks' => json_encode(array_merge($this->blocks, [$slug => ''])),
-            ]);
+        if ($block) {
+            return $block;
         }
 
-        return $block;
+        $this->update([
+            'blocks' => json_encode(array_merge($this->blocks, [$slug => ''])),
+        ]);
+
+        return '';
     }
 
     /**
      * Find a block based on slug.
-     *
-     * @param  string $slug
-     * @return string
      */
-    public function findABlock($slug)
+    public function findABlock(string $slug): ?string
     {
         if (isset($this->blocks[$slug])) {
             return $this->blocks[$slug];
         }
 
-        return false;
+        return null;
     }
 }

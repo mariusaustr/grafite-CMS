@@ -12,6 +12,4 @@ class Analytics extends CmsModel
         'token',
         'data',
     ];
-
-    public static $rules = [];
 }

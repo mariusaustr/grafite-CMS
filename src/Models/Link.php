@@ -3,6 +3,7 @@
 namespace Grafite\Cms\Models;
 
 use Grafite\Cms\Traits\Translatable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Link extends CmsModel
 {
@@ -11,8 +12,6 @@ class Link extends CmsModel
     public $table = 'links';
 
     public $primaryKey = 'id';
-
-    protected $guarded = [];
 
     public static $rules = [
         'name' => 'required',
@@ -37,12 +36,12 @@ class Link extends CmsModel
         parent::__construct($attributes);
     }
 
-    public function page()
+    public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class);
     }
 
-    public function menu()
+    public function menu(): BelongsTo
     {
         return $this->belongsTo(Menu::class);
     }

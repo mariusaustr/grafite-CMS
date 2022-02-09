@@ -2,15 +2,16 @@
 
 namespace Grafite\Cms\Models;
 
+/**
+ * @property int $entity_id
+ * @property string $entity_type
+ * @property string $entity_data
+ */
 class Translation extends CmsModel
 {
     public $table = 'translations';
 
     public $primaryKey = 'id';
-
-    protected $guarded = [];
-
-    public static $rules = [];
 
     protected $fillable = [
         'entity_id',
@@ -19,7 +20,7 @@ class Translation extends CmsModel
         'language',
     ];
 
-    public function getDataAttribute()
+    public function getDataAttribute(): object
     {
         $object = app($this->entity_type);
 

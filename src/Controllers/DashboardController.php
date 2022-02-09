@@ -3,6 +3,7 @@
 namespace Grafite\Cms\Controllers;
 
 use Grafite\Cms\Services\AnalyticsService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Schema;
 use Spatie\Analytics\Analytics;
 use Spatie\Analytics\Period;
@@ -18,7 +19,7 @@ class DashboardController extends GrafiteCmsController
         $this->service = $service;
     }
 
-    public function main()
+    public function main(): View
     {
         if (! is_null(config('analytics.view_id')) && config('cms.analytics') == 'google') {
             $period = Period::days(7);

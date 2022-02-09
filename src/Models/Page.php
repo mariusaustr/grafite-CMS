@@ -4,7 +4,11 @@ namespace Grafite\Cms\Models;
 
 use Grafite\Cms\Services\Normalizer;
 use Grafite\Cms\Traits\Translatable;
+use Illuminate\Support\Collection;
 
+/**
+ * @property string $hero_image
+ */
 class Page extends CmsModel
 {
     use Translatable;
@@ -12,8 +16,6 @@ class Page extends CmsModel
     public $table = 'pages';
 
     public $primaryKey = 'id';
-
-    protected $guarded = [];
 
     public static $rules = [
         'title' => 'required',
@@ -48,22 +50,22 @@ class Page extends CmsModel
         parent::__construct($attributes);
     }
 
-    public function getEntryAttribute($value)
+    public function getEntryAttribute($value): string
     {
         return new Normalizer($value);
     }
 
-    public function getHeroImageUrlAttribute($value)
+    public function getHeroImageUrlAttribute($value): string
     {
         return url(str_replace('public/', 'storage/', $this->hero_image));
     }
 
-    public function history()
+    public function history(): Collection
     {
         return Archive::where('entity_type', get_class($this))->where('entity_id', $this->id)->get();
     }
 
-    public function getBlocksAttribute($value)
+    public function getBlocksAttribute($value): array
     {
         $blocks = json_decode($value, true);
 

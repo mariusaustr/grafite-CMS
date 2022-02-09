@@ -3,31 +3,23 @@
 namespace Grafite\Cms\Repositories;
 
 use Exception;
+use Grafite\Cms\Models\CmsModel;
 use Grafite\Cms\Models\Link;
+use Illuminate\Support\Collection;
 
 class LinkRepository extends CmsRepository
 {
-    public $model;
-
-    public $translationRepo;
-
     public $table;
 
-    public function __construct(Link $model, TranslationRepository $translationRepo)
+    public function __construct(public Link $model, public TranslationRepository $translationRepo)
     {
-        $this->model = $model;
         $this->table = config('cms.db-prefix').'links';
-        $this->translationRepo = $translationRepo;
     }
 
     /**
      * Stores Links into database.
-     *
-     * @param array $payload
-     *
-     * @return Links
      */
-    public function store($payload)
+    public function store(array $payload): Link
     {
         $payload['external'] ??= 0;
 
@@ -56,25 +48,16 @@ class LinkRepository extends CmsRepository
 
     /**
      * Find Links by menu id.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Support\Collection|null|static|Links
      */
-    public function getLinksByMenu($id)
+    public function getLinksByMenu(int $id): Collection
     {
         return $this->model->where('menu_id', $id)->get();
     }
 
     /**
      * Updates Links into database.
-     *
-     * @param Link  $link
-     * @param array $input
-     *
-     * @return Link
      */
-    public function update($link, $payload)
+    public function update(CmsModel $link, array $payload): Link|bool
     {
         $payload['external'] ??= 0;
 

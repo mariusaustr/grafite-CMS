@@ -2,13 +2,18 @@
 
 namespace Grafite\Cms\Models;
 
+use Carbon\Carbon;
+
+/**
+ * @property string $location
+ * @property string $name
+ * @property Carbon $created_at
+ */
 class File extends CmsModel
 {
     public $table = 'files';
 
     public $primaryKey = 'id';
-
-    protected $guarded = [];
 
     public static $rules = [
         'location' => 'required',

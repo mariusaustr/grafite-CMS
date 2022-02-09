@@ -7,6 +7,8 @@ use Grafite\Cms\Models\Page;
 use Grafite\Cms\Repositories\PageRepository;
 use Grafite\Cms\Requests\PagesRequest;
 use Grafite\Cms\Services\ValidationService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class PagesController extends GrafiteCmsController
@@ -20,10 +22,8 @@ class PagesController extends GrafiteCmsController
 
     /**
      * Display a listing of the Pages.
-     *
-     * @return Response
      */
-    public function index()
+    public function index(): View
     {
         $result = $this->repository->paginated();
 
@@ -34,12 +34,8 @@ class PagesController extends GrafiteCmsController
 
     /**
      * Search.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
-    public function search(Request $request)
+    public function search(Request $request): View
     {
         $input = $request->all();
 
@@ -53,10 +49,8 @@ class PagesController extends GrafiteCmsController
 
     /**
      * Show the form for creating a new Pages.
-     *
-     * @return Response
      */
-    public function create()
+    public function create(): View
     {
         return view('cms::modules.pages.create');
     }
@@ -65,10 +59,8 @@ class PagesController extends GrafiteCmsController
      * Store a newly created Pages in storage.
      *
      * @param PagesRequest $request
-     *
-     * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validation = app(ValidationService::class)->check(Page::$rules);
 
@@ -88,12 +80,8 @@ class PagesController extends GrafiteCmsController
 
     /**
      * Show the form for editing the specified Pages.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function edit($id)
+    public function edit(int $id): View|RedirectResponse
     {
         $page = $this->repository->find($id);
 
@@ -108,13 +96,8 @@ class PagesController extends GrafiteCmsController
 
     /**
      * Update the specified Pages in storage.
-     *
-     * @param int          $id
-     * @param PagesRequest $request
-     *
-     * @return Response
      */
-    public function update($id, PagesRequest $request)
+    public function update(int $id, PagesRequest $request): RedirectResponse
     {
         $pages = $this->repository->find($id);
 
@@ -136,12 +119,8 @@ class PagesController extends GrafiteCmsController
 
     /**
      * Remove the specified Pages from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $pages = $this->repository->find($id);
 
@@ -160,12 +139,8 @@ class PagesController extends GrafiteCmsController
 
     /**
      * Page history.
-     *
-     * @param int $id
-     *
-     * @return Response
      */
-    public function history($id)
+    public function history(int $id): View
     {
         $page = $this->repository->find($id);
 
