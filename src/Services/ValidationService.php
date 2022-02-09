@@ -2,8 +2,7 @@
 
 namespace Grafite\Cms\Services;
 
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Input;
+use Cms;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
@@ -13,14 +12,8 @@ class ValidationService
 {
     /**
      * Validation check.
-     *
-     * @param string $form      form in question from the config
-     * @param string $module    module name
-     * @param bool   $jsonInput JSON input
-     *
-     * @return array
      */
-    public function check($form, $jsonInput = false)
+    public function check(string|array $form, bool $jsonInput = false): array
     {
         $result = [];
         $errors = [];
@@ -69,26 +62,9 @@ class ValidationService
     }
 
     /**
-     * Json form validation.
-     *
-     * @param string $form   validation config
-     * @param string $module module name if validation is in module
-     *
-     * @return mixed
-     */
-    public function jsonCheck($form, $module = null)
-    {
-        return $this->check($form, $module, true);
-    }
-
-    /**
      * ValidationService Errors.
-     *
-     * @param string $format Type of error request
-     *
-     * @return mixed
      */
-    public function errors($format = 'array')
+    public function errors(string $format = 'array'): mixed
     {
         $errorMessage = '';
         $errors = Session::get('errors') ?: false;
@@ -109,63 +85,36 @@ class ValidationService
     }
 
     /**
-     * Validation inputs.
-     *
-     * @return mixed
-     */
-    public function inputs()
-    {
-        $inputs = Session::get('inputs') ?: false;
-
-        if (! $inputs) {
-            return false;
-        }
-
-        return $inputs;
-    }
-
-    /**
      * Get input.
-     *
-     * @param string $key       Input name
-     * @param bool   $jsonInput JSON or not
-     *
-     * @return mixed
      */
-    private function getInput($key, $jsonInput)
+    private function getInput(string $key, bool $jsonInput): mixed
     {
         if ($jsonInput) {
-            $input = Input::json($key);
-        } elseif (Input::file($key)) {
-            $input = Input::file($key);
-        } else {
-            $input = Input::get($key);
+            return Request::json($key);
+        } elseif (Request::file($key)) {
+            return Request::file($key);
         }
 
-        return $input;
+        return Request::get($key);
     }
 
     /**
      * Get the inputs as an array.
-     *
-     * @param bool $jsonInput JSON or not
-     *
-     * @return array
      */
-    private function inputsArray($jsonInput)
+    private function inputsArray(bool $jsonInput): array
     {
         if ($jsonInput) {
-            $inputs = Input::json();
-        } else {
-            $inputs = Input::all();
+            return Request::json();
+        }
 
-            // Don't send the token back
-            unset($inputs['_token']);
+        $inputs = Request::all();
 
-            foreach ($inputs as $key => $value) {
-                if (Input::file($key)) {
-                    unset($inputs[$key]);
-                }
+        // Don't send the token back
+        unset($inputs['_token']);
+
+        foreach ($inputs as $key => $value) {
+            if (Request::file($key)) {
+                unset($inputs[$key]);
             }
         }
 
@@ -174,12 +123,8 @@ class ValidationService
 
     /**
      * Get the value last attempted in valuation.
-     *
-     * @param string $key Input key
-     *
-     * @return string
      */
-    public function value($key)
+    public function value(string $key): string
     {
         $inputs = Session::get('inputs') ?: false;
 

@@ -4,12 +4,11 @@ namespace Grafite\Cms\Services;
 
 class Normalizer
 {
-    public function __construct($value)
+    public function __construct(private ?string $value = null)
     {
-        $this->value = $value;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         if (is_null($this->value)) {
             return "";
@@ -18,7 +17,7 @@ class Normalizer
         return $this->value;
     }
 
-    public function plain()
+    public function plain(): string
     {
         return strip_tags($this->value);
     }

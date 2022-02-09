@@ -4,6 +4,7 @@ namespace Grafite\Cms\Controllers;
 
 use Grafite\Cms\Services\AssetService;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Http\Response;
 
 class AssetController extends GrafiteCmsController
 {
@@ -14,50 +15,32 @@ class AssetController extends GrafiteCmsController
 
     /**
      * Provide the File as a Public Asset.
-     *
-     * @param string $encFileName
-     *
-     * @return Download
      */
-    public function asPublic($encFileName)
+    public function asPublic(string $encFileName): Response
     {
         return $this->service->asPublic($encFileName);
     }
 
     /**
      * Provide the File as a Public Preview.
-     *
-     * @param string $encFileName
-     *
-     * @return Download
      */
-    public function asPreview($encFileName, Filesystem $fileSystem)
+    public function asPreview(string $encFileName, Filesystem $fileSystem): Response
     {
         return $this->service->asPreview($encFileName, $fileSystem);
     }
 
     /**
      * Provide file as download.
-     *
-     * @param string $encFileName
-     * @param string $encRealFileName
-     *
-     * @return Downlaod
      */
-    public function asDownload($encFileName, $encRealFileName)
+    public function asDownload(string $encFileName, string $encRealFileName): Response
     {
         return $this->service->asDownload($encFileName, $encRealFileName);
     }
 
     /**
      * Gets an asset.
-     *
-     * @param string $encPath
-     * @param string $contentType
-     *
-     * @return Provides the valid
      */
-    public function asset($encPath, $contentType, Filesystem $fileSystem)
+    public function asset(string $encPath, string $contentType, Filesystem $fileSystem): Response
     {
         return $this->service->asset($encPath, $contentType, $fileSystem);
     }

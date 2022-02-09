@@ -7,6 +7,8 @@ use Grafite\Cms\Repositories\ImageRepository;
 use Grafite\Cms\Services\Traits\DefaultModuleServiceTrait;
 use Grafite\Cms\Services\Traits\MenuServiceTrait;
 use Grafite\Cms\Services\Traits\ModuleServiceTrait;
+use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Gate;
@@ -21,23 +23,18 @@ class CmsService
         ModuleServiceTrait;
 
     public $backendRoute;
+    public $imageRepo;
 
     public function __construct()
     {
-        $this->imageRepo = app(ImageRepository::class);
         $this->backendRoute = config('cms.backend-route-prefix', 'cms');
+        $this->imageRepo = resolve(ImageRepository::class);
     }
 
     /**
      * Get a module's asset.
-     *
-     * @param string $module      Module name
-     * @param string $path        Path to module asset
-     * @param string $contentType Asset type
-     *
-     * @return string
      */
-    public function asset($path, $contentType = 'null', $fullURL = true)
+    public function asset(string $path, string $contentType = 'null', bool $fullURL = true): string
     {
         if (! $fullURL) {
             return base_path(__DIR__.'/../Assets/'.$path);
@@ -48,23 +45,16 @@ class CmsService
 
     /**
      * Get a file download response.
-     *
-     * @param  string $fileName
-     * @param  string $realFileName
-     *
-     * @return Response
      */
-    public function fileAsDownload($fileName, $realFileName)
+    public function fileAsDownload(string $fileName, string $realFileName): string
     {
         return app(FileService::class)->fileAsDownload($fileName, $realFileName);
     }
 
     /**
      * Check if default CMS language.
-     *
-     * @return bool
      */
-    public function isDefaultLanguage()
+    public function isDefaultLanguage(): bool
     {
         if (! is_null(request('lang')) && request('lang') !== config('cms.default-language', 'en')) {
             return false;
@@ -75,13 +65,8 @@ class CmsService
 
     /**
      * Links for each supported language.
-     *
-     * @param  string $linkClass
-     * @param  string $itemClass
-     *
-     * @return string
      */
-    public function languageLinks($linkClass = 'nav-link', $itemClass = 'nav-item')
+    public function languageLinks(string $linkClass = 'nav-link', string $itemClass = 'nav-item'): string
     {
         if (count(config('cms.languages')) > 1) {
             $languageLinks = [];
@@ -100,28 +85,17 @@ class CmsService
 
     /**
      * Generates a notification for the app.
-     *
-     * @param string $string Notification string
-     * @param string $type   Notification type
      */
-    public function notification($string, $type = null)
+    public function notification(string $string, string $type = 'info')
     {
-        if (is_null($type)) {
-            $type = 'info';
-        }
-
         Session::flash('notification', $string);
         Session::flash('notificationType', 'alert-'.$type);
     }
 
     /**
      * Creates a breadcrumb trail.
-     *
-     * @param array $locations Locations array
-     *
-     * @return string
      */
-    public function breadcrumbs($locations)
+    public function breadcrumbs(array $locations): string
     {
         $trail = '';
 
@@ -140,12 +114,8 @@ class CmsService
 
     /**
      * Get Module Config.
-     *
-     * @param string $key Config key
-     *
-     * @return mixed
      */
-    public function config($key)
+    public function config(string $key): mixed
     {
         $splitKey = explode('.', $key);
 
@@ -158,13 +128,8 @@ class CmsService
 
     /**
      * Assign a value to the path.
-     *
-     * @param array  &$arr Original Array of values
-     * @param string $path Array as path string
-     *
-     * @return mixed
      */
-    public function assignArrayByPath(&$arr, $path)
+    public function assignArrayByPath(array &$arr, string $path): array
     {
         $keys = explode('.', $path);
 
@@ -177,22 +142,16 @@ class CmsService
 
     /**
      * Convert a string to a URL.
-     *
-     * @param string $string
-     *
-     * @return string
      */
-    public function convertToURL($string)
+    public function convertToURL(string $string): string
     {
         return preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', strtolower($string)));
     }
 
     /**
      * Add these views to the packages.
-     *
-     * @param string $dir
      */
-    public function addToPackages($dir)
+    public function addToPackages(string $dir): void
     {
         $files = glob($dir.'/*');
 
@@ -206,19 +165,13 @@ class CmsService
             array_push($packageViews, $view);
         }
 
-        return Config::set('cms.package-menus', $packageViews);
+        Config::set('cms.package-menus', $packageViews);
     }
 
     /**
      * Edit button.
-     *
-     * @param string $type
-     * @param int    $id
-     * @param string $class
-     *
-     * @return string
      */
-    public function editBtn($type = null, $id = null, $class = "btn-outline-secondary")
+    public function editBtn(?string $type = null, ?int $id = null, string $class = "btn-outline-secondary"): string
     {
         if (Gate::allows('cms', Auth::user())) {
             if (! is_null($id)) {
@@ -233,12 +186,8 @@ class CmsService
 
     /**
      * Grafite CMS url generator - handles custom cms url.
-     *
-     * @param  string $string
-     *
-     * @return string
      */
-    public function url($string)
+    public function url(string $string): string
     {
         $url = str_replace('.', '/', $string);
 
@@ -247,38 +196,24 @@ class CmsService
 
     /**
      * Grafite CMS route generator.
-     *
-     * @param  string $string
-     *
-     * @return string
      */
-    public function route($string)
+    public function route(string $string): string
     {
         return $this->backendRoute.'.'.$string;
     }
 
     /**
      * Another form of the edit button.
-     *
-     * @param string $type
-     * @param int    $id
-     * @param string $class
-     *
-     * @return string
      */
-    public function editBtnSecondary($type = null, $id = null)
+    public function editBtnSecondary(?string $type = null, ?int $id = null): string
     {
         return $this->editBtn($type, $id, 'btn-secondary');
     }
 
     /**
      * Rollback URL.
-     *
-     * @param obj $object
-     *
-     * @return string
      */
-    public function rollbackUrl($object)
+    public function rollbackUrl(object $object): string
     {
         $class = str_replace('\\', '_', get_class($object));
 
@@ -287,10 +222,8 @@ class CmsService
 
     /**
      * Get version from the changelog.
-     *
-     * @return string
      */
-    public function version()
+    public function version(): string
     {
         $changelog = @file_get_contents(__DIR__.'/../../changelog.md');
 
@@ -306,10 +239,8 @@ class CmsService
 
     /**
      * Collect items for a site map.
-     *
-     * @return array
      */
-    public function collectSiteMapItems()
+    public function collectSiteMapItems(): Collection
     {
         $itemCollection = [];
         $modules = config('site-mapped-modules', [

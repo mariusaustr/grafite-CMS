@@ -3,9 +3,13 @@
 namespace Grafite\Cms\Services\Traits;
 
 use Carbon\Carbon;
+use Grafite\Cms\Models\Menu;
+use Grafite\Cms\Models\Page;
+use Grafite\Cms\Models\Translation;
 use Grafite\Cms\Repositories\LinkRepository;
 use Grafite\Cms\Repositories\MenuRepository;
 use Grafite\Cms\Repositories\PageRepository;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Gate;
@@ -14,10 +18,8 @@ trait MenuServiceTrait
 {
     /**
      * Cms package Menus.
-     *
-     * @return string
      */
-    public function packageMenus()
+    public function packageMenus(): void
     {
         $packageViews = Config::get('cms.package-menus', []);
 
@@ -28,15 +30,11 @@ trait MenuServiceTrait
 
     /**
      * Get a view.
-     *
-     * @param string $slug
-     * @param View   $view
-     *
-     * @return string
      */
-    public function menu($slug, $view = null, $class = '')
+    public function menu(string $slug, string $view = null, string $class = ''): string
     {
         $pageRepository = app(PageRepository::class);
+        /** @var ?Menu $menu */
         $menu = app(MenuRepository::class)->getBySlug($slug);
 
         if (! $menu) {
@@ -58,6 +56,7 @@ trait MenuServiceTrait
                     $processedLinks[] = '<a class="'.$class.'" href="'.$link->external_url.'">'.$link->name.'</a>';
                 }
             } else {
+                /** @var ?Page $page */
                 $page = $pageRepository->find($link->page_id);
                 // if the page is published
                 if ($page && $page->is_published && $page->published_at <= Carbon::now(config('app.timezone'))) {
@@ -65,7 +64,7 @@ trait MenuServiceTrait
                         $processedLinks[] = '<a class="'.$class.'" href="'.url('page/'.$page->url)."\">$link->name</a>";
                     } elseif (config('app.locale') != config('cms.default-language', $this->config('cms.default-language'))) {
                         // if the page has a translation
-                        if ($page->translation(config('app.locale'))) {
+                        if ($page->translation(config('app.locale')) instanceof Translation) {
                             $processedLinks[] = '<a class="'.$class.'" href="'.url('page/'.$page->translation(config('app.locale'))->data->url).'">'.$link->translation(config('app.locale'))->name.'</a>';
                         }
                     }
@@ -90,13 +89,8 @@ trait MenuServiceTrait
 
     /**
      * Sort by an existing set of keys.
-     *
-     * @param  collection $links
-     * @param  array $keys
-     *
-     * @return collection
      */
-    public function sortByKeys($links, $keys)
+    public function sortByKeys(Collection $links, array $keys = null): Collection
     {
         if (! is_null($keys)) {
             $links = $links->keyBy('id');

@@ -2,6 +2,9 @@
 
 namespace Grafite\Cms\Services\Traits;
 
+use Grafite\Cms\Models\Promotion;
+use Grafite\Cms\Models\Translation;
+use Grafite\Cms\Models\Widget;
 use Grafite\Cms\Repositories\PromotionRepository;
 use Grafite\Cms\Repositories\WidgetRepository;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +14,7 @@ trait DefaultModuleServiceTrait
 {
     public $imageRepo;
 
-    public function defaultModules()
+    public function defaultModules(): array
     {
         return [
             'blog',
@@ -28,13 +31,10 @@ trait DefaultModuleServiceTrait
 
     /**
      * Get a widget.
-     *
-     * @param string $slug
-     *
-     * @return widget
      */
-    public function widget($slug)
+    public function widget(string $slug): string
     {
+        /** @var ?Widget $widget */
         $widget = app(WidgetRepository::class)->getBySlug($slug);
 
         if ($widget) {
@@ -42,8 +42,8 @@ trait DefaultModuleServiceTrait
                 $widget->content .= '<a href="'.url(config('cms.backend-route-prefix', 'cms').'/widgets/'.$widget->id.'/edit').'" class="btn btn-sm ml-2 btn-outline-secondary"><span class="fa fa-edit"></span> Edit</a>';
             }
 
-            if (config('app.locale') !== config('cms.default-language') && $widget->translation(config('app.locale'))) {
-                return $widget->translationData(config('app.locale'))->content;
+            if (config('app.locale') !== config('cms.default-language') && $widget->translation(config('app.locale')) instanceof Translation) {
+                return $widget->translationData(config('app.locale'))?->content;
             } else {
                 return $widget->content;
             }
@@ -54,13 +54,10 @@ trait DefaultModuleServiceTrait
 
     /**
      * Get an promotion.
-     *
-     * @param string $slug
-     *
-     * @return promotion
      */
-    public function promotion($slug)
+    public function promotion(string $slug): string
     {
+        /** @var ?Promotion $promotion */
         $promotion = app(PromotionRepository::class)->getBySlug($slug);
 
         if ($promotion) {
@@ -69,8 +66,8 @@ trait DefaultModuleServiceTrait
             }
 
             if ($promotion->is_published) {
-                if (config('app.locale') !== config('cms.default-language') && $promotion->translation(config('app.locale'))) {
-                    return $promotion->translationData(config('app.locale'))->details;
+                if (config('app.locale') !== config('cms.default-language') && $promotion->translation(config('app.locale')) instanceof Translation) {
+                    return $promotion->translationData(config('app.locale'))?->details;
                 } else {
                     return $promotion->details;
                 }
@@ -82,12 +79,8 @@ trait DefaultModuleServiceTrait
 
     /**
      * Get image.
-     *
-     * @param string $tag
-     *
-     * @return collection
      */
-    public function image($id, $class = '')
+    public function image(int $id, string $class = ''): string
     {
         $img = '';
 
@@ -100,12 +93,8 @@ trait DefaultModuleServiceTrait
 
     /**
      * Get image link.
-     *
-     * @param string $tag
-     *
-     * @return collection
      */
-    public function imageLink($id)
+    public function imageLink(int $id): string
     {
         $img = '';
 
@@ -118,12 +107,8 @@ trait DefaultModuleServiceTrait
 
     /**
      * Get images.
-     *
-     * @param string $tag
-     *
-     * @return collection
      */
-    public function images($tag = null)
+    public function images(array|string $tag = null): array
     {
         $images = [];
 

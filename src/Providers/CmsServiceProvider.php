@@ -2,7 +2,6 @@
 
 namespace Grafite\Cms\Providers;
 
-use App;
 use Grafite\Cms\Services\BlogService;
 use Grafite\Cms\Services\CmsService;
 use Grafite\Cms\Services\CryptoService;
@@ -34,11 +33,11 @@ class CmsServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('PageService', function ($app) {
-            return new PageService();
+            return resolve(PageService::class);
         });
 
         $this->app->bind('EventService', function ($app) {
-            return App::make(EventService::class);
+            return resolve(EventService::class);
         });
 
         $this->app->bind('CryptoService', function ($app) {

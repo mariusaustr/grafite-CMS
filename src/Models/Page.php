@@ -2,12 +2,17 @@
 
 namespace Grafite\Cms\Models;
 
+use Carbon\Carbon;
 use Grafite\Cms\Services\Normalizer;
 use Grafite\Cms\Traits\Translatable;
 use Illuminate\Support\Collection;
 
 /**
  * @property string $hero_image
+ * @property bool $is_published
+ * @property Carbon $published_at
+ * @property string $url
+ * @property string $title
  */
 class Page extends CmsModel
 {

@@ -2,21 +2,19 @@
 
 namespace Grafite\Cms\Services;
 
+use Grafite\Cms\Models\Page;
 use Grafite\Cms\Repositories\PageRepository;
 
 class PageService extends BaseService
 {
-    public function __construct()
+    public function __construct(private PageRepository $repo)
     {
-        $this->repo = app(PageRepository::class);
     }
 
     /**
      * Get pages as options.
-     *
-     * @return array
      */
-    public function getPagesAsOptions()
+    public function getPagesAsOptions(): array
     {
         $pages = [];
         $publishedPages = $this->repo->all();
@@ -30,25 +28,20 @@ class PageService extends BaseService
 
     /**
      * Get templates as options.
-     *
-     * @return array
      */
-    public function getTemplatesAsOptions()
+    public function getTemplatesAsOptions(): array
     {
         return $this->getTemplatesAsOptionsArray('pages');
     }
 
     /**
      * Get a page name by ID.
-     *
-     * @param  int $id
-     *
-     * @return string
      */
-    public function pageName($id)
+    public function pageName(int $id): ?string
     {
+        /** @var ?Page $page */
         $page = $this->repo->find($id);
 
-        return $page->title;
+        return $page?->title;
     }
 }

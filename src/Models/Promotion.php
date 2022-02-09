@@ -6,6 +6,9 @@ use Grafite\Cms\Services\Normalizer;
 use Grafite\Cms\Traits\Translatable;
 use Illuminate\Support\Carbon;
 
+/**
+ * @property string $details
+ */
 class Promotion extends CmsModel
 {
     use Translatable;

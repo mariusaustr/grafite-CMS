@@ -6,12 +6,15 @@ use Cms;
 use Exception;
 use Grafite\Cms\Facades\CryptoServiceFacade;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use SplFileInfo;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AssetService
 {
@@ -24,12 +27,8 @@ class AssetService
 
     /**
      * Provide the File as a Public Asset.
-     *
-     * @param string $encFileName
-     *
-     * @return Download
      */
-    public function asPublic($encFileName)
+    public function asPublic(string $encFileName): HttpResponse
     {
         try {
             return Cache::remember($encFileName.'_asPublic', 3600, function () use ($encFileName) {
@@ -55,12 +54,8 @@ class AssetService
 
     /**
      * Provide the File as a Public Preview.
-     *
-     * @param string $encFileName
-     *
-     * @return Download
      */
-    public function asPreview($encFileName, Filesystem $fileSystem)
+    public function asPreview(string $encFileName, Filesystem $fileSystem): HttpResponse
     {
         try {
             return Cache::remember($encFileName.'_preview', 3600, function () use ($encFileName, $fileSystem) {
@@ -96,13 +91,8 @@ class AssetService
 
     /**
      * Provide file as download.
-     *
-     * @param string $encFileName
-     * @param string $encRealFileName
-     *
-     * @return Downlaod
      */
-    public function asDownload($encFileName, $encRealFileName)
+    public function asDownload(string $encFileName, string $encRealFileName): HttpResponse|RedirectResponse
     {
         try {
             return Cache::remember($encFileName.'_asDownload', 3600, function () use ($encFileName, $encRealFileName) {
@@ -131,13 +121,8 @@ class AssetService
 
     /**
      * Gets an asset.
-     *
-     * @param string $encPath
-     * @param string $contentType
-     *
-     * @return Provides the valid
      */
-    public function asset($encPath, $contentType, Filesystem $fileSystem)
+    public function asset(string $encPath, ?string $contentType, Filesystem $fileSystem): HttpResponse|BinaryFileResponse
     {
         try {
             $path = CryptoServiceFacade::url_decode($encPath);
@@ -170,12 +155,8 @@ class AssetService
 
     /**
      * Get the mime type.
-     *
-     * @param string $extension
-     *
-     * @return string
      */
-    public function getMimeType($extension)
+    public function getMimeType(string $extension): string
     {
         if (isset($this->mimeTypes['.'.strtolower($extension)])) {
             return $this->mimeTypes['.'.strtolower($extension)];
@@ -186,12 +167,8 @@ class AssetService
 
     /**
      * Get a file's path.
-     *
-     * @param  string $fileName
-     *
-     * @return string
      */
-    public function getFilePath($fileName)
+    public function getFilePath(string $fileName): string
     {
         if (file_exists(storage_path('app/'.$fileName))) {
             $filePath = storage_path('app/'.$fileName);
@@ -204,14 +181,8 @@ class AssetService
 
     /**
      * Get a files content.
-     *
-     * @param  string $fileName
-     * @param  string $contentType
-     * @param  string $ext
-     *
-     * @return mixed
      */
-    public function getFileContent($fileName, $contentType, $ext)
+    public function getFileContent(string $fileName, string $contentType, string $ext): string
     {
         if (Storage::disk(config('cms.storage-location', 'local'))->exists($fileName)) {
             $fileContent = Storage::disk(config('cms.storage-location', 'local'))->get($fileName);
@@ -237,14 +208,10 @@ class AssetService
 
     /**
      * Generate an image.
-     *
-     * @param string $ext
-     *
-     * @return Image
      */
-    public function generateImage($ext)
+    public function generateImage(string $type): string
     {
-        if ($ext == 'File Not Found') {
+        if ($type == 'File Not Found') {
             return __DIR__.'/../Assets/src/images/blank-file-not-found.jpg';
         }
 

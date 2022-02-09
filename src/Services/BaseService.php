@@ -6,12 +6,8 @@ class BaseService
 {
     /**
      * Get templates as options.
-     *
-     * @param  string $module
-     *
-     * @return array
      */
-    public function getTemplatesAsOptionsArray($module)
+    public function getTemplatesAsOptionsArray(string $module): array
     {
         $availableTemplates = ['show'];
         $templates = glob(base_path('resources/themes/'.config('cms.frontend-theme').'/'.$module.'/*'));

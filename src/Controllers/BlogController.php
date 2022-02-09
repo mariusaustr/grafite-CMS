@@ -7,6 +7,8 @@ use Grafite\Cms\Models\Blog;
 use Grafite\Cms\Repositories\BlogRepository;
 use Grafite\Cms\Requests\BlogRequest;
 use Grafite\Cms\Services\ValidationService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class BlogController extends GrafiteCmsController
@@ -94,11 +96,8 @@ class BlogController extends GrafiteCmsController
 
     /**
      * Update the specified Blog in storage.
-     *
-     * @param int         $id
-     * @param BlogRequest $request
      */
-    public function update(int $id, BlogRequest $request)
+    public function update(int $id, BlogRequest $request): RedirectResponse
     {
         $blog = $this->repository->find($id);
 
@@ -148,7 +147,7 @@ class BlogController extends GrafiteCmsController
     /**
      * Blog history.
      */
-    public function history($id)
+    public function history(int $id): View
     {
         $blog = $this->repository->find($id);
 

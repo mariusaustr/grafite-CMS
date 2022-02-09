@@ -23,6 +23,7 @@ class DashboardController extends GrafiteCmsController
     {
         if (! is_null(config('analytics.view_id')) && config('cms.analytics') == 'google') {
             $period = Period::days(7);
+            $visitStats = [];
 
             foreach (app(Analytics::class)->fetchVisitorsAndPageViews($period) as $view) {
                 $visitStats['date'][] = $view['date']->format('Y-m-d');

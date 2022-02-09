@@ -4,6 +4,9 @@ namespace Grafite\Cms\Models;
 
 use Grafite\Cms\Traits\Translatable;
 
+/**
+ * @property string $content
+ */
 class Widget extends CmsModel
 {
     use Translatable;

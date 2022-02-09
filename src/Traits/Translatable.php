@@ -2,21 +2,21 @@
 
 namespace Grafite\Cms\Traits;
 
+use Grafite\Cms\Models\CmsModel;
 use Grafite\Cms\Models\Translation;
 use Grafite\Cms\Repositories\TranslationRepository;
 use Grafite\Cms\Services\CmsService;
-use Stichoza\GoogleTranslate\TranslateClient;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
+/**
+ * @property object $data
+ */
 trait Translatable
 {
     /**
      * Get a translation.
-     *
-     * @param string $lang
-     *
-     * @return mixed
      */
-    public function translation($lang)
+    public function translation(string $lang): static|Translation
     {
         $result = Translation::where('entity_id', $this->id)
             ->where('entity_type', get_class($this))
@@ -34,16 +34,12 @@ trait Translatable
 
     /**
      * Get translation data.
-     *
-     * @param string $lang
-     *
-     * @return array|null
      */
-    public function translationData($lang)
+    public function translationData(string $lang): ?object
     {
         $translation = $this->translation($lang);
 
-        if ($translation) {
+        if ($translation instanceof Translation) {
             $data = json_decode($translation->entity_data);
 
             if (isset($data->blocks)) {
@@ -53,14 +49,13 @@ trait Translatable
             return $data;
         }
 
+        return null;
     }
 
     /**
      * Get a translations attribute.
-     *
-     * @return array
      */
-    public function getTranslationsAttribute()
+    public function getTranslationsAttribute(): array
     {
         $translationData = [];
         $translations = Translation::where('entity_id', $this->id)->where('entity_type', get_class($this))->get();
@@ -74,10 +69,8 @@ trait Translatable
 
     /**
      * After the item is created in the database.
-     *
-     * @param object $payload
      */
-    public function afterCreate($payload)
+    public function afterCreate(CmsModel $payload): void
     {
         if (config('cms.auto-translate', false)) {
             $entry = $payload->toArray();
@@ -91,7 +84,7 @@ trait Translatable
 
             foreach (config('cms.languages') as $code => $language) {
                 if ($code != config('cms.default-language')) {
-                    $translateClient = new TranslateClient(config('cms.default-language'), $code);
+                    $translateClient = new GoogleTranslate(config('cms.default-language'), $code);
                     $translation = [
                         'lang' => $code,
                         'template' => 'show',

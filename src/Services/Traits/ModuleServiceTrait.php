@@ -4,15 +4,14 @@ namespace Grafite\Cms\Services\Traits;
 
 use Grafite\Cms\Facades\CryptoServiceFacade;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 
 trait ModuleServiceTrait
 {
     /**
      * Determine the module based on URL.
-     *
-     * @return string
      */
-    public function getModule()
+    public function getModule(): string
     {
         $module = request()->segment(1);
 
@@ -22,7 +21,7 @@ trait ModuleServiceTrait
         $modules = array_merge($defaultModules, $extraModules);
 
         if (in_array($module, $modules)) {
-            return str_singular($module);
+            return Str::singular($module);
         }
 
         return 'page';
@@ -30,14 +29,8 @@ trait ModuleServiceTrait
 
     /**
      * Module Assets.
-     *
-     * @param string $module      Module name
-     * @param string $path        Asset path
-     * @param string $contentType Content type
-     *
-     * @return string
      */
-    public function moduleAsset($module, $path, $contentType = 'null')
+    public function moduleAsset(string $module, string $path, string $contentType = 'null'): string
     {
         $assetPath = base_path(Config::get('cms.module-directory').'/'.ucfirst($module).'/Assets/'.$path);
 
@@ -50,14 +43,8 @@ trait ModuleServiceTrait
 
     /**
      * Module Config.
-     *
-     * @param string $module      Module name
-     * @param string $path        Asset path
-     * @param string $contentType Content type
-     *
-     * @return string
      */
-    public function moduleConfig($module, $path)
+    public function moduleConfig(string $module, string $path): mixed
     {
         $configArray = @include base_path(Config::get('cms.module-directory').'/'.ucfirst($module).'/config.php');
 
@@ -70,12 +57,8 @@ trait ModuleServiceTrait
 
     /**
      * Module Links.
-     *
-     * @param array $ignoredModules   A list of ignored links
-     *
-     * @return string
      */
-    public function moduleLinks($ignoredModules = [], $linkClass = 'nav-link', $listClass = 'nav-item')
+    public function moduleLinks(array $ignoredModules = [], string $linkClass = 'nav-link', string $listClass = 'nav-item'): string
     {
         $links = '';
 

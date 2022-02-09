@@ -74,9 +74,7 @@ class MenuController extends GrafiteCmsController
                 $menu = $this->repository->store($request->all());
                 Cms::notification('Menu saved successfully.', 'success');
 
-                if (! $menu) {
-                    Cms::notification('Menu could not be saved.', 'danger');
-                }
+                return redirect(route($this->routeBase.'.menus.edit', [$menu->id]));
             } else {
                 return $validation['redirect'];
             }
@@ -84,7 +82,7 @@ class MenuController extends GrafiteCmsController
             Cms::notification($e->getMessage() ?: 'Menu could not be saved.', 'danger');
         }
 
-        return redirect(route($this->routeBase.'.menus.edit', [$menu->id]));
+        return back();
     }
 
     /**

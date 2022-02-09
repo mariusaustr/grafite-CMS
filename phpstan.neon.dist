@@ -9,10 +9,11 @@ parameters:
         #- src/Routes
         #- src/Repositories
         # - src/Console
-        - src/Controllers
+        #- src/Controllers
+        # - src/Services
         #- src/Facades
         #- src/Helpers
-        #- src
+        - src
         #- tests
 
     # The level 8 is the highest level

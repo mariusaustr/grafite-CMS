@@ -4,7 +4,7 @@ namespace Grafite\Cms\Services;
 
 class ModuleService
 {
-    public function menus()
+    public function menus(): string
     {
         $modulePath = base_path(config('cms.module-directory').'/');
         $modules = glob($modulePath.'*');

@@ -7,21 +7,17 @@ use Grafite\Cms\Repositories\EventRepository;
 
 class EventService extends BaseService
 {
-    public function __construct(EventRepository $eventRepo)
+    private array $weeks = [];
+    private ?string $date = null;
+
+    public function __construct(private EventRepository $eventRepository)
     {
-        $this->eventRepository = $eventRepo;
-        $this->weeks = [];
-        $this->date = null;
     }
 
     /**
      * Generate a calendar.
-     *
-     * @param  string $date
-     *
-     * @return Grafite\Cms\Services\EventService
      */
-    public function generate($date = null)
+    public function generate(?string $date = null): static
     {
         $this->date = $date;
 
@@ -50,12 +46,8 @@ class EventService extends BaseService
 
     /**
      * Get a calendar by date.
-     *
-     * @param  string $date
-     *
-     * @return array
      */
-    public function calendar($date)
+    public function calendar(string $date): array
     {
         $events = $this->eventRepository->all();
         $dateArray = explode('-', $date);
@@ -81,12 +73,8 @@ class EventService extends BaseService
 
     /**
      * Get a calendar as html.
-     *
-     * @param  array $config
-     *
-     * @return string
      */
-    public function asHtml($config)
+    public function asHtml(array $config): string
     {
         $class = $config['class'];
         $dates = $config['dates'];
@@ -145,17 +133,9 @@ class EventService extends BaseService
 
     /**
      * Generate HTML links.
-     *
-     * @param  string $class
-     *
-     * @return string
      */
-    public function links($class = null)
+    public function links(string $class = ''): string
     {
-        if (is_null($class)) {
-            $class = '';
-        }
-
         $dateArray = explode('-', $this->date);
         $previousMonth = Carbon::create($dateArray[0], $dateArray[1], $dateArray[2])->subMonth()->toDateString();
         $nextMonth = Carbon::create($dateArray[0], $dateArray[1], $dateArray[2])->addMonth()->toDateString();
@@ -170,10 +150,8 @@ class EventService extends BaseService
 
     /**
      * Get templates as options.
-     *
-     * @return array
      */
-    public function getTemplatesAsOptions()
+    public function getTemplatesAsOptions(): array
     {
         return $this->getTemplatesAsOptionsArray('events');
     }

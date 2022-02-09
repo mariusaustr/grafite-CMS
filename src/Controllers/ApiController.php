@@ -13,7 +13,7 @@ class ApiController extends GrafiteCmsController
 {
     protected $model;
 
-    protected $routeName;
+    protected $modelName;
 
     public function __construct(Request $request)
     {

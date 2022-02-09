@@ -4,16 +4,16 @@ namespace Grafite\Cms\Services;
 
 use Carbon\Carbon;
 use Grafite\Cms\Models\Analytics;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 
 class AnalyticsService
 {
-    public function __construct(Analytics $model)
+    public function __construct(private Analytics $model)
     {
-        $this->model = $model;
     }
 
-    public function log($request)
+    public function log($request): void
     {
         $requestData = json_encode([
             'referer' => $request->server('HTTP_REFERER', null),
@@ -33,7 +33,7 @@ class AnalyticsService
         }
     }
 
-    public function topReferers($count)
+    public function topReferers($count): array
     {
         $analytics = $this->model->where('created_at', '>', Carbon::now()->subDays($count))->get();
         $data = $analytics->pluck('data')->all();
@@ -41,7 +41,7 @@ class AnalyticsService
         return $this->convertDataToItems($data, 'referer', ['unknown' => 0]);
     }
 
-    public function topPages($count)
+    public function topPages($count): array
     {
         $analytics = $this->model->where('created_at', '>', Carbon::now()->subDays($count))->get();
         $data = $analytics->pluck('data')->all();
@@ -49,7 +49,7 @@ class AnalyticsService
         return $this->convertDataToItems($data, 'uri');
     }
 
-    public function topBrowsers($count)
+    public function topBrowsers($count): array
     {
         $analytics = $this->model->where('created_at', '>', Carbon::now()->subDays($count))->get();
         $data = $analytics->pluck('data')->all();
@@ -64,7 +64,7 @@ class AnalyticsService
         return $browsers;
     }
 
-    public function convertDataToItems($data, $key, $conversions = [], $limit = 15)
+    public function convertDataToItems(Collection $data, string $key, array $conversions = [], int $limit = 15): array
     {
         if (! isset($conversions['unknown'])) {
             $conversions['unknown'] = 0;
@@ -93,7 +93,7 @@ class AnalyticsService
         return array_slice($conversions, 0, $limit);
     }
 
-    public function getDays($count)
+    public function getDays($count): array
     {
         $analytics = $this->model->where('created_at', '>', Carbon::now()->subDays($count));
 
@@ -103,6 +103,7 @@ class AnalyticsService
 
             $dateRange = $this->getDateRange($startDate, $endDate);
 
+            $visits = [];
             foreach ($dateRange as $date) {
                 $visits[$date] = $this->model->where('created_at', '>', $date.' 00:00:00')->where('created_at', '<', $date.' 23:59:59')->count();
             }
@@ -120,7 +121,7 @@ class AnalyticsService
         ];
     }
 
-    protected function getDateRange($startDate, $endDate)
+    protected function getDateRange($startDate, $endDate): array
     {
         $dates = [];
 

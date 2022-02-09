@@ -4,6 +4,7 @@ namespace Grafite\Cms\Services;
 
 use CryptoService as CryptoServiceForFiles;
 use Exception;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Request;
@@ -14,12 +15,8 @@ class FileService
 {
     /**
      * Generate a name from the file path.
-     *
-     * @param string $file File path
-     *
-     * @return string
      */
-    public function getFileClass($file)
+    public function getFileClass(string $file): string
     {
         $sections = explode(DIRECTORY_SEPARATOR, $file);
         $fileName = $sections[count($sections) - 1];
@@ -31,13 +28,8 @@ class FileService
 
     /**
      * Saves File.
-     *
-     * @param string $fileName File input name
-     * @param string $location Storage location
-     *
-     * @return array
      */
-    public function saveClone($fileName, $directory = '', $fileTypes = [])
+    public function saveClone(string $fileName, string $directory = '', array $fileTypes = []): array
     {
         $fileInfo = pathinfo($fileName);
 
@@ -63,7 +55,7 @@ class FileService
         ];
     }
 
-    public function delete($path)
+    public function delete($path): bool
     {
         if (is_file(storage_path($path))) {
             return Storage::delete($path);
@@ -74,15 +66,10 @@ class FileService
 
     /**
      * Saves File.
-     *
-     * @param string $fileName File input name
-     * @param string $location Storage location
-     *
-     * @return array
      */
-    public function saveFile($fileName, $directory = '', $fileTypes = [], $isImage = false)
+    public function saveFile(string|UploadedFile $fileName, string $directory = '', array $fileTypes = [], bool $isImage = false): array|false
     {
-        if (is_object($fileName)) {
+        if ($fileName instanceof UploadedFile) {
             $file = $fileName;
             $originalName = $file->getClientOriginalName();
         } else {
@@ -130,44 +117,31 @@ class FileService
         }
 
         return [
-            'original' => $originalName ?: $file->getFilename().'.'.$extension,
+            'original' => $originalName ?: ($file->getFilename().'.'.$extension),
             'name' => $directory.$newFileName.'.'.$extension,
         ];
     }
 
     /**
      * Provide a URL for the file as a public asset.
-     *
-     * @param string $fileName File name
-     *
-     * @return string
      */
-    public function fileAsPublicAsset($fileName)
+    public function fileAsPublicAsset(string $fileName): string
     {
         return '/public-asset/'.CryptoServiceForFiles::url_encode($fileName);
     }
 
     /**
      * Provides a URL for the file as a download.
-     *
-     * @param string $fileName     File name
-     * @param string $realFileName Real file name
-     *
-     * @return string
      */
-    public function fileAsDownload($fileName, $realFileName)
+    public function fileAsDownload(string $fileName, string $realFileName): string
     {
         return '/public-download/'.CryptoServiceForFiles::url_encode($fileName).'/'.CryptoServiceForFiles::url_encode($realFileName);
     }
 
     /**
      * Provide a URL for the file as a public preview.
-     *
-     * @param string $fileName File name
-     *
-     * @return string
      */
-    public function filePreview($fileName)
+    public function filePreview(string $fileName): string
     {
         return '/public-preview/'.CryptoServiceForFiles::url_encode($fileName);
     }
