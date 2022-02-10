@@ -19,11 +19,11 @@
     </div>
 
     <div class="col-md-12">
-        {!! Form::model($links, ['route' => [cms()->route('links.update'), $links->id], 'method' => 'patch', 'class' => 'edit']) !!}
+        {!! form()->model($links, ['route' => [cms()->route('links.update'), $links->id], 'method' => 'patch', 'class' => 'edit']) !!}
 
             <input type="hidden" name="lang" value="{{ request('lang') }}">
 
-            {!! FormMaker::fromObject($links->asObject(), config('cms.forms.link')) !!}
+            {!! formMaker()->fromObject($links->asObject(), config('cms.forms.link')) !!}
 
             <div class="form-group" style="display: none;">
                 <label for="Page_id">Page</label>
@@ -36,10 +36,10 @@
 
             <div class="form-group text-right">
                 <a href="{!! url()->previous() !!}" class="btn btn-secondary float-left">Cancel</a>
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
             </div>
 
-        {!! Form::close() !!}
+        {!! form()->close() !!}
     </div>
 
 @endsection

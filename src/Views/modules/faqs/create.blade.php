@@ -9,16 +9,16 @@
     </div>
 
     <div class="col-md-12">
-        {!! Form::open(['route' => cms()->route('faqs.store'), 'class' => 'add']) !!}
+        {!! form()->open(['route' => cms()->route('faqs.store'), 'class' => 'add']) !!}
 
-            {!! FormMaker::fromTable('faqs', config('cms.forms.faqs')) !!}
+            {!! formMaker()->fromTable('faqs', config('cms.forms.faqs')) !!}
 
             <div class="form-group text-right">
                 <a href="{!! cms()->url('faqs') !!}" class="btn btn-secondary float-left">Cancel</a>
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
             </div>
 
-        {!! Form::close() !!}
+        {!! form()->close() !!}
     </div>
 
 @endsection

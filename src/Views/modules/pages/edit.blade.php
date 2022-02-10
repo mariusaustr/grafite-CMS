@@ -43,11 +43,11 @@
 
         <div class="row">
             <div class="@if (config('cms.live-preview', false)) col-md-6 @else col-md-12 @endif">
-                {!! Form::model($page, ['route' => [cms()->route('pages.update'), $page->id], 'method' => 'patch', 'class' => 'edit', 'files' => true]) !!}
+                {!! form()->model($page, ['route' => [cms()->route('pages.update'), $page->id], 'method' => 'patch', 'class' => 'edit', 'files' => true]) !!}
 
                     <input type="hidden" name="lang" value="{{ request('lang') }}">
 
-                    {!! FormMaker::setColumns(2)->fromObject($page->asObject(), config('cms.forms.page.identity')) !!}
+                    {!! formMaker()->setColumns(2)->fromObject($page->asObject(), config('cms.forms.page.identity')) !!}
 
                     <div class="form-group">
                         <label for="Template">Template</label>
@@ -64,7 +64,7 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            {!! FormMaker::setColumns(1)->fromObject($page->asObject(), config('cms.forms.page.content')) !!}
+                            {!! formMaker()->setColumns(1)->fromObject($page->asObject(), config('cms.forms.page.content')) !!}
                         </div>
                         <div class="col-md-6">
                             @if ($page->hero_image)
@@ -80,20 +80,20 @@
 
                     <div class="row">
                         <div class="col-md-12 mt-4">
-                            {!! FormMaker::setColumns(2)->fromObject($page->asObject(), config('cms.forms.page.seo')) !!}
+                            {!! formMaker()->setColumns(2)->fromObject($page->asObject(), config('cms.forms.page.seo')) !!}
                         </div>
                     </div>
 
-                    {!! FormMaker::setColumns(2)->fromObject($page->asObject(), config('cms.forms.page.publish')) !!}
+                    {!! formMaker()->setColumns(2)->fromObject($page->asObject(), config('cms.forms.page.publish')) !!}
 
                     @include('cms::modules.blocks', ['item' => $page->asObject()])
 
                     <div class="form-group text-right">
                         <a href="{!! cms()->url('pages') !!}" class="btn btn-secondary raw-left">Cancel</a>
-                        {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                        {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
                     </div>
 
-                {!! Form::close() !!}
+                {!! form()->close() !!}
             </div>
             @if (config('cms.live-preview', false))
                 <div class="col-md-6 hidden-sm hidden-xs">

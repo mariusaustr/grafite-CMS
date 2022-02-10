@@ -21,7 +21,7 @@ class DashboardTest extends TestCase
 
     public function testIndex()
     {
-        $response = $this->call('GET', '/cms/dashboard');
+        $response = $this->get('/cms/dashboard');
         $this->assertEquals(200, $response->getStatusCode());
     }
 }

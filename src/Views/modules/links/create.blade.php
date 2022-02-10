@@ -9,9 +9,9 @@
     </div>
 
     <div class="col-md-12">
-        {!! Form::open(['route' => cms()->route('links.store'), 'class' => 'add']) !!}
+        {!! form()->open(['route' => cms()->route('links.store'), 'class' => 'add']) !!}
 
-            {!! FormMaker::fromTable('links', config('cms.forms.link')) !!}
+            {!! formMaker()->fromTable('links', config('cms.forms.link')) !!}
 
             <div class="form-group" style="display: none;">
                 <label for="Page_id">Page</label>
@@ -26,10 +26,10 @@
 
             <div class="form-group text-right">
                 <a href="{!! url()->previous() !!}" class="btn btn-secondary raw-left">Cancel</a>
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
             </div>
 
-        {!! Form::close() !!}
+        {!! form()->close() !!}
     </div>
 @endsection
 

@@ -1,5 +1,7 @@
 <?php
 
+use Grafite\Forms\Services\FormMaker;
+
 if (! function_exists('menu')) {
     function menu($slug, $view = null)
     {
@@ -18,5 +20,12 @@ if (! function_exists('widget')) {
     function widget($slug)
     {
         return app('CmsService')->widget($slug);
+    }
+}
+
+if (! function_exists('formMaker')) {
+    function formMaker()
+    {
+        return app(FormMaker::class);
     }
 }

@@ -9,19 +9,19 @@
     </div>
 
     <div class="col-md-12">
-        {!! Form::open(['route' => cms()->route('events.store'), 'class' => 'add']) !!}
+        {!! form()->open(['route' => cms()->route('events.store'), 'class' => 'add']) !!}
 
-            {!! FormMaker::setColumns(3)->fromTable('events', config('cms.forms.event.identity')) !!}
-            {!! FormMaker::setColumns(1)->fromTable('events', config('cms.forms.event.content')) !!}
-            {!! FormMaker::setColumns(2)->fromTable('events', config('cms.forms.event.seo')) !!}
-            {!! FormMaker::setColumns(2)->fromTable('events', config('cms.forms.event.publish')) !!}
+            {!! formMaker()->setColumns(3)->fromTable('events', config('cms.forms.event.identity')) !!}
+            {!! formMaker()->setColumns(1)->fromTable('events', config('cms.forms.event.content')) !!}
+            {!! formMaker()->setColumns(2)->fromTable('events', config('cms.forms.event.seo')) !!}
+            {!! formMaker()->setColumns(2)->fromTable('events', config('cms.forms.event.publish')) !!}
 
             <div class="form-group text-right">
                 <a href="{!! cms()->url('events') !!}" class="btn btn-secondary float-left">Cancel</a>
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
             </div>
 
-        {!! Form::close() !!}
+        {!! form()->close() !!}
     </div>
 
 @endsection

@@ -23,20 +23,20 @@ class PromotionsTest extends TestCase
 
     public function testIndex()
     {
-        $response = $this->call('GET', 'cms/promotions');
+        $response = $this->get('cms/promotions');
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('promotions');
     }
 
     public function testCreate()
     {
-        $response = $this->call('GET', 'cms/promotions/create');
+        $response = $this->get('cms/promotions/create');
         $this->assertEquals(200, $response->getStatusCode());
     }
 
     public function testEdit()
     {
-        $response = $this->call('GET', 'cms/promotions/1/edit');
+        $response = $this->get('cms/promotions/1/edit');
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('promotion');
     }
@@ -54,7 +54,7 @@ class PromotionsTest extends TestCase
         unset($promotion['is_published']);
         unset($promotion['translations']);
 
-        $response = $this->call('POST', 'cms/promotions', $promotion);
+        $response = $this->post('cms/promotions', $promotion);
 
         $this->assertEquals(302, $response->getStatusCode());
     }
@@ -62,9 +62,9 @@ class PromotionsTest extends TestCase
     public function testUpdate()
     {
         $promotion = ['id' => 2, 'slug' => 'dumber'];
-        $response = $this->call('POST', 'cms/promotions', $promotion);
+        $response = $this->post('cms/promotions', $promotion);
 
-        $response = $this->call('PATCH', 'cms/promotions/2', [
+        $response = $this->patch('cms/promotions/2', [
             'slug' => 'whacky',
             'details' => 'foobar',
         ]);
@@ -76,9 +76,9 @@ class PromotionsTest extends TestCase
     public function testUpdateTranslation()
     {
         $promotion = ['id' => 2, 'slug' => 'dumber'];
-        $response = $this->call('POST', 'cms/promotions', $promotion);
+        $response = $this->post('cms/promotions', $promotion);
 
-        $response = $this->call('PATCH', 'cms/promotions/2', [
+        $response = $this->patch('cms/promotions/2', [
             'slug' => 'whacky',
             'details' => 'foobar',
             'lang' => 'fr',
@@ -92,7 +92,7 @@ class PromotionsTest extends TestCase
 
     public function testDelete()
     {
-        $response = $this->call('DELETE', 'cms/promotions/1');
+        $response = $this->delete('cms/promotions/1');
         $this->assertEquals(302, $response->getStatusCode());
         $response->assertRedirect('cms/promotions');
     }

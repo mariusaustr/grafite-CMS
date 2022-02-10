@@ -8,19 +8,19 @@
         @include('cms::modules.pages.breadcrumbs', ['location' => ['create']])
     </div>
     <div class="col-md-12 mt-4">
-        {!! Form::open(['route' => cms()->route('pages.store'), 'class' => 'add', 'files' => true]) !!}
+        {!! form()->open(['route' => cms()->route('pages.store'), 'class' => 'add', 'files' => true]) !!}
 
-            {!! FormMaker::setColumns(2)->fromTable('pages', config('cms.forms.page.identity')) !!}
-            {!! FormMaker::setColumns(2)->fromTable('pages', config('cms.forms.page.content')) !!}
-            {!! FormMaker::setColumns(2)->fromTable('pages', config('cms.forms.page.seo')) !!}
-            {!! FormMaker::setColumns(2)->fromTable('pages', config('cms.forms.page.publish')) !!}
+            {!! formMaker()->setColumns(2)->fromTable('pages', config('cms.forms.page.identity')) !!}
+            {!! formMaker()->setColumns(2)->fromTable('pages', config('cms.forms.page.content')) !!}
+            {!! formMaker()->setColumns(2)->fromTable('pages', config('cms.forms.page.seo')) !!}
+            {!! formMaker()->setColumns(2)->fromTable('pages', config('cms.forms.page.publish')) !!}
 
             <div class="form-group text-right">
                 <a href="{!! cms()->url('pages') !!}" class="btn btn-secondary raw-left">Cancel</a>
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
             </div>
 
-        {!! Form::close() !!}
+        {!! form()->close() !!}
     </div>
 
 @endsection

@@ -43,7 +43,7 @@
 
         <div class="row">
             <div class="@if (config('cms.live-preview', false)) col-md-6 @else col-md-12 @endif">
-                {!! Form::model($event, ['route' => [cms()->route('events.update'), $event->id], 'method' => 'patch', 'class' => 'edit']) !!}
+                {!! form()->model($event, ['route' => [cms()->route('events.update'), $event->id], 'method' => 'patch', 'class' => 'edit']) !!}
 
                     <div class="form-group">
                         <label for="Template">Template</label>
@@ -60,17 +60,17 @@
 
                     <input type="hidden" name="lang" value="{{ request('lang') }}">
 
-                    {!! FormMaker::setColumns(3)->fromObject($event->asObject(), config('cms.forms.event.identity')) !!}
-                    {!! FormMaker::setColumns(1)->fromObject($event->asObject(), config('cms.forms.event.content')) !!}
-                    {!! FormMaker::setColumns(2)->fromObject($event->asObject(), config('cms.forms.event.seo')) !!}
-                    {!! FormMaker::setColumns(2)->fromObject($event->asObject(), config('cms.forms.event.publish')) !!}
+                    {!! formMaker()->setColumns(3)->fromObject($event->asObject(), config('cms.forms.event.identity')) !!}
+                    {!! formMaker()->setColumns(1)->fromObject($event->asObject(), config('cms.forms.event.content')) !!}
+                    {!! formMaker()->setColumns(2)->fromObject($event->asObject(), config('cms.forms.event.seo')) !!}
+                    {!! formMaker()->setColumns(2)->fromObject($event->asObject(), config('cms.forms.event.publish')) !!}
 
                     <div class="form-group text-right">
                         <a href="{!! cms()->url('events') !!}" class="btn btn-secondary float-left">Cancel</a>
-                        {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                        {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
                     </div>
 
-                {!! Form::close() !!}
+                {!! form()->close() !!}
             </div>
             @if (config('cms.live-preview', false))
                 <div class="col-md-6 hidden-sm hidden-xs">

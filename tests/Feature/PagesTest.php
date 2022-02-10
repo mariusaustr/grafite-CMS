@@ -23,20 +23,20 @@ class PagesTest extends TestCase
 
     public function testIndex()
     {
-        $response = $this->call('GET', 'cms/pages');
+        $response = $this->get('cms/pages');
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('pages');
     }
 
     public function testCreate()
     {
-        $response = $this->call('GET', 'cms/pages/create');
+        $response = $this->get('cms/pages/create');
         $this->assertEquals(200, $response->getStatusCode());
     }
 
     public function testEdit()
     {
-        $response = $this->call('GET', 'cms/pages/1/edit');
+        $response = $this->get('cms/pages/1/edit');
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('page');
     }
@@ -52,14 +52,14 @@ class PagesTest extends TestCase
         $page = Page::factory()->make(['id' => 2]);
         $page = $page->toArray();
         unset($page['translations']);
-        $response = $this->call('POST', 'cms/pages', $page);
+        $response = $this->post('cms/pages', $page);
 
         $this->assertEquals(302, $response->getStatusCode());
     }
 
     public function testSearch()
     {
-        $response = $this->call('POST', 'cms/pages/search', ['term' => 'wtf']);
+        $response = $this->post('cms/pages/search', ['term' => 'wtf']);
 
         $response->assertViewHas('pages');
         $this->assertEquals(200, $response->getStatusCode());
@@ -68,9 +68,9 @@ class PagesTest extends TestCase
     public function testUpdate()
     {
         $page = ['id' => 2, 'title' => 'dumber', 'url' => 'dumber', 'entry' => 'okie dokie'];
-        $response = $this->call('POST', 'cms/pages', $page);
+        $response = $this->post('cms/pages', $page);
 
-        $response = $this->call('PATCH', 'cms/pages/2', [
+        $response = $this->patch('cms/pages/2', [
             'title' => 'smarter',
             'url' => 'smart',
             'blocks' => null,
@@ -83,9 +83,9 @@ class PagesTest extends TestCase
     public function testUpdateTranslation()
     {
         $page = ['id' => 2, 'title' => 'dumber', 'url' => 'dumber', 'entry' => 'okie dokie'];
-        $response = $this->call('POST', 'cms/pages', $page);
+        $response = $this->post('cms/pages', $page);
 
-        $response = $this->call('PATCH', 'cms/pages/2', [
+        $response = $this->patch('cms/pages/2', [
             'title' => 'smarter',
             'url' => 'smart',
             'lang' => 'fr',
@@ -100,7 +100,7 @@ class PagesTest extends TestCase
 
     public function testDelete()
     {
-        $response = $this->call('DELETE', 'cms/pages/1');
+        $response = $this->delete('cms/pages/1');
         $this->assertEquals(302, $response->getStatusCode());
         $response->assertRedirect('cms/pages');
     }

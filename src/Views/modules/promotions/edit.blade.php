@@ -32,19 +32,19 @@
 
         <div class="row">
             <div class="@if (config('cms.live-preview', false)) col-md-6 @else col-md-12 @endif">
-                {!! Form::model($promotion, ['route' => [cms()->route('promotions.update'), $promotion->id], 'method' => 'patch', 'class' => 'edit']) !!}
+                {!! form()->model($promotion, ['route' => [cms()->route('promotions.update'), $promotion->id], 'method' => 'patch', 'class' => 'edit']) !!}
 
                     <input type="hidden" name="lang" value="{{ request('lang') }}">
 
-                    {!! FormMaker::setColumns(3)->fromObject($promotion->asObject(), config('cms.forms.promotion.identity')) !!}
-                    {!! FormMaker::setColumns(1)->fromObject($promotion->asObject(), config('cms.forms.promotion.content')) !!}
+                    {!! formMaker()->setColumns(3)->fromObject($promotion->asObject(), config('cms.forms.promotion.identity')) !!}
+                    {!! formMaker()->setColumns(1)->fromObject($promotion->asObject(), config('cms.forms.promotion.content')) !!}
 
                     <div class="form-group text-right">
                         <a href="{!! cms()->url('promotions') !!}" class="btn btn-secondary float-left">Cancel</a>
-                        {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                        {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
                     </div>
 
-                {!! Form::close() !!}
+                {!! form()->close() !!}
             </div>
             @if (config('cms.live-preview', false))
                 <div class="col-md-6 hidden-sm hidden-xs">

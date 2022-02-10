@@ -38,18 +38,18 @@
 
         <div class="row">
             <div class="col-md-12">
-                {!! Form::model($faq, ['route' => [cms()->route('faqs.update'), $faq->id], 'method' => 'patch', 'class' => 'edit']) !!}
+                {!! form()->model($faq, ['route' => [cms()->route('faqs.update'), $faq->id], 'method' => 'patch', 'class' => 'edit']) !!}
 
                     <input type="hidden" name="lang" value="{{ request('lang') }}">
 
-                    {!! FormMaker::fromObject($faq->asObject(), config('cms.forms.faqs')) !!}
+                    {!! formMaker()->fromObject($faq->asObject(), config('cms.forms.faqs')) !!}
 
                     <div class="form-group text-right">
                         <a href="{!! cms()->url('faqs') !!}" class="btn btn-secondary float-left">Cancel</a>
-                        {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                        {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
                     </div>
 
-                {!! Form::close() !!}
+                {!! form()->close() !!}
             </div>
         </div>
     </div>

@@ -32,7 +32,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                {!! Form::model($widget, ['route' => [cms()->route('widgets.update'), $widget->id], 'method' => 'patch', 'class' => 'edit']) !!}
+                {!! form()->model($widget, ['route' => [cms()->route('widgets.update'), $widget->id], 'method' => 'patch', 'class' => 'edit']) !!}
 
                     <input type="hidden" name="lang" value="{{ request('lang') }}">
 
@@ -40,21 +40,21 @@
                         <input type="hidden" name="name" value="{{ $widget->name }}">
                         <input type="hidden" name="slug" value="{{ $widget->slug }}">
                         <div class="form-group">
-                            {!! FormMaker::fromObject($widget->translationData(request('lang')), ['content' => [
+                            {!! formMaker()->fromObject($widget->translationData(request('lang')), ['content' => [
                                 'type' => 'text',
                                 'class' => 'redactor'
                             ]]) !!}
                         </div>
                     @else
-                        {!! FormMaker::fromObject($widget, config('cms.forms.widget')) !!}
+                        {!! formMaker()->fromObject($widget, config('cms.forms.widget')) !!}
                     @endif
 
                     <div class="form-group text-right">
                         <a href="{!! cms()->url('widgets') !!}" class="btn btn-secondary float-left">Cancel</a>
-                        {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                        {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
                     </div>
 
-                {!! Form::close() !!}
+                {!! form()->close() !!}
             </div>
         </div>
     </div>

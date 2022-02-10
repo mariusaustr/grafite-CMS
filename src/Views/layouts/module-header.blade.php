@@ -7,9 +7,9 @@
                 </li>
             @endif
         </ul>
-        {!! Form::open(['url' => cms()->url($module.'/search'), 'class' => 'form-inline mt-2']) !!}
+        {!! form()->open(['url' => cms()->url($module.'/search'), 'class' => 'form-inline mt-2']) !!}
             <input class="form-control mr-sm-2" name="term" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        {!! Form::close() !!}
+        {!! form()->close() !!}
     </nav>
 </div>

@@ -23,20 +23,20 @@ class EventsTest extends TestCase
 
     public function testIndex()
     {
-        $response = $this->call('GET', 'cms/events');
+        $response = $this->get('cms/events');
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('events');
     }
 
     public function testCreate()
     {
-        $response = $this->call('GET', 'cms/events/create');
+        $response = $this->get('cms/events/create');
         $this->assertEquals(200, $response->getStatusCode());
     }
 
     public function testEdit()
     {
-        $response = $this->call('GET', 'cms/events/1/edit');
+        $response = $this->get('cms/events/1/edit');
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('event');
     }
@@ -52,14 +52,14 @@ class EventsTest extends TestCase
         $event = Event::factory()->make(['id' => 2]);
         $event = $event->toArray();
         unset($event['translations']);
-        $response = $this->call('POST', 'cms/events', $event);
+        $response = $this->post('cms/events', $event);
 
         $this->assertEquals(302, $response->getStatusCode());
     }
 
     public function testSearch()
     {
-        $response = $this->call('POST', 'cms/events/search', ['term' => 'wtf']);
+        $response = $this->post('cms/events/search', ['term' => 'wtf']);
 
         $response->assertViewHas('events');
         $this->assertEquals(200, $response->getStatusCode());
@@ -68,9 +68,9 @@ class EventsTest extends TestCase
     public function testUpdate()
     {
         $event = ['id' => 2, 'title' => 'dumber', 'start_date' => '2016-10-31', 'end_date' => '2016-10-31', 'details' => 'okie dokie'];
-        $response = $this->call('POST', 'cms/events', $event);
+        $response = $this->post('cms/events', $event);
 
-        $response = $this->call('PATCH', 'cms/events/2', [
+        $response = $this->patch('cms/events/2', [
             'title' => 'smarter',
         ]);
 
@@ -81,9 +81,9 @@ class EventsTest extends TestCase
     public function testUpdateTranslation()
     {
         $event = ['id' => 2, 'title' => 'dumber', 'start_date' => '2016-10-31', 'end_date' => '2016-10-31', 'details' => 'okie dokie'];
-        $response = $this->call('POST', 'cms/events', $event);
+        $response = $this->post('cms/events', $event);
 
-        $response = $this->call('PATCH', 'cms/events/2', [
+        $response = $this->patch('cms/events/2', [
             'title' => 'smarter',
             'lang' => 'fr',
         ]);
@@ -96,7 +96,7 @@ class EventsTest extends TestCase
 
     public function testDelete()
     {
-        $response = $this->call('DELETE', 'cms/events/1');
+        $response = $this->delete('cms/events/1');
         $this->assertEquals(302, $response->getStatusCode());
         $response->assertRedirect('cms/events');
     }

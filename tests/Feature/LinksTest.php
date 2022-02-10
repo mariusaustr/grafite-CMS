@@ -26,13 +26,13 @@ class LinksTest extends TestCase
 
     public function testCreate()
     {
-        $response = $this->call('GET', '/cms/links/create');
+        $response = $this->get('/cms/links/create');
         $this->assertEquals(200, $response->getStatusCode());
     }
 
     public function testEdit()
     {
-        $response = $this->call('GET', '/cms/links/1/edit');
+        $response = $this->get('/cms/links/1/edit');
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('links');
     }
@@ -46,7 +46,7 @@ class LinksTest extends TestCase
     public function testStore()
     {
         $link = Link::factory()->make(['id' => 89]);
-        $response = $this->call('POST', '/cms/links', $link->toArray());
+        $response = $this->post('/cms/links', $link->toArray());
 
         $this->assertEquals(302, $response->getStatusCode());
         $response->assertRedirect('/cms/menus/1/edit');
@@ -54,7 +54,7 @@ class LinksTest extends TestCase
 
     public function testUpdate()
     {
-        $response = $this->call('PATCH', '/cms/links/1', [
+        $response = $this->patch('/cms/links/1', [
             'name' => 'wtf',
         ]);
 
@@ -63,7 +63,7 @@ class LinksTest extends TestCase
 
     public function testDelete()
     {
-        $response = $this->call('DELETE', '/cms/links/1');
+        $response = $this->delete('/cms/links/1');
         $this->assertEquals(302, $response->getStatusCode());
     }
 }

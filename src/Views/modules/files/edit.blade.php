@@ -13,16 +13,16 @@
     </div>
 
     <div class="col-md-12">
-        {!! Form::model($files, ['route' => [cms()->route('files.update'), $files->id], 'files' => true, 'method' => 'patch', 'class' => 'edit']) !!}
+        {!! form()->model($files, ['route' => [cms()->route('files.update'), $files->id], 'files' => true, 'method' => 'patch', 'class' => 'edit']) !!}
 
-            {!! FormMaker::setColumns(2)->fromObject($files, config('cms.forms.file-edit')) !!}
+            {!! formMaker()->setColumns(2)->fromObject($files, config('cms.forms.file-edit')) !!}
 
             <div class="form-group text-right">
                 <a href="{!! cms()->url('files') !!}" class="btn btn-secondary raw-left">Cancel</a>
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
             </div>
 
-        {!! Form::close() !!}
+        {!! form()->close() !!}
     </div>
 
 @endsection

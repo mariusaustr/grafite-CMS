@@ -23,20 +23,20 @@ class FAQTest extends TestCase
 
     public function testIndex()
     {
-        $response = $this->call('GET', 'cms/faqs');
+        $response = $this->get('cms/faqs');
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('faqs');
     }
 
     public function testCreate()
     {
-        $response = $this->call('GET', 'cms/faqs/create');
+        $response = $this->get('cms/faqs/create');
         $this->assertEquals(200, $response->getStatusCode());
     }
 
     public function testEdit()
     {
-        $response = $this->call('GET', 'cms/faqs/1'.'/edit');
+        $response = $this->get('cms/faqs/1'.'/edit');
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('faq');
     }
@@ -49,7 +49,7 @@ class FAQTest extends TestCase
 
     public function testStore()
     {
-        $response = $this->call('POST', 'cms/faqs', [
+        $response = $this->post('cms/faqs', [
             'question' => 'who is this',
             'answer' => 'I am your worst nightmare!',
             'is_published' => '',
@@ -61,7 +61,7 @@ class FAQTest extends TestCase
 
     public function testSearch()
     {
-        $response = $this->call('POST', 'cms/faqs/search', ['term' => 'wtf']);
+        $response = $this->post('cms/faqs/search', ['term' => 'wtf']);
 
         $response->assertViewHas('faqs');
         $this->assertEquals(200, $response->getStatusCode());
@@ -69,7 +69,7 @@ class FAQTest extends TestCase
 
     public function testUpdate()
     {
-        $response = $this->call('PATCH', 'cms/faqs/1', [
+        $response = $this->patch('cms/faqs/1', [
             'question' => 'who is this',
             'answer' => 'I am your worst nightmare!',
             'is_published' => 'on',
@@ -81,7 +81,7 @@ class FAQTest extends TestCase
 
     public function testUpdateTranslation()
     {
-        $response = $this->call('PATCH', 'cms/faqs/1', [
+        $response = $this->patch('cms/faqs/1', [
             'question' => 'who is this',
             'answer' => 'I am your worst nightmare!',
             'is_published' => 'on',
@@ -96,7 +96,7 @@ class FAQTest extends TestCase
 
     public function testDelete()
     {
-        $response = $this->call('DELETE', 'cms/faqs/1');
+        $response = $this->delete('cms/faqs/1');
         $this->assertEquals(302, $response->getStatusCode());
         $response->assertRedirect('cms/faqs');
     }

@@ -23,20 +23,20 @@ class ImagesTest extends TestCase
 
     public function testIndex()
     {
-        $response = $this->call('GET', 'cms/images');
+        $response = $this->get('cms/images');
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('images');
     }
 
     public function testCreate()
     {
-        $response = $this->call('GET', 'cms/images/create');
+        $response = $this->get('cms/images/create');
         $this->assertEquals(200, $response->getStatusCode());
     }
 
     public function testEdit()
     {
-        $response = $this->call('GET', 'cms/images/1/edit');
+        $response = $this->get('cms/images/1/edit');
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('images');
     }
@@ -61,7 +61,7 @@ class ImagesTest extends TestCase
                 'original' => 'what.jpg',
             ],
         ];
-        $response = $this->call('POST', 'cms/images', ['location' => $image['location']], [], []);
+        $response = $this->post('cms/images', ['location' => $image['location']], [], []);
 
         $this->assertEquals(302, $response->getStatusCode());
     }
@@ -69,7 +69,7 @@ class ImagesTest extends TestCase
     public function testUpdate()
     {
         $image = (array) Image::factory()->make(['id' => 3, 'title' => 'dumber']);
-        $response = $this->call('PATCH', 'cms/images/3', $image);
+        $response = $this->patch('cms/images/3', $image);
 
         $this->assertEquals(302, $response->getStatusCode());
         $response->assertRedirect('/cms/images');
@@ -89,9 +89,9 @@ class ImagesTest extends TestCase
                 'original' => 'what.jpg',
             ],
         ];
-        $this->call('POST', 'cms/images', $image, [], ['location' => ['image' => $uploadedFile]]);
+        $this->post('cms/images', $image, [], ['location' => ['image' => $uploadedFile]]);
 
-        $response = $this->call('DELETE', 'cms/images/2');
+        $response = $this->delete('cms/images/2');
         $this->assertEquals(302, $response->getStatusCode());
         $response->assertRedirect('cms/images');
     }

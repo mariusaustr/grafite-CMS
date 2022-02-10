@@ -23,20 +23,20 @@ class FilesTest extends TestCase
 
     public function testIndex()
     {
-        $response = $this->call('GET', 'cms/files');
+        $response = $this->get('cms/files');
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('files');
     }
 
     public function testCreate()
     {
-        $response = $this->call('GET', 'cms/files/create');
+        $response = $this->get('cms/files/create');
         $this->assertEquals(200, $response->getStatusCode());
     }
 
     public function testEdit()
     {
-        $response = $this->call('GET', 'cms/files/1/edit');
+        $response = $this->get('cms/files/1/edit');
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('files');
     }
@@ -61,13 +61,13 @@ class FilesTest extends TestCase
                 ],
             ],
         ]);
-        $response = $this->call('POST', 'cms/files', $file->getAttributes());
+        $response = $this->post('cms/files', $file->getAttributes());
         $this->assertEquals(302, $response->getStatusCode());
     }
 
     public function testSearch()
     {
-        $response = $this->call('POST', 'cms/files/search', ['term' => 'wtf']);
+        $response = $this->post('cms/files/search', ['term' => 'wtf']);
 
         $response->assertViewHas('files');
         $this->assertEquals(200, $response->getStatusCode());
@@ -76,7 +76,7 @@ class FilesTest extends TestCase
     public function testUpdate()
     {
         $file = (array) File::factory()->make(['id' => 3, 'title' => 'dumber']);
-        $response = $this->call('PATCH', 'cms/files/3', $file);
+        $response = $this->patch('cms/files/3', $file);
 
         $this->assertEquals(302, $response->getStatusCode());
         $response->assertRedirect('/cms/files');
@@ -96,9 +96,9 @@ class FilesTest extends TestCase
                 ],
             ],
         ]);
-        $this->call('POST', 'cms/files', $file->getAttributes());
+        $this->post('cms/files', $file->getAttributes());
 
-        $response = $this->call('DELETE', 'cms/files/2');
+        $response = $this->delete('cms/files/2');
         $this->assertEquals(302, $response->getStatusCode());
         $response->assertRedirect('cms/files');
     }

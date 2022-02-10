@@ -143,7 +143,6 @@ class GrafiteCmsProvider extends ServiceProvider
         $loader->alias('Minify', MinifyFacade::class);
         $loader->alias('Markdown', Markdown::class);
         $loader->alias('Image', Image::class);
-        $loader->alias('Form', Form::class);
 
         /*
         |--------------------------------------------------------------------------

@@ -43,11 +43,11 @@
 
         <div class="row">
             <div class="@if (config('cms.live-preview', false)) col-md-6 @else col-md-12 @endif">
-                {!! Form::model($blog, ['route' => [cms()->route('blog.update'), $blog->id], 'method' => 'patch', 'class' => 'edit', 'files' => true]) !!}
+                {!! form()->model($blog, ['route' => [cms()->route('blog.update'), $blog->id], 'method' => 'patch', 'class' => 'edit', 'files' => true]) !!}
 
                     <input type="hidden" name="lang" value="{{ request('lang') }}">
 
-                    {!! FormMaker::setColumns(3)->fromObject($blog->asObject(), config('cms.forms.blog.identity')) !!}
+                    {!! formMaker()->setColumns(3)->fromObject($blog->asObject(), config('cms.forms.blog.identity')) !!}
 
                     <div class="form-group">
                         <label for="Template">Template</label>
@@ -64,7 +64,7 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            {!! FormMaker::setColumns(1)->fromObject($blog->asObject(), config('cms.forms.blog.content')) !!}
+                            {!! formMaker()->setColumns(1)->fromObject($blog->asObject(), config('cms.forms.blog.content')) !!}
                         </div>
                         <div class="col-md-6">
                             @if ($blog->hero_image)
@@ -80,19 +80,19 @@
 
                     <div class="row">
                         <div class="col-md-12 mt-4">
-                            {!! FormMaker::setColumns(2)->fromObject($blog->asObject(), config('cms.forms.blog.seo')) !!}
+                            {!! formMaker()->setColumns(2)->fromObject($blog->asObject(), config('cms.forms.blog.seo')) !!}
                         </div>
                     </div>
-                    {!! FormMaker::setColumns(2)->fromObject($blog->asObject(), config('cms.forms.blog.publish')) !!}
+                    {!! formMaker()->setColumns(2)->fromObject($blog->asObject(), config('cms.forms.blog.publish')) !!}
 
                     @include('cms::modules.blocks', ['item' => $blog->asObject()])
 
                     <div class="form-group text-right">
                         <a href="{!! cms()->url('blog') !!}" class="btn btn-secondary raw-left">Cancel</a>
-                        {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                        {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
                     </div>
 
-                {!! Form::close() !!}
+                {!! form()->close() !!}
             </div>
             @if (config('cms.live-preview', false))
                 <div class="col-md-6 hidden-sm hidden-xs">
