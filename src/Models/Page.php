@@ -5,6 +5,7 @@ namespace Grafite\Cms\Models;
 use Carbon\Carbon;
 use Grafite\Cms\Services\Normalizer;
 use Grafite\Cms\Traits\Translatable;
+use Grafite\Database\Factories\PageFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Collection;
 
@@ -19,6 +20,11 @@ class Page extends CmsModel
 {
     use Translatable;
     use HasFactory;
+
+    protected static function newFactory()
+    {
+        return PageFactory::new();
+    }
 
     public $table = 'pages';
 

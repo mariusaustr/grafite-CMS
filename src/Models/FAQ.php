@@ -3,12 +3,18 @@
 namespace Grafite\Cms\Models;
 
 use Grafite\Cms\Traits\Translatable;
+use Grafite\Database\Factories\FAQFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class FAQ extends CmsModel
 {
     use Translatable;
     use HasFactory;
+
+    protected static function newFactory()
+    {
+        return FAQFactory::new();
+    }
 
     public $table = 'faqs';
 

@@ -3,6 +3,7 @@
 namespace Grafite\Cms\Models;
 
 use Carbon\Carbon;
+use Grafite\Database\Factories\FileFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -13,6 +14,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class File extends CmsModel
 {
     use HasFactory;
+
+    protected static function newFactory()
+    {
+        return FileFactory::new();
+    }
 
     public $table = 'files';
 

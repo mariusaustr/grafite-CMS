@@ -4,6 +4,7 @@ namespace Grafite\Cms\Models;
 
 use Grafite\Cms\Services\Normalizer;
 use Grafite\Cms\Traits\Translatable;
+use Grafite\Database\Factories\EventFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Collection;
 
@@ -11,6 +12,11 @@ class Event extends CmsModel
 {
     use Translatable;
     use HasFactory;
+
+    protected static function newFactory()
+    {
+        return EventFactory::new();
+    }
 
     public $table = 'events';
 

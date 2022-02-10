@@ -3,6 +3,7 @@
 namespace Grafite\Cms\Models;
 
 use Grafite\Cms\Traits\Translatable;
+use Grafite\Database\Factories\LinkFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -10,6 +11,11 @@ class Link extends CmsModel
 {
     use Translatable;
     use HasFactory;
+
+    protected static function newFactory()
+    {
+        return LinkFactory::new();
+    }
 
     public $table = 'links';
 

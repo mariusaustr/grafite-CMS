@@ -23,7 +23,7 @@ class WidgetsTest extends TestCase
 
     public function testIndex()
     {
-        $response = $this->call('GET', 'cms/widgets');
+        $response = $this->getJson('cms/widgets')->dump();
         $this->assertEquals(200, $response->getStatusCode());
         $response->assertViewHas('widgets');
     }

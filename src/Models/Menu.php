@@ -2,11 +2,17 @@
 
 namespace Grafite\Cms\Models;
 
+use Grafite\Database\Factories\MenuFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Menu extends CmsModel
 {
     use HasFactory;
+
+    protected static function newFactory()
+    {
+        return MenuFactory::new();
+    }
 
     public $table = 'menus';
 

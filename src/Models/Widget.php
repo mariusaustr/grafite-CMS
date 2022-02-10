@@ -3,6 +3,7 @@
 namespace Grafite\Cms\Models;
 
 use Grafite\Cms\Traits\Translatable;
+use Grafite\Database\Factories\WidgetFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -12,6 +13,11 @@ class Widget extends CmsModel
 {
     use Translatable;
     use HasFactory;
+
+    protected static function newFactory()
+    {
+        return WidgetFactory::new();
+    }
 
     public $table = 'widgets';
 

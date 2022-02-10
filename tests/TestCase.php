@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 class TestCase extends \Orchestra\Testbench\TestCase
 {
     /**
@@ -47,7 +49,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withFactories(__DIR__.'/factories');
+
+        // Factory::useNamespace('Grafite\Database\Factories\\');
 
         $this->artisan('vendor:publish', [
             '--provider' => 'Grafite\Cms\GrafiteCmsProvider',
