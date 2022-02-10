@@ -36,12 +36,12 @@
 
                     <input type="hidden" name="lang" value="{{ request('lang') }}">
 
-                    {!! formMaker()->setColumns(3)->fromObject($promotion->asObject(), config('cms.forms.promotion.identity')) !!}
+                    {!! formMaker()->setColumns(3)->setSections([array_keys(config('cms.forms.promotion.identity'))])->fromObject($promotion->asObject(), config('cms.forms.promotion.identity')) !!}
                     {!! formMaker()->setColumns(1)->fromObject($promotion->asObject(), config('cms.forms.promotion.content')) !!}
 
                     <div class="form-group text-right">
                         <a href="{!! cms()->url('promotions') !!}" class="btn btn-secondary float-left">Cancel</a>
-                        {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
+                        {!! form()->field->submit('Save', ['class' => 'btn btn-primary']) !!}
                     </div>
 
                 {!! form()->close() !!}

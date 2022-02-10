@@ -11,12 +11,12 @@
     <div class="col-md-12">
         {!! form()->open(['route' => cms()->route('promotions.store'), 'class' => 'add']) !!}
 
-            {!! formMaker()->setColumns(3)->fromTable('promotions', config('cms.forms.promotion.identity')) !!}
+            {!! formMaker()->setColumns(3)->setSections([array_keys(config('cms.forms.promotion.identity'))])->fromTable('promotions', config('cms.forms.promotion.identity')) !!}
             {!! formMaker()->setColumns(1)->fromTable('promotions', config('cms.forms.promotion.content')) !!}
 
             <div class="form-group text-right">
                 <a href="{!! cms()->url('promotions') !!}" class="btn btn-secondary float-left">Cancel</a>
-                {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! form()->field->submit('Save', ['class' => 'btn btn-primary']) !!}
             </div>
 
         {!! form()->close() !!}

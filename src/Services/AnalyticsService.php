@@ -4,7 +4,6 @@ namespace Grafite\Cms\Services;
 
 use Carbon\Carbon;
 use Grafite\Cms\Models\Analytics;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 
 class AnalyticsService
@@ -64,7 +63,7 @@ class AnalyticsService
         return $browsers;
     }
 
-    public function convertDataToItems(Collection $data, string $key, array $conversions = [], int $limit = 15): array
+    public function convertDataToItems(array $data, string $key, array $conversions = [], int $limit = 15): array
     {
         if (! isset($conversions['unknown'])) {
             $conversions['unknown'] = 0;

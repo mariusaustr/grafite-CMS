@@ -47,7 +47,7 @@
 
                     <input type="hidden" name="lang" value="{{ request('lang') }}">
 
-                    {!! formMaker()->setColumns(3)->fromObject($blog->asObject(), config('cms.forms.blog.identity')) !!}
+                    {!! formMaker()->setColumns(3)->setSections([array_keys(config('cms.forms.blog.identity'))])->fromObject($blog->asObject(), config('cms.forms.blog.identity')) !!}
 
                     <div class="form-group">
                         <label for="Template">Template</label>
@@ -80,16 +80,16 @@
 
                     <div class="row">
                         <div class="col-md-12 mt-4">
-                            {!! formMaker()->setColumns(2)->fromObject($blog->asObject(), config('cms.forms.blog.seo')) !!}
+                            {!! formMaker()->setColumns(2)->setSections([array_keys(config('cms.forms.blog.seo'))])->fromObject($blog->asObject(), config('cms.forms.blog.seo')) !!}
                         </div>
                     </div>
-                    {!! formMaker()->setColumns(2)->fromObject($blog->asObject(), config('cms.forms.blog.publish')) !!}
+                    {!! formMaker()->setColumns(2)->setSections([array_keys(config('cms.forms.blog.publish'))])->fromObject($blog->asObject(), config('cms.forms.blog.publish')) !!}
 
                     @include('cms::modules.blocks', ['item' => $blog->asObject()])
 
                     <div class="form-group text-right">
                         <a href="{!! cms()->url('blog') !!}" class="btn btn-secondary raw-left">Cancel</a>
-                        {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
+                        {!! form()->field->submit('Save', ['class' => 'btn btn-primary']) !!}
                     </div>
 
                 {!! form()->close() !!}

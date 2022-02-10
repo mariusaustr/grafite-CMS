@@ -28,8 +28,8 @@ class CmsRouteProvider extends ServiceProvider
     public function map(Router $router)
     {
         // $router->group(, function ($router) {
-            require __DIR__.'/../Routes/web.php';
-            require __DIR__.'/../Routes/api.php';
+        require __DIR__.'/../Routes/web.php';
+        require __DIR__.'/../Routes/api.php';
         // });
     }
 }

@@ -12,7 +12,7 @@
     "require": {
         "php": "^8.0",
         "laravel/framework": "^8.82|^9.0",
-        "grafite/forms": "^4.0",
+        "grafite/forms": "^6.0",
         "laravelcollective/html": "^6.0",
         "devfactory/minify": "^1.0",
         "aws/aws-sdk-php": "^3.18",

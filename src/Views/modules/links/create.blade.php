@@ -26,7 +26,7 @@
 
             <div class="form-group text-right">
                 <a href="{!! url()->previous() !!}" class="btn btn-secondary raw-left">Cancel</a>
-                {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! form()->field->submit('Save', ['class' => 'btn btn-primary']) !!}
             </div>
 
         {!! form()->close() !!}

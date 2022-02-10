@@ -47,7 +47,7 @@ class ValidationService
         }
 
         if (! $jsonInput) {
-            $result['redirect'] = Redirect::back()->with('errors', $errors)->with('inputs', $this->inputsArray($jsonInput));
+            $result['redirect'] = Redirect::back()->with('errors', collect($errors))->with('inputs', $this->inputsArray($jsonInput));
         }
 
         if (! empty($errors)) {

@@ -61,7 +61,7 @@ class ImagesTest extends TestCase
                 'original' => 'what.jpg',
             ],
         ];
-        $response = $this->post('cms/images', ['location' => $image['location']], [], []);
+        $response = $this->post('cms/images', ['location' => $image['location']]);
 
         $this->assertEquals(302, $response->getStatusCode());
     }
@@ -89,7 +89,7 @@ class ImagesTest extends TestCase
                 'original' => 'what.jpg',
             ],
         ];
-        $this->post('cms/images', $image, [], ['location' => ['image' => $uploadedFile]]);
+        $this->post('cms/images', $image);
 
         $response = $this->delete('cms/images/2');
         $this->assertEquals(302, $response->getStatusCode());

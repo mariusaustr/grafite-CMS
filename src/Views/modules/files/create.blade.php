@@ -16,11 +16,11 @@
     <div class="col-md-12">
         {!! form()->open(['route' => cms()->route('files.store'), 'files' => true, 'id' => 'fileDetailsForm', 'class' => 'add']); !!}
 
-            {!! formMaker()->setColumns(2)->fromTable('files', config('cms.forms.files')) !!}
+            {!! formMaker()->setColumns(2)->setSections([array_keys(config('cms.forms.files'))])->fromTable('files', config('cms.forms.files')) !!}
 
             <div class="form-group text-right">
                 <a href="{!! cms()->url('files') !!}" class="btn btn-secondary raw-left">Cancel</a>
-                {!! form()->submit('Save', ['class' => 'btn btn-primary', 'id' => 'saveFilesBtn']) !!}
+                {!! form()->field->submit('Save', ['class' => 'btn btn-primary', 'id' => 'saveFilesBtn']) !!}
             </div>
 
         {!! form()->close() !!}

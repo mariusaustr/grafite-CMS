@@ -20,7 +20,7 @@ class NormalizerTest extends TestCase
     {
         $result = $this->service->__toString();
 
-        $this->assertContains('sample', $result);
+        $this->assertEquals('<p>sample</p>', $result);
     }
 
     public function testPlain()

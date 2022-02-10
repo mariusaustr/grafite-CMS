@@ -47,7 +47,7 @@
 
                     <input type="hidden" name="lang" value="{{ request('lang') }}">
 
-                    {!! formMaker()->setColumns(2)->fromObject($page->asObject(), config('cms.forms.page.identity')) !!}
+                    {!! formMaker()->setColumns(2)->setSections([array_keys(config('cms.forms.page.identity'))])->fromObject($page->asObject(), config('cms.forms.page.identity')) !!}
 
                     <div class="form-group">
                         <label for="Template">Template</label>
@@ -80,17 +80,17 @@
 
                     <div class="row">
                         <div class="col-md-12 mt-4">
-                            {!! formMaker()->setColumns(2)->fromObject($page->asObject(), config('cms.forms.page.seo')) !!}
+                            {!! formMaker()->setColumns(2)->setSections([array_keys(config('cms.forms.page.seo'))])->fromObject($page->asObject(), config('cms.forms.page.seo')) !!}
                         </div>
                     </div>
 
-                    {!! formMaker()->setColumns(2)->fromObject($page->asObject(), config('cms.forms.page.publish')) !!}
+                    {!! formMaker()->setColumns(2)->setSections([array_keys(config('cms.forms.page.publish'))])->fromObject($page->asObject(), config('cms.forms.page.publish')) !!}
 
                     @include('cms::modules.blocks', ['item' => $page->asObject()])
 
                     <div class="form-group text-right">
                         <a href="{!! cms()->url('pages') !!}" class="btn btn-secondary raw-left">Cancel</a>
-                        {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
+                        {!! form()->field->submit('Save', ['class' => 'btn btn-primary']) !!}
                     </div>
 
                 {!! form()->close() !!}

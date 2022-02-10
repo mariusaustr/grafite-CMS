@@ -30,7 +30,7 @@ class WidgetsTest extends TestCase
 
     public function testCreate()
     {
-        $response = $this->getjson('cms/widgets/create')->dump();
+        $response = $this->get('cms/widgets/create');
         $this->assertEquals(200, $response->getStatusCode());
     }
 

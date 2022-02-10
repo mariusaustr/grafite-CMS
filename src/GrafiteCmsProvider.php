@@ -17,7 +17,6 @@ use Grafite\Cms\Providers\CmsEventServiceProvider;
 use Grafite\Cms\Providers\CmsModuleProvider;
 use Grafite\Cms\Providers\CmsRouteProvider;
 use Grafite\Cms\Providers\CmsServiceProvider;
-use Grafite\Forms\Forms\Form;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use GrahamCampbell\Markdown\MarkdownServiceProvider;
 use Illuminate\Foundation\AliasLoader;

@@ -151,13 +151,13 @@ return [
         'blog' => [
             'identity' => [
                 'title' => [
-                    'type' => 'string',
+                    'type' => 'text',
                 ],
                 'url' => [
-                    'type' => 'string',
+                    'type' => 'text',
                 ],
                 'tags' => [
-                    'type' => 'string',
+                    'type' => 'text',
                     'class' => 'tags',
                 ],
             ],
@@ -178,7 +178,7 @@ return [
                     'alt_name' => 'SEO Description',
                 ],
                 'seo_keywords' => [
-                    'type' => 'string',
+                    'type' => 'text',
                     'class' => 'tags',
                     'alt_name' => 'SEO Keywords',
                 ],
@@ -186,13 +186,15 @@ return [
             'publish' => [
                 'is_published' => [
                     'type' => 'checkbox',
+                    'label' => 'Published',
                     'alt_name' => 'Published',
                 ],
                 'published_at' => [
-                    'type' => 'string',
+                    'type' => 'text',
                     'class' => 'datetimepicker',
                     'alt_name' => 'Publish Date',
                     'custom' => 'autocomplete="off"',
+                    'before' => '',
                     'after' => '<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>',
                 ],
             ],
@@ -201,10 +203,12 @@ return [
         'images' => [
             'is_published' => [
                 'type' => 'checkbox',
+                'label' => 'Published',
                 'value' => 1,
                 'custom' => 'checked',
             ],
             'tags' => [
+                'type' => 'text',
                 'custom' => 'data-role="tagsinput"',
             ],
         ],
@@ -215,22 +219,23 @@ return [
                 'alt_name' => 'File',
             ],
             'name' => [
-                'type' => 'string',
+                'type' => 'text',
             ],
             'alt_tag' => [
-                'type' => 'string',
+                'type' => 'text',
                 'alt_name' => 'Alt Tag',
             ],
             'title_tag' => [
-                'type' => 'string',
+                'type' => 'text',
                 'alt_name' => 'Title Tag',
             ],
             'tags' => [
-                'type' => 'string',
+                'type' => 'text',
                 'class' => 'tags',
             ],
             'is_published' => [
                 'type' => 'checkbox',
+                'label' => 'Published',
                 'alt_name' => 'Published',
             ],
         ],
@@ -238,10 +243,10 @@ return [
         'page' => [
             'identity' => [
                 'title' => [
-                    'type' => 'string',
+                    'type' => 'text',
                 ],
                 'url' => [
-                    'type' => 'string',
+                    'type' => 'text',
                 ],
             ],
             'content' => [
@@ -261,7 +266,7 @@ return [
                     'alt_name' => 'SEO Description',
                 ],
                 'seo_keywords' => [
-                    'type' => 'string',
+                    'type' => 'text',
                     'class' => 'tags',
                     'alt_name' => 'SEO Keywords',
                 ],
@@ -269,13 +274,15 @@ return [
             'publish' => [
                 'is_published' => [
                     'type' => 'checkbox',
+                    'label' => 'Published',
                     'alt_name' => 'Published',
                 ],
                 'published_at' => [
-                    'type' => 'string',
+                    'type' => 'text',
                     'class' => 'datetimepicker',
                     'alt_name' => 'Publish Date',
                     'custom' => 'autocomplete="off"',
+                    'before' => '',
                     'after' => '<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>',
                 ],
             ],
@@ -283,10 +290,10 @@ return [
 
         'widget' => [
             'name' => [
-                'type' => 'string',
+                'type' => 'text',
             ],
             'slug' => [
-                'type' => 'string',
+                'type' => 'text',
             ],
             'content' => [
                 'type' => 'text',
@@ -296,7 +303,7 @@ return [
 
         'faqs' => [
             'question' => [
-                'type' => 'string',
+                'type' => 'text',
             ],
             'answer' => [
                 'type' => 'text',
@@ -304,36 +311,39 @@ return [
             ],
             'is_published' => [
                 'type' => 'checkbox',
+                'label' => 'Published',
                 'alt_name' => 'Published',
             ],
             'published_at' => [
-                'type' => 'string',
+                'type' => 'text',
                 'class' => 'datetimepicker',
                 'alt_name' => 'Publish Date',
                 'custom' => 'autocomplete="off"',
+                'before' => '',
                 'after' => '<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>',
             ],
         ],
 
         'menu' => [
             'name' => [
-                'type' => 'string',
+                'type' => 'text',
             ],
             'slug' => [
-                'type' => 'string',
+                'type' => 'text',
             ],
         ],
 
         'link' => [
             'name' => [
-                'type' => 'string',
+                'type' => 'text',
             ],
             'external' => [
                 'type' => 'checkbox',
+                'label' => 'External',
                 'custom' => 'value="1"',
             ],
             'external_url' => [
-                'type' => 'string',
+                'type' => 'text',
                 'alt_name' => 'Url',
             ],
         ],
@@ -341,9 +351,11 @@ return [
         'files' => [
             'is_published' => [
                 'type' => 'checkbox',
+                'label' => 'Published',
                 'value' => 1,
             ],
             'tags' => [
+                'type' => 'text',
                 'custom' => 'data-role="tagsinput"',
             ],
             'details' => [
@@ -352,12 +364,16 @@ return [
         ],
 
         'file-edit' => [
-            'name' => [],
+            'name' => [
+                'type' => 'text',
+            ],
             'is_published' => [
                 'type' => 'checkbox',
+                'label' => 'Published',
                 'value' => 1,
             ],
             'tags' => [
+                'type' => 'text',
                 'custom' => 'data-role="tagsinput"',
             ],
             'details' => [
@@ -368,15 +384,15 @@ return [
         'event' => [
             'identity' => [
                 'title' => [
-                    'type' => 'string',
+                    'type' => 'text',
                 ],
                 'start_date' => [
-                    'type' => 'string',
+                    'type' => 'text',
                     'class' => 'datepicker',
                     'custom' => 'autocomplete="off"',
                 ],
                 'end_date' => [
-                    'type' => 'string',
+                    'type' => 'text',
                     'class' => 'datepicker',
                     'custom' => 'autocomplete="off"',
                 ],
@@ -394,7 +410,7 @@ return [
                     'alt_name' => 'SEO Description',
                 ],
                 'seo_keywords' => [
-                    'type' => 'string',
+                    'type' => 'text',
                     'class' => 'tags',
                     'alt_name' => 'SEO Keywords',
                 ],
@@ -402,13 +418,15 @@ return [
             'publish' => [
                 'is_published' => [
                     'type' => 'checkbox',
+                    'label' => 'Published',
                     'alt_name' => 'Published',
                 ],
                 'published_at' => [
-                    'type' => 'string',
+                    'type' => 'text',
                     'class' => 'datetimepicker',
                     'alt_name' => 'Publish Date',
                     'custom' => 'autocomplete="off"',
+                    'before' => '',
                     'after' => '<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>',
                 ],
             ],
@@ -416,20 +434,23 @@ return [
         'promotion' => [
             'identity' => [
                 'slug' => [
-                    'type' => 'string',
+                    'type' => 'text',
                 ],
                 'published_at' => [
-                    'type' => 'string',
+                    'type' => 'text',
                     'class' => 'datetimepicker',
                     'custom' => 'autocomplete="off"',
                     'alt_name' => 'Publish Date',
+                    'before' => '',
                     'after' => '<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>',
+
                 ],
                 'finished_at' => [
-                    'type' => 'string',
+                    'type' => 'text',
                     'class' => 'datetimepicker',
                     'custom' => 'autocomplete="off"',
                     'alt_name' => 'Finish Date',
+                    'before' => '',
                     'after' => '<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>',
                 ],
             ],

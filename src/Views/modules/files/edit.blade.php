@@ -15,11 +15,11 @@
     <div class="col-md-12">
         {!! form()->model($files, ['route' => [cms()->route('files.update'), $files->id], 'files' => true, 'method' => 'patch', 'class' => 'edit']) !!}
 
-            {!! formMaker()->setColumns(2)->fromObject($files, config('cms.forms.file-edit')) !!}
+            {!! formMaker()->setColumns(2)->setSections([array_keys(config('cms.forms.file-edit'))])->fromObject($files, config('cms.forms.file-edit')) !!}
 
             <div class="form-group text-right">
                 <a href="{!! cms()->url('files') !!}" class="btn btn-secondary raw-left">Cancel</a>
-                {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! form()->field->submit('Save', ['class' => 'btn btn-primary']) !!}
             </div>
 
         {!! form()->close() !!}

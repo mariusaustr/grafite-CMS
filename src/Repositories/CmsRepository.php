@@ -19,7 +19,7 @@ class CmsRepository
     /**
      * Returns all Widgets.
      */
-    public function all(): Collection
+    public function all(): array
     {
         return $this->model->orderBy('created_at', 'desc')->get()->all();
     }
@@ -97,7 +97,7 @@ class CmsRepository
     /**
      * Find Widgets by given id.
      */
-    public function find(int $id): ?CmsModel
+    public function find(mixed $id): ?CmsModel
     {
         return $this->model->find($id);
     }

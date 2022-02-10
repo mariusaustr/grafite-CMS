@@ -180,7 +180,7 @@ $routePrefix = config('cms.backend-route-prefix', 'cms');
                 Route::get('files/remove/{id}', [FilesController::class, 'remove']);
                 Route::post('files/search', [FilesController::class, 'search']);
 
-                Route::resource('files', 'FilesController', ['as' => $routePrefix, 'except' => ['show']]);
+                Route::resource('files', FilesController::class, ['as' => $routePrefix, 'except' => ['show']]);
             });
         });
     });

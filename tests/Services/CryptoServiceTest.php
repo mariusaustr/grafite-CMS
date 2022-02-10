@@ -20,7 +20,7 @@ class CryptoServiceTest extends TestCase
     {
         $result = $this->service->encrypt('test');
 
-        $this->assertContains('--', $result);
+        $this->assertStringContainsString('--', $result);
     }
 
     public function testDecrypt()

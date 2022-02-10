@@ -60,14 +60,14 @@
 
                     <input type="hidden" name="lang" value="{{ request('lang') }}">
 
-                    {!! formMaker()->setColumns(3)->fromObject($event->asObject(), config('cms.forms.event.identity')) !!}
+                    {!! formMaker()->setColumns(3)->setSections([array_keys(config('cms.forms.event.identity'))])->fromObject($event->asObject(), config('cms.forms.event.identity')) !!}
                     {!! formMaker()->setColumns(1)->fromObject($event->asObject(), config('cms.forms.event.content')) !!}
-                    {!! formMaker()->setColumns(2)->fromObject($event->asObject(), config('cms.forms.event.seo')) !!}
-                    {!! formMaker()->setColumns(2)->fromObject($event->asObject(), config('cms.forms.event.publish')) !!}
+                    {!! formMaker()->setColumns(2)->setSections([array_keys(config('cms.forms.event.seo'))])->fromObject($event->asObject(), config('cms.forms.event.seo')) !!}
+                    {!! formMaker()->setColumns(2)->setSections([array_keys(config('cms.forms.event.publish'))])->fromObject($event->asObject(), config('cms.forms.event.publish')) !!}
 
                     <div class="form-group text-right">
                         <a href="{!! cms()->url('events') !!}" class="btn btn-secondary float-left">Cancel</a>
-                        {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
+                        {!! form()->field->submit('Save', ['class' => 'btn btn-primary']) !!}
                     </div>
 
                 {!! form()->close() !!}

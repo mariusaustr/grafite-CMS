@@ -127,7 +127,7 @@ class BlogController extends GrafiteCmsController
     /**
      * Remove the specified Blog from storage.
      */
-    public function destroy(int $id): RedirectResponse
+    public function destroy(string $id): RedirectResponse
     {
         $blog = $this->repository->find($id);
 

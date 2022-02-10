@@ -32,11 +32,11 @@
             <div class="col-md-12 mt-4">
                 {!! form()->model($images, ['route' => [cms()->route('images.update'), $images->id], 'method' => 'patch', 'files' => true, 'class' => 'edit']) !!}
 
-                    {!! formMaker()->setColumns(2)->fromObject($images, config('cms.forms.images-edit')) !!}
+                    {!! formMaker()->setColumns(2)->setSections([array_keys(config('cms.forms.images-edit'))])->fromObject($images, config('cms.forms.images-edit')) !!}
 
                     <div class="form-group text-right">
                         <a href="{!! cms()->url('images') !!}" class="btn btn-secondary float-left">Cancel</a>
-                        {!! form()->submit('Save', ['class' => 'btn btn-primary']) !!}
+                        {!! form()->field->submit('Save', ['class' => 'btn btn-primary']) !!}
                     </div>
 
                 {!! form()->close() !!}

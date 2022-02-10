@@ -18,7 +18,7 @@
 
             <div class="form-group text-right">
                 <a href="{!! cms()->url('images') !!}" class="btn btn-secondary float-left">Cancel</a>
-                {!! form()->submit('Save', ['class' => 'btn btn-primary', 'id' => 'saveImagesBtn']) !!}
+                {!! form()->field->submit('Save', ['class' => 'btn btn-primary', 'id' => 'saveImagesBtn']) !!}
             </div>
 
         {!! form()->close() !!}
