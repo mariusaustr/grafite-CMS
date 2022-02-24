@@ -15,6 +15,7 @@ return [
     */
 
     'analytics' => 'internal',   // google, internal
+    'analytics_excluded_urls' => [],
 
     /*
      * --------------------------------------------------------------------------
@@ -48,6 +49,17 @@ return [
 
     'frontend-namespace' => '\App\Http\Controllers\Cms',
     'frontend-theme' => 'default',
+    'frontend-module-settings' => [
+        'blog' => ['edit-button' => true],
+        'menus' => ['edit-button' => true],
+        'files' => ['edit-button' => true],
+        'images' => ['edit-button' => true],
+        'pages' => ['edit-button' => true],
+        'widgets' => ['edit-button' => true],
+        'promotions' => ['edit-button' => true],
+        'events' => ['edit-button' => true],
+        'faqs' => ['edit-button' => true],
+    ],
 
     /*
      * --------------------------------------------------------------------------
@@ -118,6 +130,7 @@ return [
     'storage-location' => 'local', // s3, local
     'max-file-upload-size' => 6291456, // 6MB
     'preview-image-size' => 800, // width - auto height
+    'max-image-size' => 1670, // width - auto height
     'cloudfront' => null, // do not include http
 
     /*
@@ -163,8 +176,10 @@ return [
             ],
             'content' => [
                 'entry' => [
-                    'type' => 'text',
-                    'class' => 'redactor',
+                    'type' => 'textarea',
+                    'attributes' => [
+                    'class' => 'form-control redactor',
+                ],
                     'alt_name' => 'Content',
                 ],
                 'hero_image' => [
@@ -251,8 +266,10 @@ return [
             ],
             'content' => [
                 'entry' => [
-                    'type' => 'text',
-                    'class' => 'redactor',
+                    'type' => 'textarea',
+                    'attributes' => [
+                    'class' => 'form-control redactor',
+                ],
                     'alt_name' => 'Content',
                 ],
                 'hero_image' => [
@@ -296,8 +313,10 @@ return [
                 'type' => 'text',
             ],
             'content' => [
-                'type' => 'text',
-                'class' => 'redactor',
+                'type' => 'textarea',
+                'attributes' => [
+                    'class' => 'form-control redactor',
+                ],
             ],
         ],
 
@@ -306,8 +325,10 @@ return [
                 'type' => 'text',
             ],
             'answer' => [
-                'type' => 'text',
-                'class' => 'redactor',
+                'type' => 'textarea',
+                'attributes' => [
+                    'class' => 'form-control redactor',
+                ],
             ],
             'is_published' => [
                 'type' => 'checkbox',
@@ -336,6 +357,7 @@ return [
         'link' => [
             'name' => [
                 'type' => 'text',
+                'label' => 'Name',
             ],
             'external' => [
                 'type' => 'checkbox',
@@ -345,6 +367,7 @@ return [
             'external_url' => [
                 'type' => 'text',
                 'alt_name' => 'Url',
+                'label' => 'External URL',
             ],
         ],
 
@@ -399,8 +422,10 @@ return [
             ],
             'content' => [
                 'details' => [
-                    'type' => 'text',
-                    'class' => 'redactor',
+                    'type' => 'textarea',
+                    'attributes' => [
+                    'class' => 'form-control redactor',
+                ],
                     'alt_name' => 'Details',
                 ],
             ],
@@ -456,8 +481,10 @@ return [
             ],
             'content' => [
                 'details' => [
-                    'type' => 'text',
-                    'class' => 'redactor',
+                    'type' => 'textarea',
+                    'attributes' => [
+                    'class' => 'form-control redactor',
+                ],
                     'alt_name' => 'Details',
                 ],
             ],

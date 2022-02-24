@@ -77,7 +77,7 @@ trait MenuServiceTrait
             $response = view($view, ['links' => $links, 'processed_links' => $processedLinks]);
         }
 
-        if (Gate::allows('cms', Auth::user())) {
+        if (Gate::allows('cms', Auth::user()) && config('cms.frontend-module-settings.menus.edit-button')) {
             if (is_null($view)) {
                 $response = implode(',', $processedLinks);
             }

@@ -8,18 +8,29 @@ use Illuminate\Support\Facades\Schema;
 
 class AnalyticsService
 {
-    public function __construct(private Analytics $model)
+    public function __construct(public Analytics $model)
     {
     }
 
     public function log($request): void
     {
+        $uri = $request->server('REQUEST_URI', null);
+
+        $excluded_uris = config('cms.analytics_excluded_urls', []);
+        $matches = null;
+        foreach ((array) $excluded_uris as $value) {
+            preg_match($value, $uri, $matches);
+            if ($matches) {
+                return;
+            }
+        }
+
         $requestData = json_encode([
             'referer' => $request->server('HTTP_REFERER', null),
             'user_agent' => $request->server('HTTP_USER_AGENT', null),
             'host' => $request->server('HTTP_HOST', null),
             'remote_addr' => $request->server('REMOTE_ADDR', null),
-            'uri' => $request->server('REQUEST_URI', null),
+            'uri' => $uri,
             'method' => $request->server('REQUEST_METHOD', null),
             'query' => $request->server('QUERY_STRING', null),
             'time' => $request->server('REQUEST_TIME', null),
@@ -37,7 +48,10 @@ class AnalyticsService
         $analytics = $this->model->where('created_at', '>', Carbon::now()->subDays($count))->get();
         $data = $analytics->pluck('data')->all();
 
-        return $this->convertDataToItems($data, 'referer', ['unknown' => 0]);
+        $result = $this->convertDataToItems($data, 'referer', ['unknown' => 0]);
+        arsort($result);
+
+        return $result;
     }
 
     public function topPages($count): array
@@ -45,7 +59,10 @@ class AnalyticsService
         $analytics = $this->model->where('created_at', '>', Carbon::now()->subDays($count))->get();
         $data = $analytics->pluck('data')->all();
 
-        return $this->convertDataToItems($data, 'uri');
+        $result = $this->convertDataToItems($data, 'uri');
+        arsort($result);
+
+        return $result;
     }
 
     public function topBrowsers($count): array
@@ -59,6 +76,8 @@ class AnalyticsService
             $browser = parse_user_agent($userAgent);
             $browsers[$browser['browser'].' ('.$browser['version'].') on '.$browser['platform']] = $count;
         }
+
+        arsort($browsers);
 
         return $browsers;
     }

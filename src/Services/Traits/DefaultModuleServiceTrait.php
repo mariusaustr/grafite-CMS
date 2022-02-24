@@ -38,7 +38,7 @@ trait DefaultModuleServiceTrait
         $widget = app(WidgetRepository::class)->getBySlug($slug);
 
         if ($widget) {
-            if (Gate::allows('cms', Auth::user())) {
+            if (Gate::allows('cms', Auth::user()) && config('cms.frontend-module-settings.widgets.edit-button')) {
                 $widget->content .= '<a href="'.url(config('cms.backend-route-prefix', 'cms').'/widgets/'.$widget->id.'/edit').'" class="btn btn-sm ml-2 btn-outline-secondary"><span class="fa fa-edit"></span> Edit</a>';
             }
 
@@ -61,7 +61,7 @@ trait DefaultModuleServiceTrait
         $promotion = app(PromotionRepository::class)->getBySlug($slug);
 
         if ($promotion) {
-            if (Gate::allows('cms', Auth::user())) {
+            if (Gate::allows('cms', Auth::user()) && config('cms.frontend-module-settings.promotions.edit-button')) {
                 $promotion->details .= '<a href="'.url(config('cms.backend-route-prefix', 'cms').'/promotions/'.$promotion->id.'/edit').'" style="margin-left: 8px;" class="btn btn-xs btn-default"><span class="fa fa-pencil"></span> Edit</a>';
             }
 

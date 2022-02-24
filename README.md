@@ -18,13 +18,14 @@ Simple setup uses Grafite Builder as the backbone of an app for you using Larave
 * [Matt Lantz](https://github.com/mlantz) ([@mattylantz](http://twitter.com/mattylantz), mattlantz at gmail dot com)
 
 ## General Requirements
-1. PHP 7.1.3+
+1. PHP 8.0
 1. MySQL 5.7+
 2. OpenSSL
 
 ## Compatibility and Support
 | Laravel Version | Package Tag | Supported |
 |-----------------|-------------|-----------|
+| 8.82.x | 4.x | no |
 | 5.8.x | 3.3.x | no |
 | 5.7.x | 3.x.x | no |
 | 5.6.x | 3.0.x | no |

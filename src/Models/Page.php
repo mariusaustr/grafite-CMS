@@ -15,6 +15,7 @@ use Illuminate\Support\Collection;
  * @property Carbon $published_at
  * @property string $url
  * @property string $title
+ * @property string $template
  */
 class Page extends CmsModel
 {

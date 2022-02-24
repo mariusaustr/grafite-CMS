@@ -5,6 +5,7 @@ namespace Grafite\Cms\Controllers;
 use Grafite\Cms\Services\AssetService;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AssetController extends GrafiteCmsController
 {
@@ -40,7 +41,7 @@ class AssetController extends GrafiteCmsController
     /**
      * Gets an asset.
      */
-    public function asset(string $encPath, string $contentType, Filesystem $fileSystem): Response
+    public function asset(string $encPath, string $contentType, Filesystem $fileSystem): Response|BinaryFileResponse
     {
         return $this->service->asset($encPath, $contentType, $fileSystem);
     }
