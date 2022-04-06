@@ -21,7 +21,7 @@ class LinkRepository extends CmsRepository
      */
     public function store(array $payload): Link
     {
-        $payload['external'] ??= 0;
+        $payload['external'] = (bool) ($payload['external'] ?? false);
 
         if ($payload['external'] != 0 && empty($payload['external_url'])) {
             throw new Exception("Your link was missing a URL", 1);
@@ -59,7 +59,7 @@ class LinkRepository extends CmsRepository
      */
     public function update(CmsModel $link, array $payload): Link|bool
     {
-        $payload['external'] ??= 0;
+        $payload['external'] = (bool) ($payload['external'] ?? false);
 
         if (! empty($payload['lang']) && $payload['lang'] !== config('cms.default-language', 'en')) {
             return $this->translationRepo->createOrUpdate($link->id, 'Grafite\Cms\Models\Link', $payload['lang'], $payload);
