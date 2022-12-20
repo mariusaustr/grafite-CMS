@@ -130,7 +130,7 @@ class GrafiteCmsFeatureController extends GrafiteCmsController
     {
         $entity = app('Grafite\Cms\Models\\'.ucfirst($entity))->find($id);
 
-        if (app(FileService::class)->delete($entity->hero_image)) {
+        if ($entity->hero_image && app(FileService::class)->delete($entity->hero_image)) {
             $entity->update([
                 'hero_image' => null,
             ]);
