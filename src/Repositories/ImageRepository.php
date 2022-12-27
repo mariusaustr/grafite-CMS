@@ -74,7 +74,7 @@ class ImageRepository extends CmsRepository
      */
     public function apiStore(array $input): Image|false
     {
-        $savedFile = app(FileService::class)->saveClone($input['location'], 'public/images');
+        $savedFile = app(FileService::class)->saveClone($input['location'], 'images');
 
         if (! $savedFile) {
             return false;
@@ -127,7 +127,7 @@ class ImageRepository extends CmsRepository
     public function update(CmsModel $model, array $input): Image|bool
     {
         if (isset($input['location']) && ! empty($input['location'])) {
-            $savedFile = app(FileService::class)->saveFile($input['location'], 'public/images', [], true);
+            $savedFile = app(FileService::class)->saveFile($input['location'], 'images', [], true);
 
             if (! $savedFile) {
                 Cms::notification('Image could not be updated.', 'danger');

@@ -78,7 +78,7 @@ class BlogRepository extends CmsRepository
 
         if (isset($payload['hero_image'])) {
             $file = request()->file('hero_image');
-            $path = app(FileService::class)->saveFile($file, 'public/images', [], true);
+            $path = app(FileService::class)->saveFile($file, 'images', [], true);
             $payload['hero_image'] = $path['name'];
         }
 
@@ -123,7 +123,7 @@ class BlogRepository extends CmsRepository
                 app(FileService::class)->delete($blog->hero_image);
             }
             $file = request()->file('hero_image');
-            $path = app(FileService::class)->saveFile($file, 'public/images', [], true);
+            $path = app(FileService::class)->saveFile($file, 'images', [], true);
             $payload['hero_image'] = $path['name'];
         }
 

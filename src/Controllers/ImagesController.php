@@ -107,7 +107,7 @@ class ImagesController extends GrafiteCmsController
 
         if (! $validation['errors']) {
             $file = $request->file('location');
-            $fileSaved = app(FileService::class)->saveFile($file, 'public/images', [], true);
+            $fileSaved = app(FileService::class)->saveFile($file, 'images', [], true);
             $fileSaved['name'] = CryptoService::encrypt($fileSaved['name']);
             $fileSaved['mime'] = $file->getClientMimeType();
             $fileSaved['size'] = $file->getSize();
