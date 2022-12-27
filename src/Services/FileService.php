@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as InterventionImage;
 
 class FileService
@@ -99,11 +100,11 @@ class FileService
             }
         }
 
-        Storage::disk(Config::get('cms.storage-location', 'local'))->put($directory.$newFileName.'.'.$extension, File::get($file));
+        $storage = Storage::disk(Config::get('cms.storage-location', 'local'));
+        $storage->put($directory.$newFileName.'.'.$extension, File::get($file));
 
         // Resize images only
         if ($isImage) {
-            $storage = Storage::disk(Config::get('cms.storage-location', 'local'));
             $image = $storage->get($directory.$newFileName.'.'.$extension);
 
             $image = InterventionImage::make($image)->resize(config('cms.max-image-size', 800), null, function ($constraint) {
@@ -118,7 +119,7 @@ class FileService
 
         return [
             'original' => $originalName ?: ($file->getFilename().'.'.$extension),
-            'name' => $directory.$newFileName.'.'.$extension,
+            'name' => Str::finish((string) data_get($storage->getConfig(), 'root') ,'/').$directory.$newFileName.'.'.$extension,
         ];
     }
 
