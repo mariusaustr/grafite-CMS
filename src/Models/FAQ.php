@@ -36,8 +36,8 @@ class FAQ extends CmsModel
         'published_at',
     ];
 
-    protected $dates = [
-        'published_at',
+    protected $casts = [
+        'published_at' => 'datetime',
     ];
 
     public function __construct(array $attributes = [])

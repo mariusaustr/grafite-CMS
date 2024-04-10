@@ -42,8 +42,8 @@ class Event extends CmsModel
         'published_at',
     ];
 
-    protected $dates = [
-        'published_at' => 'Y-m-d H:i',
+    protected $casts = [
+        'published_at' => 'datetime:Y-m-d H:i',
     ];
 
     public function __construct(array $attributes = [])
