@@ -119,7 +119,7 @@ class FileService
 
         return [
             'original' => $originalName ?: ($file->getFilename().'.'.$extension),
-            'name' => Str::finish((string) data_get($storage->getConfig(), 'root') ,'/').$directory.$newFileName.'.'.$extension,
+            'name' => Str::finish((string) data_get($storage->getConfig(), 'root'), '/').$directory.$newFileName.'.'.$extension,
         ];
     }
 
