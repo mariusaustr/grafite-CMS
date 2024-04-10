@@ -10,8 +10,7 @@ class PagesTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware();
-        $this->withoutEvents();
+        
         Page::factory()->create();
     }
 

@@ -10,8 +10,7 @@ class MenuTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware();
-        $this->withoutEvents();
+        
         Menu::factory()->create();
     }
 

@@ -10,8 +10,7 @@ class FilesTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware();
-        $this->withoutEvents();
+        
         File::factory()->create();
     }
 

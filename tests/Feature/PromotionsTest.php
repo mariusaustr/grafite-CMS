@@ -10,8 +10,7 @@ class PromotionsTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware();
-        $this->withoutEvents();
+        
         Promotion::factory()->create();
     }
 

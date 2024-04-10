@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Event;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -59,7 +60,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $this->artisan('migrate', [
             '--database' => 'testbench',
         ]);
+
+        
         $this->withoutMiddleware();
-        $this->withoutEvents();
+        Event::fake();
     }
 }

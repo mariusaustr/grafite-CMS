@@ -10,8 +10,7 @@ class EventsTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware();
-        $this->withoutEvents();
+        
         Event::factory()->create();
     }
 

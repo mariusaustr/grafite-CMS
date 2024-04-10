@@ -10,8 +10,7 @@ class WidgetsTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware();
-        $this->withoutEvents();
+        
         Widget::factory()->create();
     }
 

@@ -11,8 +11,7 @@ class LinksTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware();
-        $this->withoutEvents();
+        
         Menu::factory()->create();
         Link::factory()->create();
         Link::factory()->make(['id' => 1]);

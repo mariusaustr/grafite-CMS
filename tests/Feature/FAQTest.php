@@ -10,8 +10,7 @@ class FAQTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware();
-        $this->withoutEvents();
+        
         FAQ::factory()->create();
     }
 

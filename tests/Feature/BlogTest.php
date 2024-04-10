@@ -11,8 +11,7 @@ class BlogTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware();
-        $this->withoutEvents();
+        
         Blog::factory()->create();
     }
 
