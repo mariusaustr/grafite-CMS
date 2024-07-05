@@ -194,12 +194,10 @@ class AssetService
 
         if (stristr($fileName, 'image') || stristr($contentType, 'image')) {
             if (! is_null(config('cms.preview-image-size'))) {
-                $img = Image::make($fileContent);
-                $img->resize(config('cms.preview-image-size', 800), null, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
+                $img = Image::read($fileContent);
+                $img->resizeDown(config('cms.preview-image-size', 800));
 
-                return $img->encode($ext);
+                return $img->encodeByExtension($ext);
             }
         }
 

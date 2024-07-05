@@ -166,10 +166,8 @@ class Image extends CmsModel
     {
         $imagePath = app(AssetService::class)->generateImage('File Not Found');
 
-        $image = InterventionImage::make($imagePath)->resize(config('cms.preview-image-size', 800), null, function ($constraint) {
-            $constraint->aspectRatio();
-        });
+        $image = InterventionImage::read($imagePath)->resizeDown(config('cms.preview-image-size', 800));
 
-        return (string) $image->encode('data-url');
+        return (string) $image->encode()->toDataUri();
     }
 }

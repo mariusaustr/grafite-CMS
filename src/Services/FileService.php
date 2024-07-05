@@ -107,14 +107,12 @@ class FileService
         if ($isImage) {
             $image = $storage->get($directory.$newFileName.'.'.$extension);
 
-            $image = InterventionImage::make($image)->resize(config('cms.max-image-size', 800), null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            $image = InterventionImage::read($image)->resizeDown(config('cms.max-image-size', 800));
 
-            $imageResized = $image->stream();
+            $imageResized = $image->encodeByExtension($extension)->toFilePointer();
 
             $storage->delete($directory.$newFileName.'.'.$extension);
-            $storage->put($directory.$newFileName.'.'.$extension, $imageResized->__toString());
+            $storage->put($directory.$newFileName.'.'.$extension, $imageResized);
         }
 
         return [
