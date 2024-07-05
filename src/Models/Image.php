@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManagerStatic as InterventionImage;
+use Intervention\Image\Laravel\Facades\Image as InterventionImage;
 
 /**
  * @property string $location

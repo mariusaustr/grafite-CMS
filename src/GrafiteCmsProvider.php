@@ -24,8 +24,8 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
-use Intervention\Image\ImageServiceProvider;
+use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Laravel\ServiceProvider as ImageServiceProvider;
 
 class GrafiteCmsProvider extends ServiceProvider
 {

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManagerStatic as InterventionImage;
+use Intervention\Image\Laravel\Facades\Image as InterventionImage;
 
 class FileService
 {
