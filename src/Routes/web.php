@@ -24,7 +24,6 @@ Route::group(['middleware' => 'web'], function () use ($routePrefix) {
     Route::get($routePrefix, [GrafiteCmsFeatureController::class, 'sendHome']);
     Route::get('{module}/rss', [RssController::class, 'index']);
     Route::get('site-map', [SiteMapController::class, 'index']);
-    Route::get($routePrefix.'/hero-images/delete/{entity}/{entity_id}', [GrafiteCmsFeatureController::class, 'deleteHero']);
 
     /*
     |--------------------------------------------------------------------------
@@ -58,6 +57,7 @@ Route::group(['middleware' => 'web'], function () use ($routePrefix) {
 
         Route::group(['prefix' => $routePrefix], function () {
             Route::get('images/bulk-delete/{ids}', [ImagesController::class, 'bulkDelete']);
+            Route::get('hero-images/delete/{entity}/{entity_id}', [GrafiteCmsFeatureController::class, 'deleteHero']);
             Route::post('images/upload', [ImagesController::class, 'upload']);
             Route::post('files/upload', [FilesController::class, 'upload']);
         });
