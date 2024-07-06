@@ -9,7 +9,7 @@ class CmsResponseService
     /**
      * Generate an api response.
      */
-    public function apiResponse(string $type, string $message, $code = 200): JsonResponse
+    public function apiResponse(string $type, mixed $message, $code = 200): JsonResponse
     {
         return response()->json(['status' => $type, 'data' => $message], $code);
     }
